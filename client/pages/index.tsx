@@ -1,9 +1,16 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState } from "react";
+import { useRouter } from 'next/router';
 
 function index() {
 
   const [message, setMessage] = useState("Loading");
+
+  const router = useRouter();
+
+  const navigateToHome = () => {
+    router.push('/screens/Home/Home');
+  };
 
   useEffect(() => {
     fetch("http://localhost:6969/api/login")
@@ -15,7 +22,11 @@ function index() {
   }, []);
 
   return (
-  <div>{message}</div>
+  <div className="flex-col">
+    <div>{message}</div>
+    <button onClick={navigateToHome}>Go to Home</button>
+  </div>
+  
   );
 }
 
