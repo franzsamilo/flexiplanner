@@ -10,7 +10,7 @@ app.get("/api/login", (req, res) => {
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
   );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.json({ message: "WELCOME TO FLEXIPLANNER" });
+  res.json({ message: "FLEXIPLANNER" });
 });
 
 app.use(cors());

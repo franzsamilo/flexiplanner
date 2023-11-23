@@ -22,7 +22,7 @@ function index() {
     router.push("/api/auth/login");
   }
 
-  const navigateToSignUP = () => {
+  const navigateToSignUp = () => {
     router.push("/screens/GetStarted/GetStarted");
   };
 
@@ -42,7 +42,6 @@ function index() {
     return (
       <div className="w-screen h-screen overflow-y-scroll">
         <Home />
-        <button onClick={Logout}>Logout</button>
       </div>
     );
   }
@@ -58,7 +57,7 @@ function index() {
         flex items-center justify-center"
       >
         <div className="w-full h-100 items-center text-center ">
-          <h1 className="text-3xl font-bold text-blue-300 mb-12">{message}</h1>
+          <h1 className="text-3xl font-bold mb-12">{message}</h1>
           <Image src={splash2} alt="" className="rounded-3xl"/>
           <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12  text-blue-700">
             Log in to your account

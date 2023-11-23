@@ -1,14 +1,12 @@
 import React from "react";
-import { useRouter } from "next/router";
+import Sidebar from "./Sidebar";
+
 
 function Home() {
-  const router = useRouter();
-
-
 
   return (
-    <div className="flex-col">
-      This the home page fr
+    <div className="flex-col w-full h-full">
+      <Sidebar />
     </div>
   );
 }
