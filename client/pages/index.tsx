@@ -22,6 +22,10 @@ function index() {
     router.push("/api/auth/login");
   }
 
+  const navigateToSignUP = () => {
+    router.push("/screens/GetStarted/GetStarted");
+  };
+
   useEffect(() => {
     fetch("http://localhost:6969/api/login")
       .then((res) => res.json())
