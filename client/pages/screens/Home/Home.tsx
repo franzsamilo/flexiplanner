@@ -5,7 +5,7 @@ import Scheduler from "./Shceduler";
 function Home() {
   return (
     <div className="flex-row w-full h-full">
-      <Scheduler />
+      <Sidebar />
     </div>
   );
 }
