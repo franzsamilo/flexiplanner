@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import AddSchedule, { Schedule } from "./AddSchedule";
-import Sidebar from "./Sidebar";
 
 interface SchedulerProps {}
 
-const Scheduler: React.FC<SchedulerProps> = () => {
+function Scheduler () {
   const [showAddSchedule, setShowAddSchedule] = useState(false);
   const [schedules, setSchedules] = useState<{ [key: string]: Schedule[] }>({});
 
@@ -46,14 +45,12 @@ const Scheduler: React.FC<SchedulerProps> = () => {
   return (
     <div className="flex flex-col items-center">
       <div className="flex flex-col md:flex-row">
-        {/* Days displayed horizontally */}
         <div className="flex flex-row mb-5 ml-4">
           {daysOfWeek.map((day, index) => (
             <div key={index} className="flex-1 text-center">
               <h4 className="font-bold px-4 md:px-10 py-2 border border-lightblue">
                 {day}
               </h4>
-              {/* Display schedules for the day */}
               <div className="storage-area border-red-500 p-2 mb-4">
                 {schedules[day]?.map((schedule, index) => (
                   <div

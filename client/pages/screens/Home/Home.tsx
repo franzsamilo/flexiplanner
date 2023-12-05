@@ -1,11 +1,10 @@
 import React from "react";
-import Sidebar from "./Sidebar";
-import Scheduler from "./Shceduler";
+import Scheduler from "./Scheduler";
 
 function Home() {
   return (
     <div className="flex-row w-full h-full">
-      <Sidebar />
+      <Scheduler  />
     </div>
   );
 }
