@@ -12,7 +12,7 @@ interface AddScheduleProps {
   addSchedule: (day: string, schedule: Schedule) => void;
 }
 
-const AddSchedule: React.FC<AddScheduleProps> = ({ onClose, addSchedule }) => {
+function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
   const [schedule, setSchedule] = useState<Schedule>({
     day: "",
     subject: "",
@@ -20,17 +20,17 @@ const AddSchedule: React.FC<AddScheduleProps> = ({ onClose, addSchedule }) => {
     ends: "",
   });
 
-  const handleChange = (
+  function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  ) {
     const { name, value } = e.target;
     setSchedule((prevSchedule) => ({
       ...prevSchedule,
       [name]: value,
     }));
-  };
+  }
 
-  const generateTimeOptions = () => {
+  function generateTimeOptions() {
     const options = [];
     for (let i = 0; i < 24; i++) {
       const time = `${i < 10 ? "0" : ""}${i}:00`;
@@ -41,14 +41,14 @@ const AddSchedule: React.FC<AddScheduleProps> = ({ onClose, addSchedule }) => {
       );
     }
     return options;
-  };
+  }
 
-  const handleAddSchedule = () => {
+  function handleAddSchedule() {
     if (schedule.day && schedule.subject && schedule.starts && schedule.ends) {
       addSchedule(schedule.day, schedule);
       onClose();
     }
-  };
+  }
 
   return (
     <div className="relative bg-gray-300 p-10 rounded">
@@ -119,6 +119,6 @@ const AddSchedule: React.FC<AddScheduleProps> = ({ onClose, addSchedule }) => {
       </div>
     </div>
   );
-};
+}
 
 export default AddSchedule;
