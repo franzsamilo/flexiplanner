@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useUser } from "@auth0/nextjs-auth0/client";
-
 import Home from "./screens/Home/Home";
+import GetStarted from "./screens/UserAuth/GetStarted";
 import Image from "next/image";
 import splash from "../public/assets/splash.jpg";
 import splash2 from "../public/assets/splash2.jpg";
@@ -41,7 +41,7 @@ function index() {
   if (user) {
     return (
       <div className="w-screen h-screen overflow-y-scroll">
-        <Home />
+        <GetStarted />
       </div>
     );
   }
