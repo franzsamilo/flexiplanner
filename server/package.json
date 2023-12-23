@@ -6,15 +6,26 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
-    "dev": "nodemon server"
+    "dev": "nodemon server",
+    "prepare": "husky install"
   },
   "author": "Liberal Party (not the political one)",
   "license": "ISC",
   "dependencies": {
+    "-": "^0.0.1",
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "save-dev": "^0.0.1-security"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "eslint": "^8.56.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.1.1"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": "eslint --fix",
+    "*.{js,jsx,css,md}": "prettier --write"
   }
 }

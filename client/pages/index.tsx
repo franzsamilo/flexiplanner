@@ -76,7 +76,7 @@ function index() {
           <hr className="my-6 border-gray-300 w-full" />
 
           <p className="mt-8">
-            Need an account?
+            Need an account??
             <button
               onClick={Login}
               className="text-blue-500 hover:text-blue-700 font-semibold ml-3"
