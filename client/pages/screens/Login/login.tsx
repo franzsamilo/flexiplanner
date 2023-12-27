@@ -1,23 +1,27 @@
 import React from 'react'
 import Image from 'next/image'
 import logo from '/public/assets/logo.png'
+import { useRouter } from 'next/router'
 
-function Login () {
+function LoginPage () {
+  const router = useRouter()
+
+  function navigateToHome() {
+    router.push('/screens/Home/Home')
+  }
+
   return (
     <div className='flex flex-col min-h-screen bg-dirty'>
-      {/* Navbar */}
       <nav className='bg-white text-black p-4'>
         <div className='flex items-center justify-between'>
-          {/* Logo and App Name */}
           <div className='flex items-center'>
             <Image src={logo} alt='' className='h-12 w-12 mr-2' />
             <span className='text-main text-2xl font-semibold'>
               FlexiPlanner
             </span>
           </div>
-          {/* Centered Buttons */}
           <div className='flex justify-center text-xl mr-20'>
-            <button className='px-10 py-2 bg-none font-semibold hover:text-main rounded-3xl'>
+            <button className='px-10 py-2 bg-none font-semibold hover:text-main rounded-3xl' onClick={navigateToHome}>
               Home
             </button>
             <button className='px-10 py-2 bg-none font-semibold hover:text-main rounded-3xl'>
@@ -27,14 +31,12 @@ function Login () {
               Demo
             </button>
           </div>
-          {/* Sign Up Button */}
-          <button className='px-4 py-2 bg-main hover:bg-secondary text-white font-semibold hover:bg-blue-600 rounded-3xl'>
+          <button className='px-4 py-2 bg-main hover:bg-main text-white font-semibold rounded-3xl'>
             Sign Up
           </button>
         </div>
       </nav>
 
-      {/* Login Content */}
       <main className='flex-1 flex items-center justify-center '>
         <div className='w-full max-w-md'>
           <div className='bg-white shadow-xl rounded-3xl px-9 pt-6 pb-8 mb-4'>
@@ -73,12 +75,14 @@ function Login () {
               <button
                 type='submit'
                 className='w-4/5 flex justify-center bg-secondary hover:bg-main text-white font-bold py-2 px-4 rounded-3xl mb-6'
+                onClick={navigateToHome}
               >
                 Log in
               </button>
               <button
                 type='submit'
                 className='w-4/5 flex justify-center bg-secondary hover:bg-main text-white font-bold py-2 px-4 rounded-3xl'
+                onClick={navigateToHome}
               >
                 Continue with Google
               </button>
@@ -87,7 +91,6 @@ function Login () {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className='bg-main text-white p-4 h-40'>
         <div className='flex justify-between'>
           <div className='flex items-start'>
@@ -119,4 +122,4 @@ function Login () {
   )
 }
 
-export default Login
+export default LoginPage
