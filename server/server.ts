@@ -11,7 +11,6 @@ app.get("/api/test-connection", async (req: Request, res: Response) => {
   try {
     const client = await flexiplannerDB.connect();
     client.release();
-
     res.json({ message: "Database connection successful" });
   } catch (error) {
     console.error("Error connecting to database:", error);
