@@ -2,11 +2,8 @@ import React from 'react';
 import Image from 'next/image';
 import logo from '/public/assets/logo.png';
 import { useRouter } from 'next/router';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
-function HomePage() {
+function AboutUsPage() {
   const router = useRouter();
 
   function navigateToHome() {
@@ -21,34 +18,6 @@ function HomePage() {
     router.push('/screens/Demo/demo');
   }
 
-  function navigateToLogin() {
-    router.push('/screens/Login/login');
-  }
-
-  const carouselSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 5000,
-  };
-
-  const sliderRef = React.useRef<Slider>(null);
-
-  const handlePrev = () => {
-    if (sliderRef.current) {
-      sliderRef.current.slickPrev();
-    }
-  };
-
-  const handleNext = () => {
-    if (sliderRef.current) {
-      sliderRef.current.slickNext();
-    }
-  };
-
   return (
     <div className="flex flex-col min-h-screen bg-dirty">
       <nav className="bg-white text-black p-4">
@@ -61,11 +30,12 @@ function HomePage() {
           </div>
           <div className="flex justify-center text-xl mr-20">
             <button
-              className="px-10 py-2 bg-main rounded-full font-semibold hover:text-dirty text-white"
+              className="px-10 py-2 bg-none font-semibold hover:text-main rounded-3xl"
               onClick={navigateToHome}
             >
               Home
             </button>
+
             <button
               className="px-10 py-2 bg-none font-semibold hover:text-main rounded-3xl"
               onClick={navigateToAboutUs}
@@ -73,17 +43,14 @@ function HomePage() {
               About Us
             </button>
             <button
-              className="px-10 py-2 bg-none font-semibold hover:text-main rounded-3xl"
+              className="px-10 py-2 bg-main rounded-full font-semibold hover:text-dirty text-white"
               onClick={navigateToDemo}
             >
               Demo
             </button>
           </div>
-          <button
-            className="px-4 py-2 bg-main hover:bg-main text-white font-semibold rounded-3xl"
-            onClick={navigateToLogin}
-          >
-            Log In
+          <button className="px-4 py-2 bg-main hover:bg-main text-white font-semibold rounded-3xl">
+            Sign Up
           </button>
         </div>
       </nav>
@@ -91,75 +58,19 @@ function HomePage() {
       <main>
         <div className="mx-auto my-[10px] w-[600px]">
           <p className="font-raleway font-extrabold text-[#425dc8] text-5xl text-center  leading-[1.25]">
-            A flexible way to start your day
+            Demo
           </p>
         </div>
 
-        <div className="my-5">
+        <div className="my-2">
           <p className="font-raleway font-bold text-[#1e1e1e] text-xl text-center">
-            Make spontaneous changes anytime, anywhere
+            Learn how to maximize the features of flexiplanner.
           </p>
-        </div>
-
-        <div className="flex justify-center items-center my-10">
-          <button
-            className="px-[25px] py-[14px] bg-main rounded-full font-roboto font-bold text-xl text-white"
-            onClick={navigateToLogin}
-          >
-            Get Started
-          </button>
-        </div>
-
-        <div className="flex flex-row items-center justify-center my-10">
-          <div>
-            <button onClick={handlePrev}>
-              <Image
-                className="w-auto px-3"
-                src="/assets/icons/arrow-left.png"
-                alt="arrow-left"
-                width={40}
-                height={64}
-              />
-            </button>
-          </div>
-
-          <div className="w-full max-w-3xl overflow-hidden">
-            <Slider ref={sliderRef} {...carouselSettings}>
-              <div>
-                <Image
-                  src="/assets/image1.png"
-                  alt="Image 1"
-                  width={1200}
-                  height={600}
-                />
-              </div>
-              <div>
-                <Image
-                  src="/assets/image2.png"
-                  alt="Image 2"
-                  width={1200}
-                  height={600}
-                />
-              </div>
-            </Slider>
-          </div>
-
-          <div>
-            <button onClick={handleNext}>
-              <Image
-                className="w-auto px-3"
-                src="/assets/icons/arrow-right.png"
-                alt="arrow-right"
-                width={40}
-                height={64}
-              />
-            </button>
-          </div>
         </div>
       </main>
 
       <footer className="bg-main text-white p-4 h-40">
-        <div className="flex justify-between">
+        <div className="flex flex-grow justify-between mt-atuo">
           <div className="flex items-start">
             <div className="mr-2">
               <Image src={logo} alt="" className="h-20 w-20 object-cover" />
@@ -189,4 +100,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default AboutUsPage;
