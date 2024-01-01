@@ -91,7 +91,7 @@ function IntroPage() {
             <button onClick={handlePrev}>
               <Image
                 className="w-auto px-3"
-                src="/arrow-left.png"
+                src="/assets/icons/arrow-left.png"
                 alt="arrow-left"
                 width={40}
                 height={64}
@@ -104,7 +104,7 @@ function IntroPage() {
               <div>
                 <Image
                   className="w-auto"
-                  src="/image1.png"
+                  src="/assets/image1.png"
                   alt="Image 1"
                   width={1200}
                   height={600}
@@ -113,7 +113,7 @@ function IntroPage() {
               <div>
                 <Image
                   className="w-auto"
-                  src="/image2.png"
+                  src="/assets/image2.png"
                   alt="Image 2"
                   width={1200}
                   height={600}
@@ -126,7 +126,7 @@ function IntroPage() {
             <button onClick={handleNext}>
               <Image
                 className="w-auto px-3"
-                src="/arrow-right.png"
+                src="/assets/icons/arrow-right.png"
                 alt="arrow-right"
                 width={40}
                 height={64}
