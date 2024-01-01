@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import HomePage from './screens/Home/home';
+import HomePage from './screens/Home/Home';
 
 function Index() {
   const router = useRouter();
