@@ -20,7 +20,7 @@ function IntroPage() {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 5000, // Set autoplay speed to 5000 milliseconds (5 seconds)
+    autoplaySpeed: 5000,
   };
 
   const sliderRef = React.useRef<Slider>(null);
@@ -49,7 +49,7 @@ function IntroPage() {
           </div>
           <div className="flex justify-center text-xl mr-20">
             <button
-              className="px-10 py-2 bg-main rounded-full font-semibold hover:text-dirty text-white rounded-3xl"
+              className="px-10 py-2 bg-main rounded-full font-semibold hover:text-dirty text-white"
               onClick={navigateToHome}
             >
               Home
