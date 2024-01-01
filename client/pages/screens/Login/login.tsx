@@ -67,7 +67,7 @@ function LoginPage () {
             </form>
             <div className='mt-4 text-center'>
               <button className='text-main hover:underline cursor-pointer'>
-                Don't have an account?
+                Don&apos;t have an account?
               </button>
             </div>
           </div>
