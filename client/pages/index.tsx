@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import LoginPage from "./screens/Login/Login";
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import IntroPage from './screens/Intro/intro';
 
 function Index() {
   const router = useRouter();
-  const [message, setMessage] = useState("Loading");
+  const [message, setMessage] = useState('Loading');
 
   useEffect(() => {
-    fetch("http://localhost:6969/api/test-connection") 
+    fetch('http://localhost:6969/api/test-connection')
       .then((res) => {
         if (!res.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         return res.json();
       })
       .then((data) => {
         console.log(data);
-        setMessage(data.message); 
+        setMessage(data.message);
       })
       .catch((error) => {
-        console.error("Fetch error:", error);
-        setMessage("Failed to fetch data");
+        console.error('Fetch error:', error);
+        setMessage('Failed to fetch data');
       });
   }, []);
 
-  return( 
-  <div>
-    <LoginPage />
-  </div>
+  return (
+    <div>
+      <IntroPage />
+    </div>
   );
 }
 
