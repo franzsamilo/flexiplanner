@@ -10,19 +10,19 @@ function HomePage() {
   const router = useRouter();
 
   function navigateToHome() {
-    router.push('/screens/Home/home');
+    router.push('/screens/Home/Home');
   }
 
   function navigateToAboutUs() {
-    router.push('/screens/AboutUs/aboutUs');
+    router.push('/screens/AboutUs/AboutUs');
   }
 
   function navigateToDemo() {
-    router.push('/screens/Demo/demo');
+    router.push('/screens/Demo/Demo');
   }
 
   function navigateToLogin() {
-    router.push('/screens/Login/login');
+    router.push('/screens/Login/Login');
   }
 
   const carouselSettings = {
@@ -83,7 +83,7 @@ function HomePage() {
             className="px-4 py-2 bg-main hover:bg-main text-white font-semibold rounded-3xl"
             onClick={navigateToLogin}
           >
-            Log In
+            Sign Up
           </button>
         </div>
       </nav>

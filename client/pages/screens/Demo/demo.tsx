@@ -7,15 +7,19 @@ function AboutUsPage() {
   const router = useRouter();
 
   function navigateToHome() {
-    router.push('/screens/Home/home');
+    router.push('/screens/Home/Home');
   }
 
   function navigateToAboutUs() {
-    router.push('/screens/AboutUs/aboutUs');
+    router.push('/screens/AboutUs/AboutUs');
   }
 
   function navigateToDemo() {
-    router.push('/screens/Demo/demo');
+    router.push('/screens/Demo/Demo');
+  }
+
+  function navigateToLogin() {
+    router.push('/screens/Login/Login');
   }
 
   return (
@@ -49,7 +53,10 @@ function AboutUsPage() {
               Demo
             </button>
           </div>
-          <button className="px-4 py-2 bg-main hover:bg-main text-white font-semibold rounded-3xl">
+          <button
+            className="px-4 py-2 bg-main hover:bg-main text-white font-semibold rounded-3xl"
+            onClick={navigateToLogin}
+          >
             Sign Up
           </button>
         </div>
