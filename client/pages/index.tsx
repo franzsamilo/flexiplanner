@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import IntroPage from './screens/Intro/intro';
+import HomePage from './screens/Home/Home';
 
 function Index() {
   const router = useRouter();
@@ -26,7 +26,7 @@ function Index() {
 
   return (
     <div>
-      <IntroPage />
+      <HomePage />
     </div>
   );
 }
