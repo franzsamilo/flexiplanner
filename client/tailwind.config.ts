@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
@@ -14,12 +14,18 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       colors: {
-        'main': '#7286D3',
-        'secondary': '#8EA7E9',
-        'dirty': '#EEEEEE'
-      }
+        main: '#7286D3',
+        secondary: '#8EA7E9',
+        dirty: '#EEEEEE',
+      },
+      fontFamily: {
+        raleway: ['Raleway', 'sans-serif'],
+        'raleway-bold': ['Raleway-Bold', 'sans-serif'],
+        'raleway-extrabold': ['Raleway-ExtraBold', 'sans-serif'],
+        roboto: ['Roboto', 'sans-serif'],
+      },
     },
   },
   plugins: [],
-}
-export default config
+};
+export default config;
