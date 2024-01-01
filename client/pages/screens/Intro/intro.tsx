@@ -103,7 +103,6 @@ function IntroPage() {
             <Slider ref={sliderRef} {...carouselSettings}>
               <div>
                 <Image
-                  className="w-auto"
                   src="/assets/image1.png"
                   alt="Image 1"
                   width={1200}
@@ -112,7 +111,6 @@ function IntroPage() {
               </div>
               <div>
                 <Image
-                  className="w-auto"
                   src="/assets/image2.png"
                   alt="Image 2"
                   width={1200}
