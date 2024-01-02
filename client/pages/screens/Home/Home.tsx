@@ -1,28 +1,28 @@
-import React from 'react';
-import Image from 'next/image';
-import logo from '/public/assets/logo.png';
-import { useRouter } from 'next/router';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import React from "react";
+import Image from "next/image";
+import logo from "/public/assets/logo.png";
+import { useRouter } from "next/router";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function HomePage() {
   const router = useRouter();
 
   function navigateToHome() {
-    router.push('/screens/Home/Home');
+    router.push("/screens/Home/Home");
   }
 
   function navigateToAboutUs() {
-    router.push('/screens/AboutUs/AboutUs');
+    router.push("/screens/AboutUs/AboutUs");
   }
 
   function navigateToDemo() {
-    router.push('/screens/Demo/Demo');
+    router.push("/screens/Demo/Demo");
   }
 
   function navigateToLogin() {
-    router.push('/screens/Login/Login');
+    router.push("/screens/Login/Login");
   }
 
   const carouselSettings = {
@@ -37,17 +37,17 @@ function HomePage() {
 
   const sliderRef = React.useRef<Slider>(null);
 
-  const handlePrev = () => {
+  function handlePrev() {
     if (sliderRef.current) {
       sliderRef.current.slickPrev();
     }
-  };
+  }
 
-  const handleNext = () => {
+  function handleNext() {
     if (sliderRef.current) {
       sliderRef.current.slickNext();
     }
-  };
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-dirty">
@@ -187,6 +187,6 @@ function HomePage() {
       </footer>
     </div>
   );
-  }
+}
 
 export default HomePage;

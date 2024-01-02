@@ -18,12 +18,12 @@ interface AddScheduleProps {
   ) => void;
 }
 
-const AddSchedule: React.FC<AddScheduleProps> = ({
+function AddSchedule({
   onClose,
   addSchedule,
   editingSchedule,
   editSchedule,
-}) => {
+}: AddScheduleProps) {
   const [schedule, setSchedule] = useState<Schedule>(
     editingSchedule || {
       day: "",
@@ -33,25 +33,30 @@ const AddSchedule: React.FC<AddScheduleProps> = ({
     }
   );
 
-  useEffect(() => {
-    setSchedule(
-      editingSchedule || {
-        day: "",
-        subject: "",
-        starts: "",
-        ends: "",
-      }
-    );
-  }, [editingSchedule]);
+  useEffect(
+    function () {
+      setSchedule(
+        editingSchedule || {
+          day: "",
+          subject: "",
+          starts: "",
+          ends: "",
+        }
+      );
+    },
+    [editingSchedule]
+  );
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
     const { name, value } = e.target;
-    setSchedule((prevSchedule) => ({
-      ...prevSchedule,
-      [name]: value,
-    }));
+    setSchedule(function (prevSchedule) {
+      return {
+        ...prevSchedule,
+        [name]: value,
+      };
+    });
   }
 
   function generateTimeOptions() {

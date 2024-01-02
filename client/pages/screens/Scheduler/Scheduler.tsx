@@ -3,34 +3,34 @@ import AddSchedule, { Schedule } from "./AddSchedule";
 
 interface SchedulerProps {}
 
-function Scheduler () {
+function Scheduler() {
   const [showAddSchedule, setShowAddSchedule] = useState(false);
   const [schedules, setSchedules] = useState<{ [key: string]: Schedule[] }>({});
   const [editingSchedule, setEditingSchedule] = useState<Schedule | null>(null);
 
-  const handleClick = () => {
+  function handleClick() {
     setEditingSchedule(null);
     setShowAddSchedule(true);
-  };
+  }
 
-  const handleClose = () => {
+  function handleClose() {
     setShowAddSchedule(false);
-  };
+  }
 
-  const handleClickEdit = (day: string, index: number) => {
+  function handleClickEdit(day: string, index: number) {
     const editedSchedule = schedules[day] ? schedules[day][index] : null;
     setEditingSchedule(editedSchedule);
     setShowAddSchedule(true);
-  };
+  }
 
-  const addSchedule = (day: string, schedule: Schedule) => {
+  function addSchedule(day: string, schedule: Schedule) {
     setSchedules((prevSchedules) => ({
       ...prevSchedules,
       [day]: [...(prevSchedules[day] || []), schedule],
     }));
-  };
+  }
 
-  const handleDeleteSchedule = (day: string, index: number) => {
+  function handleDeleteSchedule(day: string, index: number) {
     setSchedules((prevSchedules) => {
       const updatedSchedules = { ...prevSchedules };
       updatedSchedules[day] = updatedSchedules[day].filter(
@@ -38,13 +38,13 @@ function Scheduler () {
       );
       return updatedSchedules;
     });
-  };
+  }
 
-  const editSchedule = (
+  function editSchedule(
     day: string,
     newSchedule: Schedule,
     oldSchedule: Schedule
-  ) => {
+  ) {
     setSchedules((prevSchedules) => {
       const updatedSchedules = { ...prevSchedules };
       updatedSchedules[day] = updatedSchedules[day].map((s) =>
@@ -53,7 +53,7 @@ function Scheduler () {
       return updatedSchedules;
     });
     setEditingSchedule(null);
-  };
+  }
 
   const daysOfWeek = [
     "Monday",
@@ -125,6 +125,6 @@ function Scheduler () {
       </div>
     </div>
   );
-};
+}
 
 export default Scheduler;
