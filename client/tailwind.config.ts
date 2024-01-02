@@ -16,6 +16,7 @@ const config: Config = {
       colors: {
         main: '#7286D3',
         secondary: '#8EA7E9',
+        tertiary: '#8D8D8D',
         dirty: '#EEEEEE',
       },
       fontFamily: {
