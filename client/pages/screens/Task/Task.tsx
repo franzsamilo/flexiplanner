@@ -21,39 +21,37 @@ function Task() {
         <div className="flex flex-col min-h-screen bg-white w-[250px]">
           {/* USER-PIC & USERNAME */}
           <div
-            className="flex flex-row my-5 items-center pb-4 pl-5 mb-0 text-lg font-semibold"
-            style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.3)' }}
+            className="flex flex-row my-4 items-center pb-4 pl-5 mb-0 text-lg font-semibold"
+            style={{ borderBottom: '2px solid rgba(0, 0, 0, 0.3)' }}
           >
-            <button>
-              <div className="bg-dirty rounded-full w-[40px] h-[40px] flex justify-center items-center">
-                <Image
-                  src={userIconBlack}
-                  alt="user-pic"
-                  className="w-full h-full object-contain p-2"
-                />
-              </div>
+            <button className="bg-dirty rounded-full w-[40px] h-[40px] flex justify-center items-center hover:bg-dirty">
+              <Image
+                src={userIconBlack}
+                alt="user-pic"
+                className="w-full h-full object-contain p-2"
+              />
             </button>
-            <button>
-              <div className="px-1">markrenzotan</div>
+            <button className="px-1 rounded-lg hover:bg-dirty">
+              markrenzotan
             </button>
           </div>
 
           <div className="flex flex-col pl-5 text-tertiary text-lg font-bold">
-            <button className="flex flex-row py-1 pl-2 mr-28 my-2">
+            <button className="flex flex-row py-1 pl-2 mr-10 my-2 rounded-full hover:bg-dirty">
               <div className="w-[25px] flex items-center">
                 <Image src={searchIcon} alt="search-icon" />
               </div>
               <div className="pl-3">Search</div>
             </button>
 
-            <button className="flex flex-row py-1 pl-2 mr-24 my-2">
+            <button className="flex flex-row py-1 pl-2 mr-10 my-2 rounded-full hover:bg-dirty">
               <div className="w-[25px] flex items-center">
                 <Image src={settingsIcon} alt="settings-icon" />
               </div>
               <div className="pl-3">Settings</div>
             </button>
 
-            <button className="flex flex-row py-1 pl-2 mr-20 my-2">
+            <button className="flex flex-row py-1 pl-2 mr-10 my-2 rounded-full hover:bg-dirty">
               <div className="w-[25px] flex items-center">
                 <Image src={remindersIcon} alt="reminders-icon" />
               </div>
@@ -65,7 +63,7 @@ function Task() {
             <div className="text-tertiary pl-2 text-lg font-medium">
               Categories
             </div>
-            <button className="flex flex-row items-center px-4 py-3 my-2 mx-4 bg-secondary rounded-2xl">
+            <button className="flex flex-row items-center px-4 py-3 my-2 mx-4 bg-secondary rounded-2xl hover:bg-main">
               <div>
                 <Image
                   src={userIconWhite}
@@ -78,7 +76,7 @@ function Task() {
               </div>
             </button>
 
-            <button className="flex flex-row items-center px-3 py-3 my-2 mx-4 bg-main rounded-2xl">
+            <button className="flex flex-row items-center pl-3 py-3 my-2 mx-4 bg-main rounded-2xl hover:bg-main">
               <div>
                 <Image
                   src={academicsIcon}
@@ -86,12 +84,12 @@ function Task() {
                   className="w-[35px]"
                 />
               </div>
-              <div className="text-[#fff2f2] font-bold pl-3 text-xl justify-center">
+              <div className="text-[#fff2f2] pl-3 font-bold text-[18px] justify-center">
                 Academics
               </div>
             </button>
 
-            <button className="flex flex-row items-center px-4 py-3 my-2 mx-4 bg-secondary rounded-2xl">
+            <button className="flex flex-row items-center px-4 py-3 my-2 mx-4 bg-secondary rounded-2xl hover:bg-main">
               <div>
                 <Image src={workIcon} alt="work-icon" className="w-[30px]" />
               </div>
@@ -100,7 +98,7 @@ function Task() {
               </div>
             </button>
 
-            <button className="flex flex-row items-center px-4 py-3 my-2 mx-4 bg-secondary rounded-2xl">
+            <button className="flex flex-row items-center px-4 py-3 my-2 mx-4 bg-secondary rounded-2xl hover:bg-main">
               <div>
                 <Image
                   src={createIcon}
@@ -129,10 +127,10 @@ function Task() {
                     Academics
                   </div>
                   <div className="flex flex-row justify-end mt-2 pb-1 text-sm">
-                    <button className=" text-dirty font-medium px-3">
+                    <button className=" text-dirty font-medium px-3 mx-1 rounded-tl-md rounded-tr-md hover:bg-secondary">
                       Schedule
                     </button>
-                    <button className=" text-white font-semibold px-3 border-b-2 border-white">
+                    <button className=" text-white font-semibold px-3 mx-1 rounded-tl-md rounded-tr-md border-b-2 border-white hover:bg-secondary">
                       Tasks
                     </button>
                   </div>
