@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export interface Schedule {
   day: string;
@@ -10,24 +10,53 @@ export interface Schedule {
 interface AddScheduleProps {
   onClose: () => void;
   addSchedule: (day: string, schedule: Schedule) => void;
+  editingSchedule: Schedule | null;
+  editSchedule: (
+    day: string,
+    newSchedule: Schedule,
+    oldSchedule: Schedule
+  ) => void;
 }
 
-function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
-  const [schedule, setSchedule] = useState<Schedule>({
-    day: "",
-    subject: "",
-    starts: "",
-    ends: "",
-  });
+function AddSchedule({
+  onClose,
+  addSchedule,
+  editingSchedule,
+  editSchedule,
+}: AddScheduleProps) {
+  const [schedule, setSchedule] = useState<Schedule>(
+    editingSchedule || {
+      day: "",
+      subject: "",
+      starts: "",
+      ends: "",
+    }
+  );
+
+  useEffect(
+    function () {
+      setSchedule(
+        editingSchedule || {
+          day: "",
+          subject: "",
+          starts: "",
+          ends: "",
+        }
+      );
+    },
+    [editingSchedule]
+  );
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
     const { name, value } = e.target;
-    setSchedule((prevSchedule) => ({
-      ...prevSchedule,
-      [name]: value,
-    }));
+    setSchedule(function (prevSchedule) {
+      return {
+        ...prevSchedule,
+        [name]: value,
+      };
+    });
   }
 
   function generateTimeOptions() {
@@ -45,7 +74,11 @@ function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
 
   function handleAddSchedule() {
     if (schedule.day && schedule.subject && schedule.starts && schedule.ends) {
-      addSchedule(schedule.day, schedule);
+      if (editingSchedule) {
+        editSchedule(schedule.day, schedule, editingSchedule);
+      } else {
+        addSchedule(schedule.day, schedule);
+      }
       onClose();
     }
   }
@@ -114,7 +147,7 @@ function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
           className="bg-black hover:bg-green-400 hover:text-black text-white font-bold py-2 px-4 rounded"
           onClick={handleAddSchedule}
         >
-          Add +
+          {editingSchedule ? "Update" : "Add"} +
         </button>
       </div>
     </div>
