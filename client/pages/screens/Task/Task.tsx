@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import Sidebar from "../Components/Sidebar";
-import AddTask from "./AddTask";
+import AddTask from "../Task/AddTask";
 import Scheduler from "../Scheduler/Scheduler";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
-
+import Sidebar from "../Components/Sidebar";
 function Task() {
-  const table = [
+  const tableHeaders = [
     "Name",
-    "Descrition",
+    "Description",
     "Priority",
     "DueDate",
     "Duration",
@@ -21,20 +20,27 @@ function Task() {
     setShowTask(true);
   }
 
-  function handleCloseTask() {
+  const handleCloseTask = () => {
     setShowTask(false);
+  };
+
+  const [headerText, setHeaderText] = useState("Academics");
+
+  function updateHeaderText(text: string) {
+    setHeaderText(text);
   }
 
   return (
     <div className="flex flex-col min-h-screen bg-dirty">
-      <div className="flex flex-row">
-       <Sidebar/>
+      <div className="flex flex-roW ">
+        <Sidebar updateHeaderText={updateHeaderText} />
+
         <main className="flex flex-col w-full h-auto">
-          <Header />     
+          <Header buttonText={headerText} />
           <Scheduler />
           <div className="bg-pink-50">
-            <div className="flex flex-col items-center mx-auto max-w-3xl ">
-              <div className="ml-auto ">
+            <div className="flex flex-col items-center mx-auto max-w-3xl">
+              <div className="ml-auto">
                 <button className="text-lg text-black font-bold py-2 px-4 rounded w-70 mb-2 mr-[450px] text-[20px]">
                   To do&apos;s
                 </button>
@@ -48,11 +54,11 @@ function Task() {
                 {showTask && <AddTask onClose={handleCloseTask} />}
               </div>
 
-              <div className="border border-gray-400 shadow rounded-[30px] p-4 h-[800px] bg-white ">
+              <div className="border border-gray-400 shadow rounded-[30px] p-4 h-[800px] bg-white">
                 <div className="flex flex-col md:flex-row border-b w-full pb-2">
-                  {table.map((day, index) => (
+                  {tableHeaders.map((header, index) => (
                     <div key={index} className="flex-1 text-center">
-                      <h4 className="font-bold px-4 md:px-10 py-2">{day}</h4>
+                      <h4 className="font-bold px-4 md:px-10 py-2">{header}</h4>
                     </div>
                   ))}
                 </div>
@@ -61,7 +67,7 @@ function Task() {
           </div>
         </main>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
