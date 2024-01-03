@@ -22,7 +22,7 @@ router.post('/create', async (req: Request, res: Response) => {
       'INSERT INTO tasks (task_name, task_description, task_priority, task_due_date, task_duration_days, task_duration_hours, task_duration_minutes, task_status, user_id, category_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
       [
         task_name,
-        task_description,
+        '',
         task_priority,
         task_due_date,
         task_duration_days,
