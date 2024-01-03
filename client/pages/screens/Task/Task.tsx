@@ -17,9 +17,7 @@ function Task() {
   return (
     <div className="flex flex-col min-h-screen bg-dirty">
       <div className="flex flex-row">
-        {/* SIDEBAR */}
         <div className="flex flex-col min-h-screen bg-white w-[250px]">
-          {/* USER-PIC & USERNAME */}
           <div
             className="flex flex-row my-4 items-center pb-4 pl-5 mb-0 text-lg font-semibold"
             style={{ borderBottom: '2px solid rgba(0, 0, 0, 0.3)' }}
