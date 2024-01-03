@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 function useNavigation() {
   const router = useRouter();
@@ -7,23 +7,23 @@ function useNavigation() {
   }
 
   function ToHome() {
-    navigateTo('/screens/Home/Home');
+    navigateTo("/screens/Home/Home");
   }
 
   function ToAboutUs() {
-    navigateTo('/screens/AboutUs/AboutUs');
+    navigateTo("/screens/AboutUs/aboutUs");
   }
 
   function ToDemo() {
-    navigateTo('/screens/Demo/Demo');
+    navigateTo("/screens/Demo/demo");
   }
 
   function ToLogin() {
-    navigateTo('/screens/Login/Login');
+    navigateTo("/screens/Login/login");
   }
 
   function ToSignUp() {
-    navigateTo('/screens/SignUp/SignUp');
+    navigateTo("/screens/SignUp/SignUp");
   }
 
   return {
