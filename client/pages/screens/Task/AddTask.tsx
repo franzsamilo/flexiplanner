@@ -1,18 +1,29 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 interface AddTaskProps {
   onClose: () => void;
 }
 
 function AddTask({ onClose }: AddTaskProps) {
-  const [TaskName, setTaskName] = useState("");
-  const [TaskDescription, setTaskDescription] = useState("");
-  const [TaskPriority, setTaskPriority] = useState("Low");
-  const [TaskDueDate, setTaskDueDate] = useState("");
+  const [TaskName, setTaskName] = useState('');
+  const [TaskDescription, setTaskDescription] = useState('');
+  const [TaskPriority, setTaskPriority] = useState('Low');
+  const [TaskDueDate, setTaskDueDate] = useState('');
   const [TaskDurationDays, setTaskDurationDays] = useState(0);
   const [TaskDurationHours, setTaskDurationHours] = useState(0);
   const [TaskDurationMinutes, setTaskDurationMinutes] = useState(0);
-  const [TaskStatus, setTaskStatus] = useState("");
+  const [TaskStatus, setTaskStatus] = useState('To do');
+
+  const today = new Date().toISOString().split('T')[0]; // Get today's date in 'yyyy-mm-dd' format
+
+  function handleDueDateChange(date: string) {
+    if (date > today) {
+      setTaskDueDate(date);
+    } else {
+      // Notify the user or handle the situation where the selected date is before today
+      console.log('Please select a date on or after today.');
+    }
+  }
 
   function handleAddTask() {
     const newTask = {
@@ -25,28 +36,28 @@ function AddTask({ onClose }: AddTaskProps) {
       task_duration_minutes: TaskDurationMinutes,
       task_status: TaskStatus,
       user_id: 1,
-      category_name: "",
+      category_name: '',
     };
 
-    fetch("http://localhost:6969/api/tasks/create", {
-      method: "POST",
+    fetch('http://localhost:6969/api/tasks/create', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(newTask),
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to add task");
+          throw new Error('Failed to add task');
         }
         return response.json();
       })
       .then((data) => {
-        console.log("Task created successfully:", data);
+        console.log('Task created successfully:', data);
         onClose();
       })
       .catch((error) => {
-        console.error("Error adding task:", error);
+        console.error('Error adding task:', error);
       });
   }
 
@@ -65,14 +76,14 @@ function AddTask({ onClose }: AddTaskProps) {
           />
         </label>
 
-        <label className="block mb-2">
+        {/* <label className="block mb-2">
           Task Description:
           <textarea
             value={TaskDescription}
             onChange={(e) => setTaskDescription(e.target.value)}
             className="border rounded w-full p-2"
           />
-        </label>
+        </label> */}
 
         <label className="block mb-2">
           Priority:
@@ -92,7 +103,8 @@ function AddTask({ onClose }: AddTaskProps) {
           <input
             type="date"
             value={TaskDueDate}
-            onChange={(e) => setTaskDueDate(e.target.value)}
+            min={today} // Set the minimum date to today
+            onChange={(e) => handleDueDateChange(e.target.value)}
             className="border rounded w-full p-2"
           />
         </label>
@@ -140,8 +152,8 @@ function AddTask({ onClose }: AddTaskProps) {
             onChange={(e) => setTaskStatus(e.target.value)}
             className="border rounded w-full p-2"
           >
-            <option value="Todo">To-do</option>
-            <option value="Inprogress">In Progress</option>
+            <option value="To do">To-do</option>
+            <option value="In progress">In Progress</option>
             <option value="Completed">Completed</option>
           </select>
         </label>
