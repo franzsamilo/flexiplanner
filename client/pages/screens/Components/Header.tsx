@@ -1,21 +1,24 @@
-import React from "react";
+// Header component
+import React, { useState } from "react";
 import Image from "next/image";
 import logo from "/public/assets/logo.png";
 import academicsIcon from "public/assets/icons/academics-icon.png";
 
-function Header() {
+interface HeaderProps {
+  buttonText: string;
+}
+
+function Header({ buttonText }: HeaderProps) {
   return (
-    <header className="flex flex-row bg-main items-center">
-      <div>
-        <div className="flex flex-row  ml-2">
-          <Image
-            src={academicsIcon}
-            alt="academics-icon"
-            className="w-[50px] h-[60px]"
-          />
-          <div className="flex flex-col pt-2">
-            <div className="text-white  text-2xl font-bold pl-2">Academics</div>
-          </div>
+    <header className="flex items-center bg-main">
+      <div className="flex items-center ml-2">
+        <Image
+          src={academicsIcon}
+          alt="academics-icon"
+          className="w-[50px] h-[60px]"
+        />
+        <div className="flex flex-col items-start pt-2 pl-2">
+          <div className="text-white text-2xl font-bold">{buttonText}</div>
         </div>
       </div>
 
@@ -25,4 +28,5 @@ function Header() {
     </header>
   );
 }
+
 export default Header;
