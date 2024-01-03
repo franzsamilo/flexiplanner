@@ -49,8 +49,9 @@ function AddEvent({ onClose }: AddEventProps) {
             onChange={(e) => setEventPriority(e.target.value)}
             className="border rounded w-full p-2"
           >
-            <option value="Low">Low</option>
             <option value="High">High</option>
+            <option value="Low">Low</option>
+            <option value="Optional">Optional</option>
           </select>
         </label>
 
