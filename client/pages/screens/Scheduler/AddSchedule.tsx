@@ -1,62 +1,26 @@
-import React, { useState, useEffect } from "react";
-
-export interface Schedule {
-  day: string;
-  subject: string;
-  starts: string;
-  ends: string;
-}
+import React, { useState } from "react";
 
 interface AddScheduleProps {
   onClose: () => void;
-  addSchedule: (day: string, schedule: Schedule) => void;
-  editingSchedule: Schedule | null;
-  editSchedule: (
-    day: string,
-    newSchedule: Schedule,
-    oldSchedule: Schedule
-  ) => void;
+  addSchedule: (schedule: Schedule) => void;
 }
 
-function AddSchedule({
-  onClose,
-  addSchedule,
-  editingSchedule,
-  editSchedule,
-}: AddScheduleProps) {
-  const [schedule, setSchedule] = useState<Schedule>(
-    editingSchedule || {
-      day: "",
-      subject: "",
-      starts: "",
-      ends: "",
-    }
-  );
-
-  useEffect(
-    function () {
-      setSchedule(
-        editingSchedule || {
-          day: "",
-          subject: "",
-          starts: "",
-          ends: "",
-        }
-      );
-    },
-    [editingSchedule]
-  );
+function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
+  const [schedule, setSchedule] = useState<Schedule>({
+    day: "",
+    subject: "",
+    starts: "",
+    ends: "",
+  });
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
     const { name, value } = e.target;
-    setSchedule(function (prevSchedule) {
-      return {
-        ...prevSchedule,
-        [name]: value,
-      };
-    });
+    setSchedule((prevSchedule) => ({
+      ...prevSchedule,
+      [name]: value,
+    }));
   }
 
   function generateTimeOptions() {
@@ -74,30 +38,23 @@ function AddSchedule({
 
   function handleAddSchedule() {
     if (schedule.day && schedule.subject && schedule.starts && schedule.ends) {
-      if (editingSchedule) {
-        editSchedule(schedule.day, schedule, editingSchedule);
-      } else {
-        addSchedule(schedule.day, schedule);
-      }
+      addSchedule(schedule);
       onClose();
     }
   }
 
   return (
-    <div className="relative bg-gray-300 p-10 rounded">
-      <button
-        className="absolute top-2 right-2 border-2 border-red-500 text-red-500 px-2 py-1 rounded cursor-pointer"
-        onClick={onClose}
-      >
-        X
-      </button>
-      <div className="flex flex-col items-center">
-        <div className="mb-4">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      <div className="bg-white p-6 rounded-md">
+        <h2 className="text-2xl font-bold mb-4">Add Schedule</h2>
+
+        <label className="block mb-2">
+          Day:
           <select
             name="day"
             value={schedule.day}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="border rounded w-full p-2"
           >
             <option value="">Select Day</option>
             <option value="Monday">Monday</option>
@@ -108,47 +65,59 @@ function AddSchedule({
             <option value="Saturday">Saturday</option>
             <option value="Sunday">Sunday</option>
           </select>
-        </div>
+        </label>
 
-        <div className="mb-4">
+        <label className="block mb-2">
+          Subject:
           <input
             type="text"
             name="subject"
             value={schedule.subject}
             onChange={handleChange}
-            placeholder="Subject"
-            className="w-full p-2 border border-gray-300 rounded"
+            className="border rounded w-full p-2"
           />
-        </div>
-        <div className="mb-4">
+        </label>
+
+        <label className="block mb-2">
+          Start Time:
           <select
             name="starts"
             value={schedule.starts}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="border rounded w-full p-2"
           >
             <option value="">Select Start Time</option>
             {generateTimeOptions()}
           </select>
-        </div>
-        <div className="mb-4">
+        </label>
+
+        <label className="block mb-2">
+          End Time:
           <select
             name="ends"
             value={schedule.ends}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="border rounded w-full p-2"
           >
             <option value="">Select End Time</option>
             {generateTimeOptions()}
           </select>
-        </div>
+        </label>
 
-        <button
-          className="bg-black hover:bg-green-400 hover:text-black text-white font-bold py-2 px-4 rounded"
-          onClick={handleAddSchedule}
-        >
-          {editingSchedule ? "Update" : "Add"} +
-        </button>
+        <div className="flex justify-end">
+          <button
+            onClick={handleAddSchedule}
+            className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+          >
+            Add Schedule
+          </button>
+          <button
+            onClick={onClose}
+            className="bg-gray-300 text-black px-4 py-2 rounded"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   );
