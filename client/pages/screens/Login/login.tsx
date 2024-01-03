@@ -1,25 +1,19 @@
 import React from 'react'
 import Image from 'next/image'
 import logo from '/public/assets/logo.png'
-import { useRouter } from 'next/router'
+import useNavigation from '../Components/Navigation'
 
 function LoginPage () {
-  const router = useRouter()
-
-  function navigateToScheduler () {
-    router.push('/screens/Scheduler/Scheduler')
-  }
-  function navigateToSignUp () {
-    router.push('/screens/SignUp/SignUp')
-  }
-
+  const { ToSignUp, ToScheduler, ToHome } = useNavigation()
   return (
     <div className='flex flex-col min-h-screen bg-gradient-to-br from-dirty via-blue-100 to-main'>
       <main className='flex-1 flex items-center justify-center '>
         <div className='w-full max-w-xl px-6'>
           <div className='bg-white shadow-xl rounded-3xl px-8 py-10'>
             <div className='flex justify-center mb-4'>
-              <Image src={logo} alt='Logo' className='h-16 w-16' />
+            <button onClick={ToHome}>
+                <Image src={logo} alt='Logo' className='h-16 w-16' />
+              </button>
             </div>
             <h2 className='text-2xl font-semibold text-center mb-4'>
               Welcome!
@@ -56,14 +50,14 @@ function LoginPage () {
               <button
                 type='submit'
                 className='w-full bg-secondary hover:bg-main text-white font-bold py-2 px-4 rounded-3xl mb-6'
-                onClick={navigateToScheduler}
+                onClick={ToScheduler}
               >
                 Log in
               </button>
               <button
                 type='submit'
                 className='w-full bg-secondary hover:bg-main text-white font-bold py-2 px-4 rounded-3xl'
-                onClick={navigateToScheduler}
+                onClick={ToScheduler}
               >
                 Continue with Google
               </button>
@@ -71,7 +65,7 @@ function LoginPage () {
             <div className='mt-4 text-center'>
               <button
                 className='text-main hover:underline cursor-pointer'
-                onClick={navigateToSignUp}
+                onClick={ToSignUp}
               >
                 Don&apos;t have an account?
               </button>

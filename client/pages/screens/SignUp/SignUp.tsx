@@ -1,14 +1,10 @@
 import React from 'react'
 import Image from 'next/image'
 import logo from '/public/assets/logo.png'
-import { useRouter } from 'next/router'
+import useNavigation from '../Components/Navigation'
 
 function SignUpPage () {
-  const router = useRouter()
-
-  function navigateToLogin () {
-    router.push('/screens/Login/Login')
-  }
+  const { ToLogin, ToHome } = useNavigation()
 
   return (
     <div className='flex flex-col min-h-screen bg-gradient-to-br from-dirty via-blue-100 to-main'>
@@ -16,7 +12,9 @@ function SignUpPage () {
         <div className='w-full max-w-xl px-6'>
           <div className='bg-white shadow-xl rounded-3xl px-8 py-10'>
             <div className='flex justify-center mb-4'>
-              <Image src={logo} alt='Logo' className='h-16 w-16' />
+              <button onClick={ToHome}>
+                <Image src={logo} alt='Logo' className='h-16 w-16' />
+              </button>
             </div>
             <h2 className='text-2xl font-semibold text-center mb-4'>Sign Up</h2>
             <form className='flex flex-col items-center'>
@@ -65,14 +63,14 @@ function SignUpPage () {
               <button
                 type='submit'
                 className='w-full bg-secondary hover:bg-main text-white font-bold py-2 px-4 rounded-3xl mb-6'
-                onClick={navigateToLogin}
+                onClick={ToLogin}
               >
                 Sign Up
               </button>
               <div className='mt-4 text-center'>
                 <button
                   className='text-main hover:underline cursor-pointer'
-                  onClick={navigateToLogin}
+                  onClick={ToLogin}
                 >
                   Already have an account?
                 </button>

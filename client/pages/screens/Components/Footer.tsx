@@ -1,15 +1,10 @@
 import React from 'react'
 import Image from 'next/image'
 import logo from '/public/assets/logo.png'
-import { useRouter } from 'next/router'
-import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import Navbar from '../Components/Navbar'
 
 function Footer () {
-
-
   return (
       <footer className='bg-main text-white p-4 h-40'>
         <div className='flex justify-between'>

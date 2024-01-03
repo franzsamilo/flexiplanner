@@ -28,7 +28,7 @@ function Task() {
   return (
     <div className="flex flex-col min-h-screen bg-dirty">
       <div className="flex flex-row">
-        <Sidebar />
+       <Sidebar/>
         <main className="flex flex-col w-full h-auto">
           <Header />     
           <Scheduler />
@@ -61,7 +61,7 @@ function Task() {
           </div>
         </main>
       </div>
-      <Footer />
+      <Footer/>
     </div>
   );
 }
