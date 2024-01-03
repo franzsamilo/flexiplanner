@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import Image from "next/image";
-import AddEvent from "./AddEvent";
+import Sidebar from "../Components/Sidebar";
+import AddTask from "./AddTask";
 import Scheduler from "../Scheduler/Scheduler";
-import Sidebar from "..//Components/Sidebar";
-import logo from "/public/assets/logo.png";
-import academicsIcon from "public/assets/icons/academics-icon.png";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 
@@ -18,14 +15,14 @@ function Task() {
     "Status",
   ];
 
-  const [showAddEvent, setShowAddEvent] = useState(false);
+  const [showTask, setShowTask] = useState(false);
 
-  function handleClickAddEvent() {
-    setShowAddEvent(true);
+  function handleClickTask() {
+    setShowTask(true);
   }
 
-  function handleCloseAddEvent() {
-    setShowAddEvent(false);
+  function handleCloseTask() {
+    setShowTask(false);
   }
 
   return (
@@ -33,8 +30,7 @@ function Task() {
       <div className="flex flex-row">
         <Sidebar />
         <main className="flex flex-col w-full h-auto">
-          <Header />
-          
+          <Header />     
           <Scheduler />
           <div className="bg-pink-50">
             <div className="flex flex-col items-center mx-auto max-w-3xl ">
@@ -44,12 +40,12 @@ function Task() {
                 </button>
                 <button
                   className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded w-70 mb-2"
-                  onClick={handleClickAddEvent}
+                  onClick={handleClickTask}
                 >
-                  + Add event
+                  + Add Task
                 </button>
 
-                {showAddEvent && <AddEvent onClose={handleCloseAddEvent} />}
+                {showTask && <AddTask onClose={handleCloseTask} />}
               </div>
 
               <div className="border border-gray-400 shadow rounded-[30px] p-4 h-[800px] bg-white ">
