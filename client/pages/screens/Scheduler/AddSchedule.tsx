@@ -38,15 +38,43 @@ function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
 
   function handleAddSchedule() {
     if (schedule.day && schedule.subject && schedule.starts && schedule.ends) {
-      addSchedule(schedule);
-      onClose();
+      const newEvent = {
+        day: schedule.day,
+        subject: schedule.subject,
+        starts: schedule.starts,
+        ends: schedule.ends,
+        user_id: 1,
+        category_name: "",
+      };
+
+      fetch("http://localhost:6969/api/events/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newEvent),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to add event");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Event created successfully:", data);
+          addSchedule(newEvent);
+          onClose();
+        })
+        .catch((error) => {
+          console.error("Error adding event:", error);
+        });
     }
   }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
       <div className="bg-white p-6 rounded-md">
-        <h2 className="text-2xl font-bold mb-4">Add Schedule</h2>
+        <h2 className="text-2xl font-bold mb-4">Add Event</h2>
 
         <label className="block mb-2">
           Day:
@@ -109,7 +137,7 @@ function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
             onClick={handleAddSchedule}
             className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
           >
-            Add Schedule
+            Add Event
           </button>
           <button
             onClick={onClose}

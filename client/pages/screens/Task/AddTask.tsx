@@ -15,7 +15,39 @@ function AddTask({ onClose }: AddTaskProps) {
   const [TaskStatus, setTaskStatus] = useState("");
 
   function handleAddTask() {
-    onClose();
+    const newTask = {
+      task_name: TaskName,
+      task_description: TaskDescription,
+      task_priority: TaskPriority,
+      task_due_date: TaskDueDate,
+      task_duration_days: TaskDurationDays,
+      task_duration_hours: TaskDurationHours,
+      task_duration_minutes: TaskDurationMinutes,
+      task_status: TaskStatus,
+      user_id: 1,
+      category_name: "",
+    };
+
+    fetch("http://localhost:6969/api/tasks/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newTask),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to add task");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Task created successfully:", data);
+        onClose();
+      })
+      .catch((error) => {
+        console.error("Error adding task:", error);
+      });
   }
 
   return (
