@@ -1,26 +1,45 @@
-import React from 'react';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
+import React, { useState } from "react";
+import Image from "next/image";
+import AddEvent from "./AddEvent";
+import Scheduler from "../Scheduler/Scheduler";
 
-//Assets
-import logo from '/public/assets/logo.png';
-import userIconBlack from '/public/assets/icons/user-icon-black.png';
-import userIconWhite from '/public/assets/icons/user-icon-white.png';
-import searchIcon from 'public/assets/icons/search-icon.png';
-import settingsIcon from 'public/assets/icons/settings-icon.png';
-import remindersIcon from 'public/assets/icons/reminders-icon.png';
-import academicsIcon from 'public/assets/icons/academics-icon.png';
-import workIcon from 'public/assets/icons/work-icon.png';
-import createIcon from 'public/assets/icons/create-icon.png';
+import logo from "/public/assets/logo.png";
+import userIconBlack from "/public/assets/icons/user-icon-black.png";
+import userIconWhite from "/public/assets/icons/user-icon-white.png";
+import searchIcon from "public/assets/icons/search-icon.png";
+import settingsIcon from "public/assets/icons/settings-icon.png";
+import remindersIcon from "public/assets/icons/reminders-icon.png";
+import academicsIcon from "public/assets/icons/academics-icon.png";
+import workIcon from "public/assets/icons/work-icon.png";
+import createIcon from "public/assets/icons/create-icon.png";
 
 function Task() {
+  const table = [
+    "Name",
+    "Descrition",
+    "Priority",
+    "DueDate",
+    "Duration",
+    "Status",
+  ];
+
+  const [showAddEvent, setShowAddEvent] = useState(false);
+
+  const handleClickAddEvent = () => {
+    setShowAddEvent(true);
+  };
+
+  const handleCloseAddEvent = () => {
+    setShowAddEvent(false);
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-dirty">
       <div className="flex flex-row">
         <div className="flex flex-col min-h-screen bg-white w-[250px]">
           <div
             className="flex flex-row my-4 items-center pb-4 pl-5 mb-0 text-lg font-semibold"
-            style={{ borderBottom: '2px solid rgba(0, 0, 0, 0.3)' }}
+            style={{ borderBottom: "2px solid rgba(0, 0, 0, 0.3)" }}
           >
             <button className="bg-dirty rounded-full w-[40px] h-[40px] flex justify-center items-center hover:bg-dirty">
               <Image
@@ -141,38 +160,41 @@ function Task() {
             </div>
           </header>
 
-          <div className="flex justify-center my-auto text-3xl text-black font-black">
-            HAHA WLA UNOD
+          <div className="bg-pink-50">
+            <div className="flex flex-col items-center mx-auto max-w-3xl ">
+              <div className="ml-auto ">
+                <button className="text-lg text-black font-bold py-2 px-4 rounded w-70 mb-2 mr-[450px] text-[20px]">
+                  To dos
+                </button>
+                <button
+                  className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded w-70 mb-2"
+                  onClick={handleClickAddEvent}
+                >
+                  + Add event
+                </button>
+
+                {showAddEvent && <AddEvent onClose={handleCloseAddEvent} />}
+              </div>
+
+              <div className="border border-gray-400 shadow rounded-[30px] p-4 h-[800px] bg-white ">
+                <div className="flex flex-col md:flex-row border-b w-full pb-2">
+                  {table.map((day, index) => (
+                    <div key={index} className="flex-1 text-center">
+                      <h4 className="font-bold px-4 md:px-10 py-2">{day}</h4>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mt-[30px]">
+            <Scheduler />
           </div>
         </main>
       </div>
 
       <footer className="bg-main text-white p-4 h-40">
-        <div className="flex justify-between">
-          <div className="flex items-start">
-            <div className="mr-2">
-              <Image src={logo} alt="" className="h-20 w-20 object-cover" />
-            </div>
-            <div className="overflow-wrap">
-              <span className="italic text-lg font-medium max-w-xs break-words">
-                About Us:
-              </span>
-              <h2 className="max-w-[40%]">
-                At the core of FlexiPlanner lies innovation by the Liberal
-                Party, offering a flexible way to organize. Empowering through
-                technology for a brighter, efficient tomorrow.
-              </h2>
-            </div>
-          </div>
-          <div className="flex flex-col justify-start ml-4">
-            <div className="mr-4">
-              <span className="italic text-lg font-medium">Contact Us:</span>
-              <h1 className="text-lg font-medium">Feel free to reach out:</h1>
-              <p>Email: liberalparty@gmail.com</p>
-              <p>Contact Number: 09696969699</p>
-            </div>
-          </div>
-        </div>
+        {/* Footer content */}
       </footer>
     </div>
   );

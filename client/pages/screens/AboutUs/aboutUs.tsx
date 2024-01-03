@@ -1,25 +1,25 @@
-import React from 'react';
-import Image from 'next/image';
-import logo from '/public/assets/logo.png';
-import { useRouter } from 'next/router';
+import React from "react";
+import Image from "next/image";
+import logo from "/public/assets/logo.png";
+import { useRouter } from "next/router";
 
 function AboutUsPage() {
   const router = useRouter();
 
   function navigateToHome() {
-    router.push('/screens/Home/Home');
+    router.push("/screens/Home/Home");
   }
 
   function navigateToAboutUs() {
-    router.push('/screens/AboutUs/AboutUs');
+    router.push("/screens/AboutUs/aboutUs");
   }
 
   function navigateToDemo() {
-    router.push('/screens/Demo/Demo');
+    router.push("/screens/Demo/demo");
   }
 
   function navigateToLogin() {
-    router.push('/screens/Login/Login');
+    router.push("/screens/Login/login");
   }
 
   return (
