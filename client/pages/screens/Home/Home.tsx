@@ -36,29 +36,28 @@ function HomePage() {
   return (
     <div className="flex flex-col w-full min-h-screen bg-dirty">
       <Navbar />
-      <main className="bg-gradient-to-br from-white via-blue-100 to-blue-300">
-        <div className="mx-auto my-2 xs:max-sm:my-6">
-          <p className="font-raleway font-extrabold text-[#425dc8] text-5xl text-center  leading-[1.25] xs:max-sm:text-xl md:max-lg:text-3xl">
+      <main className="flex-grow bg-gradient-to-br from-white via-blue-100 to-blue-300">
+        <div className="w-full max-w-screen-md mx-auto my-10 xs:max-sm:my-12 sm:max-md:my-10 md:max-xl:my-20 flex-grow">
+          <p className="font-raleway font-extrabold text-[#425dc8] text-5xl text-center  leading-[1.25] xs:max-xl:text-4xl md:max-2xl:text-5xl">
             A flexible way to start your day
           </p>
         </div>
-
         <div className="my-5">
-          <p className="font-raleway font-bold text-[#1e1e1e] text-xl text-center xs:max-sm:text-xs md:max-lg:text-lg">
+          <p className="font-raleway font-bold text-[#1e1e1e] text-xl text-center xs:max-sm:text-xl md:max-lg:text-lg">
             Make spontaneous changes anytime, anywhere
           </p>
         </div>
 
         <div className="flex justify-center items-center my-10">
           <button
-            className="px-[25px] py-[14px] bg-main rounded-full font-roboto font-bold text-xl text-white"
+            className="px-[25px] py-[14px] bg-main rounded-full font-roboto font-bold text-xl text-white xs:max-sm:text-xl md:max-lg:text-lg "
             onClick={ToLogin}
           >
             Get Started
           </button>
         </div>
 
-        <div className="flex flex-row items-center justify-center my-10">
+        <div className="flex flex-row items-center justify-center my-10 ">
           <div>
             <button onClick={handlePrev}>
               <Image
@@ -71,7 +70,7 @@ function HomePage() {
             </button>
           </div>
 
-          <div className="w-full max-w-3xl overflow-hidden">
+          <div className="w-full max-w-3xl overflow-hidden ">
             <Slider ref={sliderRef} {...carouselSettings}>
               <div>
                 <Image
@@ -103,9 +102,9 @@ function HomePage() {
               />
             </button>
           </div>
-        </div>
+        </div >
       </main>
-      <Footer />
+      <Footer className="flex-shrink-0" />
     </div>
   );
 }
