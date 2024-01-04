@@ -17,7 +17,7 @@ function AddTask({ onClose }: AddTaskProps) {
   const today = new Date().toISOString().split('T')[0]; 
 
   function handleDueDateChange(date: string) {
-    if (date > today) {
+    if (date >= today) {
       setTaskDueDate(date);
     } else {
       console.log('Please select a date on or after today.');

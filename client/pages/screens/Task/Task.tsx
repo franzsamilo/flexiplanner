@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import AddTask from '../Task/AddTask'
-import Task from '../Constants/types'
+
+interface Task {
+  task_id: number
+  task_name: string
+  task_description: string
+  task_priority: string
+  task_due_date: string
+  task_duration_days: number
+  task_duration_hours: number
+  task_duration_minutes: number
+  task_status: string
+  user_id: number
+  category_name: string
+}
 
 function formatDueDate (dueDate: string) {
   const formattedDate = new Date(dueDate).toISOString().split('T')[0]
   return formattedDate
 }
 
-function formatDuration (days: number, hours: number, minutes: number) {
+function formatDuration (days: number, hours:number, minutes:number) {
   const formattedDuration = `${days} d, ${hours
     .toString()
     .padStart(2, '0')} h, ${minutes.toString().padStart(2, '0')} m`
@@ -47,7 +60,7 @@ function Task () {
     fetchTasks()
   }
 
-  const handleEditTask = async taskId => {
+  const handleEditTask = async (taskId: number) => {
     try {
       const response = await fetch(
         `http://localhost:6969/api/taskRead/${taskId}`
@@ -63,7 +76,7 @@ function Task () {
     }
   }
 
-  const handleDeleteTask = async taskId => {
+  const handleDeleteTask = async (taskId: number) => {
     try {
       const response = await fetch(
         `http://localhost:6969/api/taskDelete/${taskId}`,
@@ -83,8 +96,8 @@ function Task () {
 
   return (
     <div className='bg-pink-50'>
-      <div className='flex flex-col items-center mx-auto my-5 w-[1000px]'>
-        <div className='flex flex-row w-[1000px]'>
+      <div className='flex flex-col items-center mx-auto my-5 w-[1200px]'>
+        <div className='flex flex-row w-[1200px]'>
           <div className='text-lg text-black font-bold py-2 px-4 rounded w-70 mb-2 mr-auto ml-5 text-[20px]'>
             To do&apos;s
           </div>
@@ -96,7 +109,7 @@ function Task () {
           </button>
           {showTask && <AddTask onClose={handleCloseTask} />}
         </div>
-        <div className='border border-gray-400 shadow rounded-[30px] p-4 h-auto w-[1050px] mb-10 bg-white'>
+        <div className='border border-gray-400 shadow rounded-[30px] p-4 h-auto w-[1200px] mb-10 bg-white'>
           <div className='flex flex-col md:flex-row border-b w-full pb-2'>
             {tableHeaders.map((header, index) => (
               <div key={index} className='flex-1 text-center'>
@@ -122,7 +135,7 @@ function Task () {
                 </p>
               </div>
               <div className='flex-1 text-center text-sm'>
-                <p className='px-4 md:px-8 py-2'>
+                <p className='px-4 md:px-18 py-2'>
                   {formatDuration(
                     task.task_duration_days,
                     task.task_duration_hours,
