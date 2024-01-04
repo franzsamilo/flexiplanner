@@ -1,21 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Event } from "../Constants/types";
 
 interface AddScheduleProps {
   onClose: () => void;
   addSchedule: (schedule: Event) => void;
+  existingSchedules: Event[];
 }
 
-function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
+function AddSchedule({
+  onClose,
+  addSchedule,
+  existingSchedules,
+}: AddScheduleProps) {
   const [schedule, setSchedule] = useState<Event>({
     event_id: 0,
     day: "",
     subject: "",
     starts: "",
     ends: "",
-    user_id: 0, 
+    user_id: 0,
     category_name: "",
   });
+
+  const [sortedSchedules, setSortedSchedules] = useState<Event[]>([]);
+
+  useEffect(() => {
+    if (Array.isArray(existingSchedules)) {
+      const sortedSchedules = [...existingSchedules].sort((a, b) =>
+        a.starts.localeCompare(b.starts)
+      );
+      setSortedSchedules(sortedSchedules);
+    }
+  }, [existingSchedules]);
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -25,6 +41,23 @@ function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
       ...prevSchedule,
       [name]: value,
     }));
+  }
+
+  function hasConflict(newEvent: Event): boolean {
+    for (const existingEvent of sortedSchedules) {
+      if (
+        newEvent.day === existingEvent.day &&
+        ((newEvent.starts >= existingEvent.starts &&
+          newEvent.starts < existingEvent.ends) ||
+          (newEvent.ends > existingEvent.starts &&
+            newEvent.ends <= existingEvent.ends) ||
+          (newEvent.starts <= existingEvent.starts &&
+            newEvent.ends >= existingEvent.ends))
+      ) {
+        return true;
+      }
+    }
+    return false;
   }
 
   function generateTimeOptions() {
@@ -39,15 +72,20 @@ function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
     }
     return options;
   }
-
   function handleAddSchedule() {
-    if (schedule.day && schedule.subject && schedule.starts && schedule.ends) {
+    if (
+      schedule.day &&
+      schedule.subject &&
+      schedule.starts &&
+      schedule.ends &&
+      !hasConflict(schedule)
+    ) {
       const newEvent: Event = {
         ...schedule,
-        user_id: 1, 
+        user_id: 1,
         category_name: "",
       };
-  
+
       fetch("http://localhost:6969/api/events/create", {
         method: "POST",
         headers: {
@@ -71,7 +109,6 @@ function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
         });
     }
   }
-  
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">

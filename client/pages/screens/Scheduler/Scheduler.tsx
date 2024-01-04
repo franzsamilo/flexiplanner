@@ -11,7 +11,6 @@ function Scheduler() {
   const [showDeleteSchedule, setShowDeleteSchedule] = useState(false);
   const [selectedSchedule, setSelectedSchedule] = useState<Event | null>(null);
   const [schedules, setSchedules] = useState<{ [key: string]: Event[] }>({});
-  
 
   function handleAddEvent() {
     setShowAddSchedule(true);
@@ -33,12 +32,14 @@ function Scheduler() {
 
   function addSchedule(schedule: Event) {
     const { day } = schedule;
+
     setSchedules((prevSchedules) => ({
       ...prevSchedules,
       [day]: [...(prevSchedules[day] || []), schedule],
     }));
+
+    window.location.reload();
   }
-  
 
   const daysOfWeek = [
     "Monday",
@@ -131,13 +132,14 @@ function Scheduler() {
           </button>
 
           {showAddSchedule && (
-            <AddSchedule onClose={handleClose} addSchedule={addSchedule} />
+            <AddSchedule
+              onClose={handleClose}
+              addSchedule={addSchedule}
+              existingSchedules={[]}
+            />
           )}
           {showUpdateSchedule && (
-            <UpdateSchedule
-              onClose={handleClose}
-              updateSchedule={JSXStyle}
-            />
+            <UpdateSchedule onClose={handleClose} updateSchedule={JSXStyle} />
           )}
           {showDeleteSchedule && (
             <DeleteSchedule
