@@ -2,69 +2,26 @@ import React, { useState } from "react";
 
 interface UpdateScheduleProps {
   onClose: () => void;
-  updateSchedule: (
-    subject: string,
-    attribute: string | number | Date,
-    newValue: string | number | Date
-  ) => void;
 }
 
-function UpdateSchedule({ onClose, updateSchedule }: UpdateScheduleProps) {
+function UpdateSchedule({ onClose }: UpdateScheduleProps) {
   const [updateData, setUpdateData] = useState({
     subject: "",
     attribute: "",
     newValue: "",
   });
 
-  function handleChange(
+  const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) {
+  ) => {
     const { name, value } = e.target;
     setUpdateData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-  }
+  };
 
-  async function updateEvent() {
-    try {
-      const { subject, attribute, newValue } = updateData;
-
-      const apiUrl = "http://localhost:6969/api/eventUpdate/update";
-
-      const response = await fetch(apiUrl, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          subject: subject,
-          attribute: attribute,
-          newValue: newValue,
-        }),
-      });
-
-      if (response.ok) {
-        console.log("Event updated successfully");
-      } else {
-        console.error("Failed to update event");
-      }
-    } catch (error) {
-      console.error("Error updating event:", error);
-    }
-  }
-
-  const daysOfWeek = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-
-  function generateTimeOptions() {
+  const generateTimeOptions = () => {
     const options = [];
     for (let i = 0; i < 24; i++) {
       const time = `${i < 10 ? "0" : ""}${i}:00`;
@@ -75,121 +32,113 @@ function UpdateSchedule({ onClose, updateSchedule }: UpdateScheduleProps) {
       );
     }
     return options;
-  }
+  };
 
-  function handleUpdateSchedule() {
-    const { subject, attribute, newValue } = updateData;
-    if (subject && attribute) {
-      let parsedValue: string | number | Date = newValue;
-
-      if (attribute === "Starts" || attribute === "Ends") {
-        parsedValue = new Date(`1970-01-01T${newValue}`);
-      }
-
-      updateSchedule(subject, attribute, parsedValue);
-      onClose();
+  const renderInputBasedOnAttribute = () => {
+    const { attribute } = updateData;
+    switch (attribute) {
+      case "Day":
+        return (
+          <select
+            name="newValue"
+            onChange={handleChange}
+            className="border rounded w-full p-2"
+          >
+            <option value="">Select Day</option>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesay</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Saturday">Saturday</option>
+            <option value="Sunday">Sunday</option>
+          </select>
+        );
+      case "Starts":
+      case "Ends":
+        return (
+          <select
+            name="newValue"
+            onChange={handleChange}
+            className="border rounded w-full p-2"
+          >
+            <option value="">Select Time</option>
+            {generateTimeOptions()}
+          </select>
+        );
+      default:
+        return (
+          <input
+            type="text"
+            name="newValue"
+            onChange={handleChange}
+            className="border rounded w-full p-2"
+          />
+        );
     }
-  }
+  };
 
-  const eventAttributes = [
-    { name: "Day", type: "text" },
-    { name: "Subject", type: "text" },
-    { name: "Starts", type: "time" },
-    { name: "Ends", type: "time" },
-  ];
+  const handleUpdate = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:6969/api/eventUpdate/update`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updateData),
+        }
+      );
 
-  let newValueComponent = null;
-
-  switch (updateData.attribute) {
-    case "Day":
-      newValueComponent = (
-        <select
-          name="newValue"
-          value={updateData.newValue}
-          onChange={handleChange}
-          className="border rounded w-full py-2 px-8"
-        >
-          <option value="">Select Day</option>
-          {daysOfWeek.map((day) => (
-            <option key={day} value={day}>
-              {day}
-            </option>
-          ))}
-        </select>
-      );
-      break;
-    case "Starts":
-    case "Ends":
-      newValueComponent = (
-        <select
-          name="newValue"
-          value={updateData.newValue}
-          onChange={handleChange}
-          className="border rounded w-full py-2 px-8"
-        >
-          <option value="">Select Time</option>
-          {generateTimeOptions()}
-        </select>
-      );
-      break;
-    case "Subject":
-    default:
-      newValueComponent = (
-        <input
-          type="text"
-          name="newValue"
-          value={updateData.newValue}
-          onChange={handleChange}
-          className="border rounded w-full py-2 px-8"
-        />
-      );
-      break;
-  }
+      if (response.ok) {
+        console.log("Event updated successfully");
+        onClose();
+      } else {
+        console.error("Failed to update event");
+      }
+    } catch (error) {
+      console.error("Error updating event:", error);
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
       <div className="bg-white p-6 rounded-md">
-        <h2 className="text-2xl font-bold mb-4">Update Schedule</h2>
-
+        <h2 className="text-2xl font-bold mb-4">Update Event</h2>
         <label className="block mb-2">
-          Subject:
+          <p className="my-1">Subject:</p>
           <input
             type="text"
             name="subject"
-            value={updateData.subject}
             onChange={handleChange}
-            className="border rounded w-full py-2 px-8"
+            className="border rounded w-full p-2"
           />
         </label>
-
         <label className="block mb-2">
-          Attribute to Edit:
+          <p className="my-1">Attribute to Update:</p>
           <select
             name="attribute"
-            value={updateData.attribute}
             onChange={handleChange}
-            className="border rounded w-full py-2 px-8"
+            className="border rounded w-full p-2"
           >
-            <option value=""></option>
-            {eventAttributes.map((attribute) => (
-              <option key={attribute.name} value={attribute.name}>
-                {attribute.name}
-              </option>
-            ))}
+            <option value="">Select Attribute</option>
+            <option value="Subject">Subject</option>
+            <option value="Day">Day</option>
+            <option value="Starts">Starts</option>
+            <option value="Ends">Ends</option>
           </select>
         </label>
-
         <label className="block mb-2">
-          New Value:
-          {newValueComponent}
+          <p className="my-1">New Value:</p>
+          {renderInputBasedOnAttribute()}
         </label>
-
         <div className="flex justify-end">
           <button
-            onClick={updateEvent}
+            onClick={handleUpdate}
             className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
           >
-            Update Schedule
+            Update Event
           </button>
           <button
             onClick={onClose}
