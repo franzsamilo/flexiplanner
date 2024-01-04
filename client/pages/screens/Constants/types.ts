@@ -1,4 +1,4 @@
-export default interface Task {
+export interface Task {
     task_id: number
     task_name: string
     task_description: string
@@ -9,5 +9,15 @@ export default interface Task {
     task_duration_minutes: number
     task_status: string
     user_id: number
-    category_name: string
+    category_name?: string
+  }
+
+  export interface Event {
+    event_id: number;
+    day: string;
+    subject: string;
+    starts: string;
+    ends: string;
+    user_id: number;
+    category_name?: string;
   }
