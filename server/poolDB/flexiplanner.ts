@@ -1,5 +1,6 @@
-require("dotenv").config();
-const { Pool } = require("pg");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config();
+import { Pool } from 'pg';
 
 const flexiplannerDB = new Pool({
   user: process.env.DATABASE_USER,
@@ -8,7 +9,7 @@ const flexiplannerDB = new Pool({
   port: process.env.DATABASE_PORT,
   database: process.env.DATABASE_NAME,
   ssl: {
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
   },
 });
 
