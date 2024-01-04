@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import flexiplannerDB from '../poolDB/flexiplanner';
+import flexiplannerDB from '../../poolDB/flexiplanner';
 
 const router = express.Router();
 

@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import taskRoutes from './routes/taskCreate';
-import taskReadRoutes from './routes/taskRead';
-import eventRoutes from './routes/eventCreate';
-import eventReadRoutes from './routes/eventRead';
+import taskRoutes from './routes/taskRoutes/taskCreate';
+import taskReadRoutes from './routes/taskRoutes/taskRead';
+import eventRoutes from './routes/eventsRoutes/eventCreate';
+import eventReadRoutes from './routes/eventsRoutes/eventRead';
 
 const app = express();
 const PORT = 6969;

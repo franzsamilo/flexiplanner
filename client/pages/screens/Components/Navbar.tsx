@@ -8,7 +8,7 @@ function Navbar() {
   const [activeButton, setActiveButton] = useState<string | null>(null);
 
   const handleButtonClick = (buttonName: string, navigateFunction: any) => {
-    setActiveButton(buttonName); // Set the clicked button as active
+    setActiveButton(buttonName); 
     switch (buttonName) {
       case 'home':
         navigateFunction(ToHome);

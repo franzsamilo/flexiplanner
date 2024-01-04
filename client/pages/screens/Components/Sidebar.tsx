@@ -1,5 +1,4 @@
-// Sidebar component
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import userIconBlack from "/public/assets/icons/user-icon-black.png";
 import userIconWhite from "/public/assets/icons/user-icon-white.png";
