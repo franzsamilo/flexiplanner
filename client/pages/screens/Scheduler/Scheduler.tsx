@@ -138,9 +138,7 @@ function Scheduler() {
               existingSchedules={[]}
             />
           )}
-          {showUpdateSchedule && (
-            <UpdateSchedule onClose={handleClose} updateSchedule={JSXStyle} />
-          )}
+          {showUpdateSchedule && <UpdateSchedule onClose={handleClose} />}
           {showDeleteSchedule && (
             <DeleteSchedule
               onClose={handleClose}

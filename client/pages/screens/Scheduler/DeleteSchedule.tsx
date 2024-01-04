@@ -29,6 +29,7 @@ function DeleteSchedule({ onClose, onDelete, subject }: DeleteScheduleProps) {
       if (response.ok) {
         console.log("Event deleted successfully");
         onDelete();
+        window.location.reload();
       } else {
         console.error("Failed to delete event");
       }
