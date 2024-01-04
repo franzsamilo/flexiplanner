@@ -5,7 +5,7 @@ interface UpdateScheduleProps {
   updateSchedule: (
     subject: string,
     attribute: string | number | Date,
-    newValue: string | number | Date 
+    newValue: string | number | Date
   ) => void;
 }
 
@@ -25,6 +25,34 @@ function UpdateSchedule({ onClose, updateSchedule }: UpdateScheduleProps) {
       [name]: value,
     }));
   }
+
+  const updateEvent = async () => {
+    try {
+      const { subject, attribute, newValue } = updateData;
+
+      const apiUrl = "http://localhost:6969/api/eventUpdate/update";
+
+      const response = await fetch(apiUrl, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          subject: subject,
+          attribute: attribute,
+          newValue: newValue,
+        }),
+      });
+
+      if (response.ok) {
+        console.log("Event updated successfully");
+      } else {
+        console.error("Failed to update event");
+      }
+    } catch (error) {
+      console.error("Error updating event:", error);
+    }
+  };
 
   const daysOfWeek = [
     "Monday",
@@ -158,7 +186,7 @@ function UpdateSchedule({ onClose, updateSchedule }: UpdateScheduleProps) {
 
         <div className="flex justify-end">
           <button
-            onClick={handleUpdateSchedule}
+            onClick={updateEvent}
             className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
           >
             Update Schedule
