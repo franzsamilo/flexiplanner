@@ -7,14 +7,17 @@ import academicsIcon from 'public/assets/icons/academics-icon.png'
 import workIcon from 'public/assets/icons/work-icon.png'
 import createIcon from 'public/assets/icons/create-icon.png'
 import logoutIcon from 'public/assets/icons/right-from-bracket-solid.svg'
+import { StaticImageData } from 'next/image'
 
 interface SidebarProps {
   updateHeaderText(text: string): void
+  updateHeaderIcon(icon: StaticImageData): void
 }
 
-function Sidebar ({ updateHeaderText }: SidebarProps) {
-  function handleButtonClick (buttonText: string) {
+function Sidebar ({ updateHeaderText, updateHeaderIcon }: SidebarProps) {
+  function handleButtonClick (buttonText: string, iconPath: StaticImageData) {
     updateHeaderText(buttonText)
+    updateHeaderIcon(iconPath)
   }
 
   return (
@@ -43,10 +46,10 @@ function Sidebar ({ updateHeaderText }: SidebarProps) {
         <div className='text-tertiary pl-2 text-lg font-medium'>Categories</div>
         <button
           className='flex items-center px-4 py-3 my-2 mx-4 bg-secondary rounded-2xl hover:bg-main'
-          onClick={() => handleButtonClick('Personal')}
+          onClick={() => handleButtonClick('Personal', userIconWhite)}
         >
           <div>
-            <Image src={userIconWhite} alt='user-icon' className='w-[25px]' />
+            <Image src={userIconWhite} alt='user-icon' className='w-[30px]' />
           </div>
           <div className='text-[#fff2f2] font-bold pl-5 text-xl justify-center'>
             Personal
@@ -54,14 +57,14 @@ function Sidebar ({ updateHeaderText }: SidebarProps) {
         </button>
 
         <button
-          className='flex items-center pl-3 py-3 my-2 mx-4 bg-main rounded-2xl hover:bg-main'
-          onClick={() => handleButtonClick('Academics')}
+          className='flex items-center pl-3 py-3 my-2 mx-4 bg-secondary rounded-2xl hover:bg-main'
+          onClick={() => handleButtonClick('Academics', academicsIcon)}
         >
           <div>
             <Image
               src={academicsIcon}
               alt='academics-icon'
-              className='w-[35px]'
+              className='w-[30px]'
             />
           </div>
           <div className='text-[#fff2f2] pl-3 font-bold text-[18px] justify-center'>
@@ -71,7 +74,7 @@ function Sidebar ({ updateHeaderText }: SidebarProps) {
 
         <button
           className='flex items-center px-4 py-3 my-2 mx-4 bg-secondary rounded-2xl hover:bg-main'
-          onClick={() => handleButtonClick('Work')}
+          onClick={() => handleButtonClick('Work', workIcon)}
         >
           <div>
             <Image src={workIcon} alt='work-icon' className='w-[30px]' />
@@ -92,7 +95,11 @@ function Sidebar ({ updateHeaderText }: SidebarProps) {
       </div>
       <button className='flex items-center px-10 py-2 my-2 mx-4 fixed bottom-1  rounded-lg hover:bg-secondary'>
         <div>
-          <Image src={logoutIcon} alt='logout-icon' className='color-white w-[30px] px-1 py-1 bg-dirty rounded-full' />
+          <Image
+            src={logoutIcon}
+            alt='logout-icon'
+            className='color-white w-[30px] px-1 py-1 bg-dirty rounded-full'
+          />
         </div>
         <div className='text-black font-medium pl-3 text-lg justify-center'>
           Logout
