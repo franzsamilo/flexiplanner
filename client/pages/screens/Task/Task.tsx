@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AddTask from '../Task/AddTask';
 import UpdateTask from '../Task/UpdateTask';
-import Task from '../Constants/types';
+import { Task } from '../Constants/types';
 
 function formatDueDate(dueDate: string) {
   const formattedDate = new Date(dueDate).toISOString().split('T')[0];

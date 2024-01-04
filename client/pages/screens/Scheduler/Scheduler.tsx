@@ -1,58 +1,44 @@
 import React, { useState, useEffect } from "react";
-import AddSchedule, { Schedule } from "./AddSchedule";
-import Image from "next/image";
-import deleteIcon from "../../../public/assets/icons/delete.svg";
+import AddSchedule from "./AddSchedule";
+import UpdateSchedule from "./UpdateSchedule";
+import DeleteSchedule from "./DeleteSchedule";
+import { Event } from "../Constants/types";
+import JSXStyle from "styled-jsx/style";
 
 function Scheduler() {
   const [showAddSchedule, setShowAddSchedule] = useState(false);
-  const [schedules, setSchedules] = useState<{ [key: string]: Schedule[] }>({});
-  const [editingSchedule, setEditingSchedule] = useState<Schedule | null>(null);
+  const [showUpdateSchedule, setShowUpdateSchedule] = useState(false);
+  const [showDeleteSchedule, setShowDeleteSchedule] = useState(false);
+  const [selectedSchedule, setSelectedSchedule] = useState<Event | null>(null);
+  const [schedules, setSchedules] = useState<{ [key: string]: Event[] }>({});
 
-  function handleClick() {
-    setEditingSchedule(null);
+  function handleAddEvent() {
     setShowAddSchedule(true);
+  }
+
+  function handleUpdateEvent() {
+    setShowUpdateSchedule(true);
+  }
+
+  function handleDeleteEvent() {
+    setShowDeleteSchedule(true);
   }
 
   function handleClose() {
     setShowAddSchedule(false);
+    setShowUpdateSchedule(false);
+    setShowDeleteSchedule(false);
   }
 
-  function handleClickEdit(day: string, index: number) {
-    const editedSchedule = schedules[day] ? schedules[day][index] : null;
-    setEditingSchedule(editedSchedule);
-    setShowAddSchedule(true);
-  }
+  function addSchedule(schedule: Event) {
+    const { day } = schedule;
 
-  function addSchedule(day: string, schedule: Schedule) {
     setSchedules((prevSchedules) => ({
       ...prevSchedules,
       [day]: [...(prevSchedules[day] || []), schedule],
     }));
-  }
 
-  function handleDeleteSchedule(day: string, index: number) {
-    setSchedules((prevSchedules) => {
-      const updatedSchedules = { ...prevSchedules };
-      updatedSchedules[day] = updatedSchedules[day].filter(
-        (_, i) => i !== index
-      );
-      return updatedSchedules;
-    });
-  }
-
-  function editSchedule(
-    day: string,
-    newSchedule: Schedule,
-    oldSchedule: Schedule
-  ) {
-    setSchedules((prevSchedules) => {
-      const updatedSchedules = { ...prevSchedules };
-      updatedSchedules[day] = updatedSchedules[day].map((s) =>
-        s === oldSchedule ? newSchedule : s
-      );
-      return updatedSchedules;
-    });
-    setEditingSchedule(null);
+    window.location.reload();
   }
 
   const daysOfWeek = [
@@ -74,7 +60,7 @@ function Scheduler() {
         return response.json();
       })
       .then((data) => {
-        const weeklySchedules: { [key: string]: Schedule[] } = {};
+        const weeklySchedules: { [key: string]: Event[] } = {};
 
         data.forEach((event: any) => {
           const { day } = event;
@@ -126,19 +112,22 @@ function Scheduler() {
             Class Schedule
           </div>
           <button
-            className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-1 px-3 mt-2 mb-2 rounded mb-2"
-            onClick={handleClick}
+            className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-1 px-3 mt-2 mb-2 rounded"
+            onClick={handleAddEvent}
           >
             + ADD EVENT
           </button>
           <button
-            className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-1 px-3 rounded mb-2 ml-3 mt-2 mb-2"
-            onClick={handleClick}
+            className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-1 px-3 rounded mb-2 ml-3 mt-2 "
+            onClick={handleUpdateEvent}
           >
             UPDATE EVENT
           </button>
 
-          <button className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-1 px-3 rounded mb-2 ml-3 mt-2 mb-2 mr-[300px]">
+          <button
+            className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-1 px-3 rounded mb-2 ml-3 mt-2 mr-[300px]"
+            onClick={handleDeleteEvent}
+          >
             DELETE EVENT
           </button>
 
@@ -146,8 +135,15 @@ function Scheduler() {
             <AddSchedule
               onClose={handleClose}
               addSchedule={addSchedule}
-              editingSchedule={editingSchedule}
-              editSchedule={editSchedule}
+              existingSchedules={[]}
+            />
+          )}
+          {showUpdateSchedule && <UpdateSchedule onClose={handleClose} />}
+          {showDeleteSchedule && (
+            <DeleteSchedule
+              onClose={handleClose}
+              onDelete={handleClose}
+              subject={selectedSchedule?.subject || ""}
             />
           )}
         </div>
@@ -171,12 +167,6 @@ function Scheduler() {
                           {schedule.starts} - {schedule.ends}
                         </p>
                       </div>
-                      <button
-                        onClick={() => handleDeleteSchedule(day, index)}
-                        className="text-red-400 p-1 rounded mt-2"
-                      >
-                        <Image src={deleteIcon} alt="" />
-                      </button>
                     </div>
                   ))}
                 </div>

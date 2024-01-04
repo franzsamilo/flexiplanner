@@ -1,26 +1,63 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Event } from "../Constants/types";
 
 interface AddScheduleProps {
   onClose: () => void;
-  addSchedule: (schedule: Schedule) => void;
+  addSchedule: (schedule: Event) => void;
+  existingSchedules: Event[];
 }
 
-function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
-  const [schedule, setSchedule] = useState<Schedule>({
+function AddSchedule({
+  onClose,
+  addSchedule,
+  existingSchedules,
+}: AddScheduleProps) {
+  const [schedule, setSchedule] = useState<Event>({
+    event_id: 0,
     day: "",
     subject: "",
     starts: "",
     ends: "",
+    user_id: 0,
+    category_name: "",
   });
+
+  const [sortedSchedules, setSortedSchedules] = useState<Event[]>([]);
+
+  useEffect(() => {
+    if (Array.isArray(existingSchedules)) {
+      const sortedSchedules = [...existingSchedules].sort((a, b) =>
+        a.starts.localeCompare(b.starts)
+      );
+      setSortedSchedules(sortedSchedules);
+    }
+  }, [existingSchedules]);
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
     const { name, value } = e.target;
-    setSchedule((prevSchedule) => ({
+    setSchedule((prevSchedule: Event) => ({
       ...prevSchedule,
       [name]: value,
     }));
+  }
+
+  function hasConflict(newEvent: Event): boolean {
+    for (const existingEvent of sortedSchedules) {
+      if (
+        newEvent.day === existingEvent.day &&
+        ((newEvent.starts >= existingEvent.starts &&
+          newEvent.starts < existingEvent.ends) ||
+          (newEvent.ends > existingEvent.starts &&
+            newEvent.ends <= existingEvent.ends) ||
+          (newEvent.starts <= existingEvent.starts &&
+            newEvent.ends >= existingEvent.ends))
+      ) {
+        return true;
+      }
+    }
+    return false;
   }
 
   function generateTimeOptions() {
@@ -35,14 +72,16 @@ function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
     }
     return options;
   }
-
   function handleAddSchedule() {
-    if (schedule.day && schedule.subject && schedule.starts && schedule.ends) {
-      const newEvent = {
-        day: schedule.day,
-        subject: schedule.subject,
-        starts: schedule.starts,
-        ends: schedule.ends,
+    if (
+      schedule.day &&
+      schedule.subject &&
+      schedule.starts &&
+      schedule.ends &&
+      !hasConflict(schedule)
+    ) {
+      const newEvent: Event = {
+        ...schedule,
         user_id: 1,
         category_name: "",
       };
@@ -87,7 +126,7 @@ function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
             <option value="">Select Day</option>
             <option value="Monday">Monday</option>
             <option value="Tuesday">Tuesday</option>
-            <option value="Wednesday">Wednesday</option>
+            <option value="Wednesday">Wednesay</option>
             <option value="Thursday">Thursday</option>
             <option value="Friday">Friday</option>
             <option value="Saturday">Saturday</option>
