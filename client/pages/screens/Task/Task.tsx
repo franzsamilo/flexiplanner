@@ -1,26 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import AddTask from '../Task/AddTask'
+import Task from '../Constants/types'
 
-interface Task {
-  task_id: number
-  task_name: string
-  task_description: string
-  task_priority: string
-  task_due_date: string
-  task_duration_days: number
-  task_duration_hours: number
-  task_duration_minutes: number
-  task_status: string
-  user_id: number
-  category_name: string
-}
-
-function formatDueDate (dueDate) {
+function formatDueDate (dueDate: string) {
   const formattedDate = new Date(dueDate).toISOString().split('T')[0]
   return formattedDate
 }
 
-function formatDuration (days, hours, minutes) {
+function formatDuration (days: number, hours: number, minutes: number) {
   const formattedDuration = `${days} d, ${hours
     .toString()
     .padStart(2, '0')} h, ${minutes.toString().padStart(2, '0')} m`
@@ -124,7 +111,7 @@ function Task () {
               className='flex flex-col md:flex-row border-b w-full pb-2'
             >
               <div className='flex-1 text-center'>
-                <p className='px-4 md:px-10 py-2'>{task.task_name}</p>
+                <p className='px-4 md:px-8 py-2'>{task.task_name}</p>
               </div>
               <div className='flex-1 text-center'>
                 <p className='px-4 md:px-10 py-2'>{task.task_priority}</p>
@@ -135,7 +122,7 @@ function Task () {
                 </p>
               </div>
               <div className='flex-1 text-center text-sm'>
-                <p className='px-4 md:px-10 py-2'>
+                <p className='px-4 md:px-8 py-2'>
                   {formatDuration(
                     task.task_duration_days,
                     task.task_duration_hours,
