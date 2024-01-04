@@ -11,11 +11,11 @@ function useNavigation () {
   }
 
   function ToAboutUs () {
-    navigateTo('/screens/AboutUs/aboutUs')
+    navigateTo('/screens/AboutUs/AboutUs')
   }
 
   function ToDemo () {
-    navigateTo('/screens/Demo/demo')
+    navigateTo('/screens/Demo/Demo')
   }
 
   function ToLogin () {
