@@ -13,7 +13,7 @@ function DeleteSchedule({ onClose, onDelete, subject }: DeleteScheduleProps) {
     setInputValue(event.target.value);
   };
 
-  const deleteEvent = async () => {
+  async function deleteEvent() {
     try {
       const response = await fetch(
         `http://localhost:6969/api/eventDelete/delete`,
@@ -35,7 +35,7 @@ function DeleteSchedule({ onClose, onDelete, subject }: DeleteScheduleProps) {
     } catch (error) {
       console.error("Error deleting event:", error);
     }
-  };
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">

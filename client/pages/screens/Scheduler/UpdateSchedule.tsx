@@ -26,7 +26,7 @@ function UpdateSchedule({ onClose, updateSchedule }: UpdateScheduleProps) {
     }));
   }
 
-  const updateEvent = async () => {
+  async function updateEvent() {
     try {
       const { subject, attribute, newValue } = updateData;
 
@@ -52,7 +52,7 @@ function UpdateSchedule({ onClose, updateSchedule }: UpdateScheduleProps) {
     } catch (error) {
       console.error("Error updating event:", error);
     }
-  };
+  }
 
   const daysOfWeek = [
     "Monday",
