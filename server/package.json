@@ -8,7 +8,6 @@
     "start": "node server.js",
     "dev": "nodemon server.ts",
     "build": "npm ci && npm run tsc",
-    "prepare": "husky install",
     "tsc": "tsc"
   },
   "author": "Liberal Party (not the political one)",
@@ -29,7 +28,6 @@
     "@types/node": "^20.10.6",
     "dbmate": "^2.10.0",
     "eslint": "^8.56.0",
-    "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
     "nodemon": "^3.0.2",
     "prettier": "^3.1.1",
