@@ -6,7 +6,6 @@ interface AddTaskProps {
 
 function AddTask({ onClose }: AddTaskProps) {
   const [TaskName, setTaskName] = useState('');
-  const [TaskDescription, setTaskDescription] = useState('');
   const [TaskPriority, setTaskPriority] = useState('Low');
   const [TaskDueDate, setTaskDueDate] = useState('');
   const [TaskDurationDays, setTaskDurationDays] = useState(0);
@@ -14,7 +13,7 @@ function AddTask({ onClose }: AddTaskProps) {
   const [TaskDurationMinutes, setTaskDurationMinutes] = useState(0);
   const [TaskStatus, setTaskStatus] = useState('To do');
 
-  const today = new Date().toISOString().split('T')[0]; 
+  const today = new Date().toISOString().split('T')[0];
 
   function handleDueDateChange(date: string) {
     if (date >= today) {
@@ -27,7 +26,6 @@ function AddTask({ onClose }: AddTaskProps) {
   function handleAddTask() {
     const newTask = {
       task_name: TaskName,
-      task_description: TaskDescription,
       task_priority: TaskPriority,
       task_due_date: TaskDueDate,
       task_duration_days: TaskDurationDays,
@@ -75,15 +73,6 @@ function AddTask({ onClose }: AddTaskProps) {
           />
         </label>
 
-        {/* <label className="block mb-2">
-          Task Description:
-          <textarea
-            value={TaskDescription}
-            onChange={(e) => setTaskDescription(e.target.value)}
-            className="border rounded w-full p-2"
-          />
-        </label> */}
-
         <label className="block mb-2">
           Priority:
           <select
@@ -115,7 +104,7 @@ function AddTask({ onClose }: AddTaskProps) {
               <input
                 type="number"
                 value={TaskDurationDays}
-                onChange={(e) => setTaskDurationDays(e.target.value)}
+                onChange={(e) => setTaskDurationDays(Number(e.target.value))}
                 className="border rounded w-full p-2"
               />
             </label>
@@ -126,7 +115,7 @@ function AddTask({ onClose }: AddTaskProps) {
               <input
                 type="number"
                 value={TaskDurationHours}
-                onChange={(e) => setTaskDurationHours(e.target.value)}
+                onChange={(e) => setTaskDurationHours(Number(e.target.value))}
                 className="border rounded w-full p-2"
               />
             </label>
@@ -137,7 +126,7 @@ function AddTask({ onClose }: AddTaskProps) {
               <input
                 type="number"
                 value={TaskDurationMinutes}
-                onChange={(e) => setTaskDurationMinutes(e.target.value)}
+                onChange={(e) => setTaskDurationMinutes(Number(e.target.value))}
                 className="border rounded w-full p-2"
               />
             </label>
