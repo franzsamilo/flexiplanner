@@ -73,7 +73,7 @@ function Navbar() {
           className="px-4 py-2 bg-main hover:bg-main text-white font-semibold rounded-full text-xl xs:max-sm:px-2 xs:max-sm:py-1 xs:max-sm:text-sm"
           onClick={() => handleButtonClick('login', ToLogin)}
         >
-          Sign Up
+          Log In
         </button>
       </div>
     </nav>

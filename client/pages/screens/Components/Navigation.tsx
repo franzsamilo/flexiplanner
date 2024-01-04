@@ -19,7 +19,7 @@ function useNavigation () {
   }
 
   function ToLogin () {
-    navigateTo('/screens/Login/Login')
+    navigateTo('/screens/Login/login')
   }
 
   function ToSignUp () {
