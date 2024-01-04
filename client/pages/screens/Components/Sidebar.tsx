@@ -20,7 +20,7 @@ function Sidebar({ updateHeaderText }: SidebarProps) {
 
   return (
     <div className="flex flex-col min-h-screen bg-white w-[250px] shadow-xl">
-      <div className="flex items-center pb-4 pl-5 mb-0 text-lg font-semibold">
+      <div className="flex items-center pb-4 pl-5 mb-0 text-lg font-semibold pt-1 border-b">
         <button className="bg-dirty rounded-full w-[40px] h-[40px] flex justify-center items-center hover:bg-dirty">
           <Image
             src={userIconBlack}
