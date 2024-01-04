@@ -4,9 +4,9 @@ import logo from '/public/assets/logo.png';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-function Footer() {
+function Footer( { className }: { className?: string } ) {
   return (
-    <footer className="bg-main text-white p-4 mt-auto">
+    <footer className={`bg-main py-4 text-white ${className || ''}`}>
       <div className="flex justify-between">
         <div className="flex flex-row items-start w-1/2">
           <div className="flex mr-2">
