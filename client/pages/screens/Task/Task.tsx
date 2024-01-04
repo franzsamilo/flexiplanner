@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import AddTask from '../Task/AddTask';
-import Scheduler from '../Scheduler/Scheduler';
-import Footer from '../Components/Footer';
-import Header from '../Components/Header';
-import Sidebar from '../Components/Sidebar';
 
 interface Task {
   task_id: number;
@@ -66,20 +62,7 @@ function Task() {
     fetchTasks();
   };
 
-  const [headerText, setHeaderText] = useState('Academics');
-
-  function updateHeaderText(text: string) {
-    setHeaderText(text);
-  }
-
   return (
-    <div className="flex flex-col min-h-screen bg-dirty">
-      <div className="flex flex-row ">
-        <Sidebar updateHeaderText={updateHeaderText} />
-
-        <main className="flex flex-col w-full h-auto">
-          <Header buttonText={headerText} />
-          <Scheduler />
           <div className="bg-pink-50">
             <div className="flex flex-col items-center mx-auto my-5 w-[1075px]">
               <div className="flex flex-row w-[1075px]">
@@ -137,10 +120,6 @@ function Task() {
               </div>
             </div>
           </div>
-        </main>
-      </div>
-      <Footer />
-    </div>
   );
 }
 
