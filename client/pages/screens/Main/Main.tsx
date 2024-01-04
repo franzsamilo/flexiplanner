@@ -14,15 +14,17 @@ function MainPage () {
   return (
     <div className='flex flex-col min-h-screen bg-dirty'>
       <div className='flex flex-row '>
-        <Sidebar updateHeaderText={updateHeaderText} />
+          {' '}
+          <Sidebar updateHeaderText={updateHeaderText} />
 
-        <main className='flex flex-col w-full h-auto'>
+        <main className='flex flex-col w-full h-auto '>
           <Header buttonText={headerText} />
           <Scheduler />
           <Task />
+          <Footer />
         </main>
       </div>
-      <Footer />
+     
     </div>
   )
 }
