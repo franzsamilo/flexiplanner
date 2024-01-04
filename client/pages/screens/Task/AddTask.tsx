@@ -14,13 +14,12 @@ function AddTask({ onClose }: AddTaskProps) {
   const [TaskDurationMinutes, setTaskDurationMinutes] = useState(0);
   const [TaskStatus, setTaskStatus] = useState('To do');
 
-  const today = new Date().toISOString().split('T')[0]; // Get today's date in 'yyyy-mm-dd' format
+  const today = new Date().toISOString().split('T')[0]; 
 
   function handleDueDateChange(date: string) {
     if (date > today) {
       setTaskDueDate(date);
     } else {
-      // Notify the user or handle the situation where the selected date is before today
       console.log('Please select a date on or after today.');
     }
   }
