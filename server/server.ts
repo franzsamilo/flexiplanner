@@ -6,6 +6,7 @@ import eventRoutes from "./routes/eventsRoutes/eventCreate";
 import eventReadRoutes from "./routes/eventsRoutes/eventRead";
 import eventDeleteRoutes from "./routes/eventsRoutes/eventDelete";
 import eventUpdateRoutes from "./routes/eventsRoutes/eventUpdate";
+import userRegisterRoutes from "./routes/userAuth/userRegister";
 
 const app = express();
 const PORT = 6969;
@@ -18,6 +19,7 @@ app.use("/api/eventRead", eventReadRoutes);
 app.use("/api/taskRead", taskReadRoutes);
 app.use("/api/eventDelete", eventDeleteRoutes);
 app.use("/api/eventUpdate", eventUpdateRoutes);
+app.use("/api/auth", userRegisterRoutes)
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
