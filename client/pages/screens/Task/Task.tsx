@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AddTask from '../Task/AddTask';
 import UpdateTask from '../Task/UpdateTask';
+import DeleteTask from '../Task/DeleteTask';
 import { Task } from '../Constants/types';
 
 function formatDueDate(dueDate: string) {
@@ -53,6 +54,22 @@ function Task() {
   const handleEditTask = (task: Task) => {
     setSelectedTask(task);
     setShowTask(true);
+  };
+
+  const [showDeleteTask, setShowDeleteTask] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
+
+  // Function to open the DeleteTask component
+  const handleDeleteTask = (task: Task) => {
+    setTaskToDelete(task);
+    setShowDeleteTask(true);
+  };
+
+  // Function to close the DeleteTask component
+  const handleCloseDeleteTask = () => {
+    setTaskToDelete(null);
+    setShowDeleteTask(false);
+    fetchTasks(); // You may want to fetch tasks after deletion
   };
 
   return (
@@ -115,7 +132,10 @@ function Task() {
                 >
                   Edit
                 </button>
-                <button className="cursor-pointer text-red-500 ml-2 hover:font-medium">
+                <button
+                  className="cursor-pointer text-red-500 ml-2 hover:font-medium"
+                  onClick={() => handleDeleteTask(task)}
+                >
                   Delete
                 </button>
               </div>
@@ -129,6 +149,19 @@ function Task() {
                 fetchTasks();
               }}
               value={selectedTask}
+            />
+          )}
+          {/* Render the DeleteTask component when needed */}
+          {showDeleteTask && taskToDelete && (
+            <DeleteTask
+              onClose={handleCloseDeleteTask}
+              onDelete={(taskId) => {
+                // Update tasks after deletion
+                setTasks((prevTasks) =>
+                  prevTasks.filter((task) => task.task_id !== taskId)
+                );
+              }}
+              value={taskToDelete}
             />
           )}
         </div>

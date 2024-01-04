@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import taskRoutes from './routes/taskRoutes/taskCreate';
 import taskReadRoutes from './routes/taskRoutes/taskRead';
+import taskDeleteRoutes from './routes/taskRoutes/taskDelete';
 import taskUpdateRoutes from './routes/taskRoutes/taskUpdate';
 import eventRoutes from './routes/eventsRoutes/eventCreate';
 import eventReadRoutes from './routes/eventsRoutes/eventRead';
@@ -22,6 +23,7 @@ app.use('/api/eventDelete', eventDeleteRoutes);
 app.use('/api/eventUpdate', eventUpdateRoutes);
 app.use('/api/auth', userRegisterRoutes);
 app.use('/api/taskUpdate', taskUpdateRoutes);
+app.use('/api/taskDelete', taskDeleteRoutes);
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
