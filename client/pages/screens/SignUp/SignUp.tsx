@@ -9,7 +9,7 @@ function SignUpPage () {
   return (
     <div className='flex flex-col min-h-screen bg-gradient-to-br from-dirty via-blue-100 to-main'>
       <main className='flex-1 flex items-center justify-center'>
-        <div className='w-full max-w-xl px-6'>
+        <div className='w-full max-w-2xl px-8'>
           <div className='bg-white shadow-xl rounded-3xl px-8 py-10'>
             <div className='flex justify-center mb-4'>
               <button onClick={ToHome}>
@@ -29,6 +29,20 @@ function SignUpPage () {
                   type='text'
                   id='username'
                   placeholder='Enter your username'
+                  className='shadow appearance-lg rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                />
+              </div>
+              <div className='mb-4 w-full'>
+                <label
+                  htmlFor='email'
+                  className='block text-black text-md font-bold mb-2'
+                >
+                  Email
+                </label>
+                <input
+                  type='text'
+                  id='email'
+                  placeholder='Enter your Email'
                   className='shadow appearance-lg rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 />
               </div>

@@ -54,13 +54,6 @@ function LoginPage () {
               >
                 Log in
               </button>
-              <button
-                type='submit'
-                className='w-full bg-secondary hover:bg-main text-white font-bold py-2 px-4 rounded-3xl'
-                onClick={ToScheduler}
-              >
-                Continue with Google
-              </button>
             </form>
             <div className='mt-4 text-center'>
               <button
