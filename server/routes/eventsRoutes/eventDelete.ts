@@ -3,7 +3,7 @@ import flexiplannerDB from "../../poolDB/flexiplanner";
 
 const router = express.Router();
 
-router.delete("/delete", async (req, res) => {
+router.delete("/delete", async (req : Request, res : Response) => {
   try {
     const subject = req.body.subject;
 
