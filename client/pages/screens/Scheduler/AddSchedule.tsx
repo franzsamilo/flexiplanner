@@ -1,23 +1,27 @@
 import React, { useState } from "react";
+import { Event } from "../Constants/types";
 
 interface AddScheduleProps {
   onClose: () => void;
-  addSchedule: (schedule: Schedule) => void;
+  addSchedule: (schedule: Event) => void;
 }
 
 function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
-  const [schedule, setSchedule] = useState<Schedule>({
+  const [schedule, setSchedule] = useState<Event>({
+    event_id: 0,
     day: "",
     subject: "",
     starts: "",
     ends: "",
+    user_id: 0, 
+    category_name: "",
   });
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
     const { name, value } = e.target;
-    setSchedule((prevSchedule) => ({
+    setSchedule((prevSchedule: Event) => ({
       ...prevSchedule,
       [name]: value,
     }));
@@ -38,15 +42,12 @@ function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
 
   function handleAddSchedule() {
     if (schedule.day && schedule.subject && schedule.starts && schedule.ends) {
-      const newEvent = {
-        day: schedule.day,
-        subject: schedule.subject,
-        starts: schedule.starts,
-        ends: schedule.ends,
-        user_id: 1,
+      const newEvent: Event = {
+        ...schedule,
+        user_id: 1, 
         category_name: "",
       };
-
+  
       fetch("http://localhost:6969/api/events/create", {
         method: "POST",
         headers: {
@@ -70,6 +71,7 @@ function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
         });
     }
   }
+  
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -87,7 +89,7 @@ function AddSchedule({ onClose, addSchedule }: AddScheduleProps) {
             <option value="">Select Day</option>
             <option value="Monday">Monday</option>
             <option value="Tuesday">Tuesday</option>
-            <option value="Wednesday">Wednesday</option>
+            <option value="Wednesday">Wednesay</option>
             <option value="Thursday">Thursday</option>
             <option value="Friday">Friday</option>
             <option value="Saturday">Saturday</option>
