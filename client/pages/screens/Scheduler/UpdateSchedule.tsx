@@ -78,7 +78,7 @@ function UpdateSchedule({ onClose }: UpdateScheduleProps) {
     }
   };
 
-  const handleUpdate = async () => {
+  async function handleUpdate() {
     try {
       const response = await fetch(
         `http://localhost:6969/api/eventUpdate/update`,
@@ -94,13 +94,14 @@ function UpdateSchedule({ onClose }: UpdateScheduleProps) {
       if (response.ok) {
         console.log("Event updated successfully");
         onClose();
+        window.location.reload();
       } else {
         console.error("Failed to update event");
       }
     } catch (error) {
       console.error("Error updating event:", error);
     }
-  };
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
