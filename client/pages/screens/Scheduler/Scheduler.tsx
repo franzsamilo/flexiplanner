@@ -120,25 +120,25 @@ function Scheduler() {
 
   return (
     <div className="bg-pink-50">
-      <div className="flex flex-col items-center mx-auto  ">
+      <div className="flex flex-col items-center mx-auto">
         <div className="ml-auto flex flex-row">
-          <div className="text-lg text-black font-bold py-2 px-4 rounded  mb-2 mr-[450px] text-[20px]">
+          <div className="text-lg text-black font-bold py-2 px-4 rounded mb-2 mr-[450px] text-[20px]">
             Class Schedule
           </div>
           <button
-            className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-1 px-3 mt-2 mb-2 rounded  mb-2"
+            className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-1 px-3 mt-2 mb-2 rounded mb-2"
             onClick={handleClick}
           >
             + ADD EVENT
           </button>
           <button
-            className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-1 px-3 rounded  mb-2 ml-3 mt-2 mb-2"
+            className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-1 px-3 rounded mb-2 ml-3 mt-2 mb-2"
             onClick={handleClick}
           >
             UPDATE EVENT
           </button>
 
-          <button className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-1 px-3 rounded  mb-2 ml-3 mt-2 mb-2 mr-[300px]">
+          <button className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-1 px-3 rounded mb-2 ml-3 mt-2 mb-2 mr-[300px]">
             DELETE EVENT
           </button>
 
@@ -152,24 +152,28 @@ function Scheduler() {
           )}
         </div>
 
-        <div className="border border-gray-400 shadow rounded-[30px] p-4 h-[800px] bg-white ">
-          <div className="flex flex-col md:flex-row border-b w-full pb-2">
+        <div className="border border-gray-400 shadow rounded-[30px] p-4 h-[800px] bg-transparent ">
+          <div className="grid grid-cols-7 gap-4 ">
             {daysOfWeek.map((day, index) => (
               <div key={index} className="flex-1 text-center">
                 <h4 className="font-bold px-4 md:px-10 py-2">{day}</h4>
-                <div className="storage-area p-2 mb-4">
+                <div className="storage-area p-2">
                   {schedules[day]?.map((schedule, index) => (
                     <div
                       key={index}
-                      className="bg-blue-300 p-4 mb-4 border border-gray-300 rounded"
+                      className="bg-blue-100 p-4 mb-4 border border-gray-300 rounded "
                     >
-                      <p className="text-black font-bold">{schedule.subject}</p>
-                      <p>
-                        {schedule.starts} - {schedule.ends}
-                      </p>
+                      <div className="flex flex-col items-center ">
+                        <p className="text-black font-bold ">
+                          {schedule.subject}
+                        </p>
+                        <p className="text-gray-600 text-sm ">
+                          {schedule.starts} - {schedule.ends}
+                        </p>
+                      </div>
                       <button
                         onClick={() => handleDeleteSchedule(day, index)}
-                        className="text-red-400  p-1 rounded mb-2"
+                        className="text-red-400 p-1 rounded mt-2"
                       >
                         <Image src={deleteIcon} alt="" />
                       </button>
