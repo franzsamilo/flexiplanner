@@ -11,10 +11,14 @@ import eventDeleteRoutes from "./routes/eventsRoutes/eventDelete";
 import eventUpdateRoutes from "./routes/eventsRoutes/eventUpdate";
 import userRegisterRoutes from "./routes/userAuth/userRegister";
 import userLoginRoutes from "./routes/userAuth/userLogin";
+import userLogoutRoutes from "./routes/userAuth/userLogout"
 
 const app = express();
 const PORT = 6969;
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+ }));
 app.use(express.json());
 
 app.use(session({ 
@@ -34,6 +38,8 @@ app.use('/api/taskUpdate', taskUpdateRoutes);
 app.use('/api/taskDelete', taskDeleteRoutes);
 app.use('/api/auth', userRegisterRoutes);
 app.use('/api/auth', userLoginRoutes);
+app.use('/api/auth', userLogoutRoutes);
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

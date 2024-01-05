@@ -35,7 +35,7 @@ router.post("/login", async (req, res) => {
     res.cookie("sessionToken", token, { httpOnly: false });
 
 
-    res.status(200).json({ message: "Login successful", token, user: { user_id: user.rows[0].user_id } });
+    res.status(200).json({ message: "Login successful", token, user: { user_id: user.rows[0].user_id, user_name: user.rows[0].username, email: user.rows[0].email } });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ error: "Failed to login" });

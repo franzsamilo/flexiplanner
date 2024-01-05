@@ -1,8 +1,11 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
+import AuthProvider from './screens/useContexts/useAuth'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-      <Component {...pageProps} />
+    <AuthProvider>
+    <Component {...pageProps} />
+  </AuthProvider>
   )
 }

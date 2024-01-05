@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import logo from '/public/assets/logo.png';
 import useNavigation from '../Components/Navigation';
+import { useRouter } from 'next/router';
 
 function LoginPage() {
-  const { ToSignUp, ToHome, ToMain } = useNavigation();
+  const { ToSignUp, ToHome } = useNavigation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  const router = useRouter();
 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -26,7 +29,8 @@ function LoginPage() {
       if (response.ok) {
         console.log('Login successful');
         localStorage.setItem('user', JSON.stringify(data.user));
-        ToMain();
+        console.log('After ToMain');
+        router.push('/screens/Main/Main');
       } else {
         setError(data.message || 'Login failed. Please check your credentials.');
         console.error('Login failed');

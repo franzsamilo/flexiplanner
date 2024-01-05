@@ -15,11 +15,11 @@ function useNavigation () {
   }
 
   function ToAboutUs () {
-    navigateTo('/screens/AboutUs/AboutUs')
+    navigateTo('/screens/AboutUs/aboutUs')
   }
 
   function ToDemo () {
-    navigateTo('/screens/Demo/Demo')
+    navigateTo('/screens/Demo/demo')
   }
 
   function ToLogin () {
