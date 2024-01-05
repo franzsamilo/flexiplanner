@@ -133,7 +133,7 @@ function AddTask({ onClose }: AddTaskProps) {
                 value={TaskDurationHours}
                 onChange={(e) => {
                   const hours = Number(e.target.value);
-                  if (hours < 0) {
+                  if (hours < 0 || hours > 23) {
                     setTaskDurationHours(0);
                   } else {
                     setTaskDurationHours(hours);
@@ -151,7 +151,7 @@ function AddTask({ onClose }: AddTaskProps) {
                 value={TaskDurationMinutes}
                 onChange={(e) => {
                   const minutes = Number(e.target.value);
-                  if (minutes < 0) {
+                  if (minutes < 0 || minutes > 59) {
                     setTaskDurationMinutes(0);
                   } else {
                     setTaskDurationMinutes(minutes);
@@ -175,6 +175,7 @@ function AddTask({ onClose }: AddTaskProps) {
             <option value="Completed">Completed</option>
           </select>
         </label>
+
         {!isTaskNameValid && (
           <p className="text-red-500">Please input task name</p>
         )}
