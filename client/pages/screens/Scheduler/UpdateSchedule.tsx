@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 interface UpdateScheduleProps {
   onClose: () => void;
@@ -6,9 +6,9 @@ interface UpdateScheduleProps {
 
 function UpdateSchedule({ onClose }: UpdateScheduleProps) {
   const [updateData, setUpdateData] = useState({
-    subject: "",
-    attribute: "",
-    newValue: "",
+    subject: '',
+    attribute: '',
+    newValue: '',
   });
 
   const handleChange = (
@@ -21,10 +21,10 @@ function UpdateSchedule({ onClose }: UpdateScheduleProps) {
     }));
   };
 
-  const generateTimeOptions = () => {
+  function generateTimeOptions() {
     const options = [];
     for (let i = 0; i < 24; i++) {
-      const time = `${i < 10 ? "0" : ""}${i}:00`;
+      const time = `${i < 10 ? '0' : ''}${i}:00`;
       options.push(
         <option key={time} value={time}>
           {time}
@@ -32,12 +32,12 @@ function UpdateSchedule({ onClose }: UpdateScheduleProps) {
       );
     }
     return options;
-  };
+  }
 
-  const renderInputBasedOnAttribute = () => {
+  function renderInputBasedOnAttribute() {
     const { attribute } = updateData;
     switch (attribute) {
-      case "Day":
+      case 'Day':
         return (
           <select
             name="newValue"
@@ -54,8 +54,8 @@ function UpdateSchedule({ onClose }: UpdateScheduleProps) {
             <option value="Sunday">Sunday</option>
           </select>
         );
-      case "Starts":
-      case "Ends":
+      case 'Starts':
+      case 'Ends':
         return (
           <select
             name="newValue"
@@ -76,30 +76,30 @@ function UpdateSchedule({ onClose }: UpdateScheduleProps) {
           />
         );
     }
-  };
+  }
 
   async function handleUpdate() {
     try {
       const response = await fetch(
         `http://localhost:6969/api/eventUpdate/update`,
         {
-          method: "PUT",
+          method: 'PUT',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(updateData),
         }
       );
 
       if (response.ok) {
-        console.log("Event updated successfully");
+        console.log('Event updated successfully');
         onClose();
         window.location.reload();
       } else {
-        console.error("Failed to update event");
+        console.error('Failed to update event');
       }
     } catch (error) {
-      console.error("Error updating event:", error);
+      console.error('Error updating event:', error);
     }
   }
 

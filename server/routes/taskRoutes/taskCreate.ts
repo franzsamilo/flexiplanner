@@ -7,7 +7,6 @@ router.post("/create", async (req: Request, res: Response) => {
   try {
     const {
       task_name,
-      task_description,
       task_priority,
       task_due_date,
       task_duration_days,
@@ -19,7 +18,7 @@ router.post("/create", async (req: Request, res: Response) => {
     } = req.body;
 
     await flexiplannerDB.query(
-      "INSERT INTO tasks (task_name, task_description, task_priority, task_due_date, task_duration_days, task_duration_hours, task_duration_minutes, task_status, user_id, category_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
+      "INSERT INTO tasks (task_name, task_description, task_priority, task_due_date, task_duration_days, task_duration_hours, task_duration_minutes, task_status, user_id, category_name) VALUES ($1, $2, $3, CASE WHEN $4 = '' THEN NULL ELSE TO_DATE($4, 'YYYY-MM-DD') END, COALESCE($5::int, NULL), COALESCE($6::int, NULL), COALESCE($7::int, NULL), $8, $9, $10)",
       [
         task_name,
         "",

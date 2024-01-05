@@ -10,9 +10,19 @@ function formatDueDate(dueDate: string) {
 }
 
 function formatDuration(days: number, hours: number, minutes: number) {
-  const formattedDuration = `${days} d, ${hours
-    .toString()
-    .padStart(2, '0')} h, ${minutes.toString().padStart(2, '0')} m`;
+  let durationParts = [];
+
+  if (days > 0) {
+    durationParts.push(`${days} d`);
+  }
+  if (hours > 0) {
+    durationParts.push(`${hours} h`);
+  }
+  if (minutes > 0) {
+    durationParts.push(`${minutes} m`);
+  }
+
+  const formattedDuration = durationParts.join(', ');
   return formattedDuration;
 }
 
@@ -21,6 +31,20 @@ function Task() {
 
   const [showTask, setShowTask] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const tasksPerPage = 5;
+
+  const totalPages = Math.ceil(tasks.length / tasksPerPage);
+
+  const currentTasks = tasks.slice(
+    (currentPage - 1) * tasksPerPage,
+    currentPage * tasksPerPage
+  );
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
 
   useEffect(() => {
     fetchTasks();
@@ -44,10 +68,10 @@ function Task() {
     setShowTask(true);
   }
 
-  const handleCloseTask = () => {
+  function handleCloseTask() {
     setShowTask(false);
     fetchTasks();
-  };
+  }
 
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
@@ -59,18 +83,16 @@ function Task() {
   const [showDeleteTask, setShowDeleteTask] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
 
-  // Function to open the DeleteTask component
   const handleDeleteTask = (task: Task) => {
     setTaskToDelete(task);
     setShowDeleteTask(true);
   };
 
-  // Function to close the DeleteTask component
-  const handleCloseDeleteTask = () => {
+  function handleCloseDeleteTask() {
     setTaskToDelete(null);
     setShowDeleteTask(false);
-    fetchTasks(); // You may want to fetch tasks after deletion
-  };
+    fetchTasks();
+  }
 
   return (
     <div className="bg-pink-50">
@@ -96,7 +118,7 @@ function Task() {
             ))}
             <div className="flex-1 text-center"></div>
           </div>
-          {tasks.map((task) => (
+          {currentTasks.map((task) => (
             <div
               key={task.task_id}
               className="flex flex-col md:flex-row border-b w-full pb-2"
@@ -109,7 +131,7 @@ function Task() {
               </div>
               <div className="flex-1 text-center">
                 <p className="px-4 md:px-10 py-2">
-                  {formatDueDate(task.task_due_date)}
+                  {task.task_due_date ? formatDueDate(task.task_due_date) : ''}
                 </p>
               </div>
               <div className="flex-1 text-center text-sm">
@@ -141,6 +163,23 @@ function Task() {
               </div>
             </div>
           ))}
+
+          <div className="flex space-x-2">
+            {[...Array(totalPages).keys()].map((number) => (
+              <button
+                key={number}
+                className={`px-3 py-2 border rounded ${
+                  currentPage === number + 1
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-white text-blue-500'
+                }`}
+                onClick={() => handlePageChange(number + 1)}
+              >
+                {number + 1}
+              </button>
+            ))}
+          </div>
+
           {showTask && selectedTask && (
             <UpdateTask
               onClose={() => {
@@ -151,12 +190,11 @@ function Task() {
               value={selectedTask}
             />
           )}
-          {/* Render the DeleteTask component when needed */}
+
           {showDeleteTask && taskToDelete && (
             <DeleteTask
               onClose={handleCloseDeleteTask}
               onDelete={(taskId) => {
-                // Update tasks after deletion
                 setTasks((prevTasks) =>
                   prevTasks.filter((task) => task.task_id !== taskId)
                 );
