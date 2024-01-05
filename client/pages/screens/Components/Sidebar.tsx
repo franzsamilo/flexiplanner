@@ -1,39 +1,36 @@
-import React, { useContext } from "react";
-import Image from "next/image";
-import userIconBlack from "/public/assets/icons/user-icon-black.png";
-import userIconWhite from "/public/assets/icons/user-icon-white.png";
-import remindersIcon from "public/assets/icons/reminders-icon.png";
-import academicsIcon from "public/assets/icons/academics-icon.png";
-import workIcon from "public/assets/icons/work-icon.png";
-import createIcon from "public/assets/icons/create-icon.png";
-import logoutIcon from "public/assets/icons/right-from-bracket-solid.svg";
-import { StaticImageData } from "next/image";
-import setUser from "../useContexts/useAuth";
-import {AuthContext} from "../useContexts/useAuth";
+import React, { useContext } from 'react';
+import Image from 'next/image';
+import userIconBlack from '/public/assets/icons/user-icon-black.png';
+import userIconWhite from '/public/assets/icons/user-icon-white.png';
+import remindersIcon from 'public/assets/icons/reminders-icon.png';
+import academicsIcon from 'public/assets/icons/academics-icon.png';
+import workIcon from 'public/assets/icons/work-icon.png';
+import createIcon from 'public/assets/icons/create-icon.png';
+import logoutIcon from 'public/assets/icons/right-from-bracket-solid.svg';
+import { StaticImageData } from 'next/image';
+import { AuthContext } from '../useContexts/useAuth';
 
 interface SidebarProps {
-  updateHeaderText(text: string): void;
-  updateHeaderIcon(icon: StaticImageData): void;
+  updateHeader(category: string, icon: StaticImageData): void;
 }
 
-function Sidebar({ updateHeaderText, updateHeaderIcon }: SidebarProps) {
-  function handleButtonClick(buttonText: string, iconPath: StaticImageData) {
-    updateHeaderText(buttonText);
-    updateHeaderIcon(iconPath);
+function Sidebar({ updateHeader }: SidebarProps) {
+  function handleButtonClick(category: string, iconPath: StaticImageData) {
+    updateHeader(category, iconPath);
   }
 
   const { user, setUser } = useContext(AuthContext);
 
   async function handleLogout() {
-    const response = await fetch("http://localhost:6969/api/auth/logout", {
-      method: "POST",
-      credentials: "include",
+    const response = await fetch('http://localhost:6969/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include',
     });
 
     if (response.ok) {
       setUser(null);
     } else {
-      console.error("Logout failed");
+      console.error('Logout failed');
     }
   }
 
@@ -48,7 +45,7 @@ function Sidebar({ updateHeaderText, updateHeaderIcon }: SidebarProps) {
           />
         </button>
         <button className="px-1 rounded-lg hover:bg-dirty">
-        {user && user.user_name ? user.user_name : 'Not logged in'}
+          {user && user.user_name ? user.user_name : 'Not logged in'}
         </button>
       </div>
 
@@ -65,7 +62,7 @@ function Sidebar({ updateHeaderText, updateHeaderIcon }: SidebarProps) {
         <div className="text-tertiary pl-2 text-lg font-medium">Categories</div>
         <button
           className="flex items-center px-4 py-3 my-2 mx-4 bg-secondary rounded-2xl hover:bg-main"
-          onClick={() => handleButtonClick("Personal", userIconWhite)}
+          onClick={() => handleButtonClick('Personal', userIconWhite)}
         >
           <div>
             <Image src={userIconWhite} alt="user-icon" className="w-[30px]" />
@@ -77,7 +74,7 @@ function Sidebar({ updateHeaderText, updateHeaderIcon }: SidebarProps) {
 
         <button
           className="flex items-center pl-3 py-3 my-2 mx-4 bg-secondary rounded-2xl hover:bg-main"
-          onClick={() => handleButtonClick("Academics", academicsIcon)}
+          onClick={() => handleButtonClick('Academics', academicsIcon)}
         >
           <div>
             <Image
@@ -93,7 +90,7 @@ function Sidebar({ updateHeaderText, updateHeaderIcon }: SidebarProps) {
 
         <button
           className="flex items-center px-4 py-3 my-2 mx-4 bg-secondary rounded-2xl hover:bg-main"
-          onClick={() => handleButtonClick("Work", workIcon)}
+          onClick={() => handleButtonClick('Work', workIcon)}
         >
           <div>
             <Image src={workIcon} alt="work-icon" className="w-[30px]" />
