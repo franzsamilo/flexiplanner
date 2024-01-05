@@ -25,6 +25,7 @@ function LoginPage() {
 
       if (response.ok) {
         console.log('Login successful');
+        localStorage.setItem('user', JSON.stringify(data.user));
         ToMain();
       } else {
         setError(data.message || 'Login failed. Please check your credentials.');
