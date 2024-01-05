@@ -12,6 +12,7 @@ function AddTask({ onClose }: AddTaskProps) {
   const [TaskDurationHours, setTaskDurationHours] = useState(0);
   const [TaskDurationMinutes, setTaskDurationMinutes] = useState(0);
   const [TaskStatus, setTaskStatus] = useState('To do');
+  const [isTaskNameValid, setIsTaskNameValid] = useState(true);
 
   const today = new Date().toISOString().split('T')[0];
 
@@ -24,6 +25,10 @@ function AddTask({ onClose }: AddTaskProps) {
   }
 
   function handleAddTask() {
+    if (!TaskName) {
+      setIsTaskNameValid(false);
+      return;
+    }
     const newTask = {
       task_name: TaskName,
       task_priority: TaskPriority,
@@ -56,6 +61,10 @@ function AddTask({ onClose }: AddTaskProps) {
       .catch((error) => {
         console.error('Error adding task:', error);
       });
+  }
+
+  function handleButtonClick() {
+    setIsTaskNameValid(true);
   }
 
   return (
@@ -104,7 +113,14 @@ function AddTask({ onClose }: AddTaskProps) {
               <input
                 type="number"
                 value={TaskDurationDays}
-                onChange={(e) => setTaskDurationDays(Number(e.target.value))}
+                onChange={(e) => {
+                  const days = Number(e.target.value);
+                  if (days < 0) {
+                    setTaskDurationDays(0);
+                  } else {
+                    setTaskDurationDays(days);
+                  }
+                }}
                 className="border rounded w-full p-2"
               />
             </label>
@@ -115,7 +131,14 @@ function AddTask({ onClose }: AddTaskProps) {
               <input
                 type="number"
                 value={TaskDurationHours}
-                onChange={(e) => setTaskDurationHours(Number(e.target.value))}
+                onChange={(e) => {
+                  const hours = Number(e.target.value);
+                  if (hours < 0) {
+                    setTaskDurationHours(0);
+                  } else {
+                    setTaskDurationHours(hours);
+                  }
+                }}
                 className="border rounded w-full p-2"
               />
             </label>
@@ -126,7 +149,14 @@ function AddTask({ onClose }: AddTaskProps) {
               <input
                 type="number"
                 value={TaskDurationMinutes}
-                onChange={(e) => setTaskDurationMinutes(Number(e.target.value))}
+                onChange={(e) => {
+                  const minutes = Number(e.target.value);
+                  if (minutes < 0) {
+                    setTaskDurationMinutes(0);
+                  } else {
+                    setTaskDurationMinutes(minutes);
+                  }
+                }}
                 className="border rounded w-full p-2"
               />
             </label>
@@ -145,6 +175,9 @@ function AddTask({ onClose }: AddTaskProps) {
             <option value="Completed">Completed</option>
           </select>
         </label>
+        {!isTaskNameValid && (
+          <p className="text-red-500">Please input task name</p>
+        )}
 
         <div className="flex justify-end">
           <button
