@@ -16,9 +16,9 @@ const iconArray = [
   { buttonText: 'Personal', icon: personalIcon },
 ];
 function MainPage() {
-  const [headerText, setHeaderText] = useState('Academics');
-  const [headerIcon, setHeaderIcon] = useState(academicsIcon);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [headerText, setHeaderText] = useState('Personal');
+  const [headerIcon, setHeaderIcon] = useState(personalIcon);
+  const [selectedCategory, setSelectedCategory] = useState('Personal');
 
   function updateHeader(category: string, icon: StaticImageData) {
     const iconObject = iconArray.find((item) => item.buttonText === category);
