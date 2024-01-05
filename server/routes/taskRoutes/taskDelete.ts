@@ -1,10 +1,10 @@
-import express, { Request, Response } from 'express';
-import flexiplannerDB from '../../poolDB/flexiplanner';
+import express, { Request, Response } from "express";
+import flexiplannerDB from "../../poolDB/flexiplanner";
 
 const router = express.Router();
 
-router.delete('/delete/:task_id', async (req: Request, res: Response) => {
-  console.log('Reached delete route');
+router.delete("/delete/:task_id", async (req: Request, res: Response) => {
+  console.log("Reached delete route");
 
   const { task_id } = req.params;
 
@@ -13,13 +13,13 @@ router.delete('/delete/:task_id', async (req: Request, res: Response) => {
       task_id,
     ]);
 
-    res.json('task was deleted!');
+    res.json("task was deleted!");
   } catch (error) {
-    console.error('Error deleting events:', error);
-    res.status(500).json({ error: 'Failed to delete tasks' });
+    console.error("Error deleting events:", error);
+    res.status(500).json({ error: "Failed to delete tasks" });
   }
 
-  console.log('End of delete route');
+  console.log("End of delete route");
 });
 
 export default router;
