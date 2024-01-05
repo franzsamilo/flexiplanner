@@ -21,17 +21,17 @@ function HomePage() {
 
   const sliderRef = React.useRef<Slider>(null);
 
-  const handlePrev = () => {
+  function handlePrev() {
     if (sliderRef.current) {
       sliderRef.current.slickPrev();
     }
-  };
+  }
 
-  const handleNext = () => {
+  function handleNext() {
     if (sliderRef.current) {
       sliderRef.current.slickNext();
     }
-  };
+  }
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-dirty">
@@ -102,7 +102,7 @@ function HomePage() {
               />
             </button>
           </div>
-        </div >
+        </div>
       </main>
       <Footer className="flex-shrink-0" />
     </div>
