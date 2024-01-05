@@ -62,8 +62,11 @@ function AddSchedule({
 
   function generateTimeOptions() {
     const options = [];
-    for (let i = 0; i < 24; i++) {
-      const time = `${i < 10 ? "0" : ""}${i}:00`;
+    for (let i = 0; i < 24 * 2; i++) {
+      const hour = Math.floor(i / 2);
+      const minute = i % 2 === 0 ? "00" : "30";
+      const time = `${hour < 10 ? "0" : ""}${hour}:${minute}`;
+
       options.push(
         <option key={time} value={time}>
           {time}
@@ -72,6 +75,7 @@ function AddSchedule({
     }
     return options;
   }
+
   function handleAddSchedule() {
     if (
       schedule.day &&
@@ -80,6 +84,14 @@ function AddSchedule({
       schedule.ends &&
       !hasConflict(schedule)
     ) {
+      const startTime = new Date(`1970-01-01T${schedule.starts}`);
+      const endTime = new Date(`1970-01-01T${schedule.ends}`);
+
+      if (endTime <= startTime) {
+        alert("End time must be later than start time");
+        return;
+      }
+
       const newEvent: Event = {
         ...schedule,
         user_id: 1,

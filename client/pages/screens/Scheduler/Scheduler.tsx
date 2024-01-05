@@ -3,7 +3,6 @@ import AddSchedule from "./AddSchedule";
 import UpdateSchedule from "./UpdateSchedule";
 import DeleteSchedule from "./DeleteSchedule";
 import { Event } from "../Constants/types";
-import JSXStyle from "styled-jsx/style";
 
 function Scheduler() {
   const [showAddSchedule, setShowAddSchedule] = useState(false);
@@ -41,6 +40,15 @@ function Scheduler() {
     window.location.reload();
   }
 
+  function formatTime(time) {
+    const date = new Date(`1970-01-01T${time}`);
+    const formattedTime = date.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    return formattedTime;
+  }
+
   const daysOfWeek = [
     "Monday",
     "Tuesday",
@@ -52,17 +60,21 @@ function Scheduler() {
   ];
 
   useEffect(() => {
-    fetch("http://localhost:6969/api/eventRead/read")
-      .then((response) => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:6969/api/eventRead/read"
+        );
+
         if (!response.ok) {
           throw new Error("Failed to fetch events");
         }
-        return response.json();
-      })
-      .then((data) => {
-        const weeklySchedules: { [key: string]: Event[] } = {};
 
-        data.forEach((event: any) => {
+        const data = await response.json();
+
+        const weeklySchedules = {};
+
+        data.forEach((event: Event) => {
           const { day } = event;
           if (!weeklySchedules[day]) {
             weeklySchedules[day] = [];
@@ -71,7 +83,7 @@ function Scheduler() {
         });
 
         Object.keys(weeklySchedules).forEach((day) => {
-          weeklySchedules[day].sort((a: any, b: any) => {
+          weeklySchedules[day].sort((a, b) => {
             const startTimeA = new Date(`1970-01-01T${a.starts}`);
             const startTimeB = new Date(`1970-01-01T${b.starts}`);
             return startTimeA.getTime() - startTimeB.getTime();
@@ -98,10 +110,12 @@ function Scheduler() {
         });
 
         setSchedules(weeklySchedules);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching events:", error);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -164,7 +178,9 @@ function Scheduler() {
                           {schedule.subject}
                         </p>
                         <p className="text-gray-600 text-sm ">
-                          {schedule.starts} - {schedule.ends}
+                          {`${formatTime(schedule.starts)} - ${formatTime(
+                            schedule.ends
+                          )}`}
                         </p>
                       </div>
                     </div>
