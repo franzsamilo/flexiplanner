@@ -8,6 +8,7 @@ import academicsIcon from 'public/assets/icons/academics-icon.png';
 import workIcon from 'public/assets/icons/work-icon.png';
 import personalIcon from 'public/assets/icons/user-icon-white.png';
 import { StaticImageData } from 'next/image';
+import AuthWrapper from '../Components/AuthWrapper';
 
 const iconArray = [
   { buttonText: 'Academics', icon: academicsIcon },
@@ -29,18 +30,20 @@ function MainPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-dirty">
-      <div className="flex flex-row ">
-        {' '}
-        <Sidebar updateHeader={updateHeader} />
-        <main className="flex flex-col w-full h-auto ">
-          <Header buttonText={headerText} icon={headerIcon} />
-          <Scheduler />
-          <Task selectedCategory={selectedCategory} />
-          <Footer />
-        </main>
+    <AuthWrapper>
+      <div className="flex flex-col min-h-screen bg-dirty">
+        <div className="flex flex-row ">
+          {' '}
+          <Sidebar updateHeader={updateHeader} />
+          <main className="flex flex-col w-full h-auto ">
+            <Header buttonText={headerText} icon={headerIcon} />
+            <Scheduler />
+            <Task selectedCategory={selectedCategory} />
+            <Footer />
+          </main>
+        </div>
       </div>
-    </div>
+    </AuthWrapper>
   );
 }
 

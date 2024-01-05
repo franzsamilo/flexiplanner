@@ -1,24 +1,60 @@
-import React from 'react'
-import Image from 'next/image'
-import logo from '/public/assets/logo.png'
-import useNavigation from '../Components/Navigation'
+import React, { useState } from 'react';
+import Image from 'next/image';
+import logo from '/public/assets/logo.png';
+import useNavigation from '../Components/Navigation';
+import { useRouter } from 'next/router';
 
-function LoginPage () {
-  const { ToSignUp, ToScheduler, ToHome } = useNavigation()
+function LoginPage() {
+  const { ToSignUp, ToHome } = useNavigation();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const router = useRouter();
+
+  async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:6969/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user_name: username, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log('Login successful');
+        localStorage.setItem('user', JSON.stringify(data.user));
+        console.log('After ToMain');
+        router.push('/screens/Main/Main');
+      } else {
+        setError(data.message || 'Login failed. Please check your credentials.');
+        console.error('Login failed');
+      }
+    } catch (error) {
+      setError('An error occurred during login.');
+      console.error('Error during login:', error);
+    }
+  }
+
   return (
     <div className='flex flex-col min-h-screen bg-gradient-to-br from-dirty via-blue-100 to-main'>
       <main className='flex-1 flex items-center justify-center '>
         <div className='w-full max-w-xl px-6'>
           <div className='bg-white shadow-xl rounded-3xl px-8 py-10'>
             <div className='flex justify-center mb-4'>
-            <button onClick={ToHome}>
+              <button onClick={ToHome}>
                 <Image src={logo} alt='Logo' className='h-16 w-16' />
               </button>
             </div>
             <h2 className='text-2xl font-semibold text-center mb-4'>
               Welcome!
             </h2>
-            <form className='flex flex-col items-center'>
+            <form className='flex flex-col items-center' onSubmit={handleLogin}>
               <div className='mb-4 w-full'>
                 <label
                   htmlFor='username'
@@ -30,6 +66,8 @@ function LoginPage () {
                   type='text'
                   id='username'
                   placeholder='Enter your username'
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   className='shadow appearance-lg rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 />
               </div>
@@ -44,13 +82,15 @@ function LoginPage () {
                   type='password'
                   id='password'
                   placeholder='Enter your password'
-                  className='shadow appearance-lg  rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className='shadow appearance-lg rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 />
               </div>
+              <p className='text-red-500 text-sm mb-4'>{error}</p>
               <button
                 type='submit'
                 className='w-full bg-secondary hover:bg-main text-white font-bold py-2 px-4 rounded-3xl mb-6'
-                onClick={ToScheduler}
               >
                 Log in
               </button>
@@ -67,7 +107,7 @@ function LoginPage () {
         </div>
       </main>
     </div>
-  )
+  );
 }
 
-export default LoginPage
+export default LoginPage;

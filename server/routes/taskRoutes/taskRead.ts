@@ -1,9 +1,9 @@
-import express, { Request, Response } from 'express';
-import flexiplannerDB from '../../poolDB/flexiplanner';
+import express, { Request, Response } from "express";
+import flexiplannerDB from "../../poolDB/flexiplanner";
 
 const router = express.Router();
 
-router.get('/read', async (req: Request, res: Response) => {
+router.get("/read", async (req: Request, res: Response) => {
   try {
     const { category_name = '' } = req.query;
 
@@ -14,8 +14,8 @@ router.get('/read', async (req: Request, res: Response) => {
 
     res.status(200).json(tasks.rows);
   } catch (error) {
-    console.error('Error fetching events:', error);
-    res.status(500).json({ error: 'Failed to fetch tasks' });
+    console.error("Error fetching events:", error);
+    res.status(500).json({ error: "Failed to fetch tasks" });
   }
 });
 

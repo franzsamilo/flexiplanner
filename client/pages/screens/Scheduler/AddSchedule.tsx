@@ -86,10 +86,13 @@ function AddSchedule({
         category_name: "",
       };
 
+      const token = localStorage.getItem('token');
+
       fetch("http://localhost:6969/api/events/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(newEvent),
       })

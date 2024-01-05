@@ -7,6 +7,10 @@ function SignUpPage() {
   const { ToLogin, ToHome } = useNavigation();
   const [passwordLengthError, setPasswordLengthError] = useState("");
   const [passwordMismatchError, setPasswordMismatchError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
@@ -17,6 +21,11 @@ function SignUpPage() {
 
   async function handleSubmit(event: any) {
     event.preventDefault();
+
+    if (hasErrors) {
+      console.error("There are validation errors. Please correct them.");
+      return;
+    }
 
     if (formData.password !== formData.confirmPassword) {
       setPasswordMismatchError("Passwords do not match");
@@ -59,10 +68,60 @@ function SignUpPage() {
     }
   }
 
+  let hasErrors = false;
+
   function handleChange(event: any) {
+    const { id, value } = event.target;
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const noSpecialCharsPattern = /^[a-zA-Z0-9]+$/;
+
+    switch (id) {
+      case "username":
+        if (value.trim() === "" || value.includes(" ")) {
+          setUsernameError(
+            "Username cannot be empty and cannot contain spaces"
+          );
+          hasErrors = true;
+        } else {
+          setUsernameError("");
+        }
+        break;
+      case "email":
+        if (!emailPattern.test(value)) {
+          setEmailError("Invalid email, please use a valid email address and format");
+          hasErrors = true;
+        } else {
+          setEmailError("");
+        }
+        break;
+      case "password":
+        if (!noSpecialCharsPattern.test(value) || value.includes(" ")) {
+          setPasswordError(
+            "Password cannot contain spaces or special characters"
+          );
+          hasErrors = true;
+        } else {
+          setPasswordError("");
+        }
+        break;
+      case "confirmPassword":
+        if (!noSpecialCharsPattern.test(value)) {
+          setConfirmPasswordError(
+            "Confirm password cannot contain spaces or special characters"
+          );
+          hasErrors = true;
+        } else {
+          setConfirmPasswordError("");
+        }
+        break;
+      default:
+        break;
+    }
+
     setFormData({
       ...formData,
-      [event.target.id]: event.target.value,
+      [id]: value,
     });
   }
 
@@ -142,7 +201,7 @@ function SignUpPage() {
                   className="shadow appearance-lg  rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
                 {passwordMismatchError && (
-                  <p className="text-red-500 text-sm mt-1">
+                  <p className="text-red-500 text-sm mt-2 mb-2">
                     {passwordMismatchError}
                   </p>
                 )}
@@ -152,11 +211,28 @@ function SignUpPage() {
                   </p>
                 )}
                 {passwordLengthError && (
-                  <p className="text-red-500 text-sm mt-1">
+                  <p className="text-red-500 text-sm mt-2 mb-2">
                     {passwordLengthError}
                   </p>
                 )}
               </div>
+              {usernameError && (
+                <p className="text-red-500 text-sm mt-2 mb-2">
+                  {usernameError}</p>
+              )}
+              {emailError && (
+                <p className="text-red-500 text-sm mt-2 mb-2">
+                  {emailError}</p>
+              )}
+              {passwordError && (
+                <p className="text-red-500 text-sm mt-2 mb-2">
+                  {passwordError}</p>
+              )}
+              {confirmPasswordError && (
+                <p className="text-red-500 text-sm mt-2 mb-2">
+                  {confirmPasswordError}
+                </p>
+              )}
               <button
                 type="submit"
                 className="w-full bg-secondary hover:bg-main text-white font-bold py-2 px-4 rounded-3xl mb-6"

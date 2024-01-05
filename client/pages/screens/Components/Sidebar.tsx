@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Image from 'next/image';
 import userIconBlack from '/public/assets/icons/user-icon-black.png';
 import userIconWhite from '/public/assets/icons/user-icon-white.png';
@@ -8,6 +8,7 @@ import workIcon from 'public/assets/icons/work-icon.png';
 import createIcon from 'public/assets/icons/create-icon.png';
 import logoutIcon from 'public/assets/icons/right-from-bracket-solid.svg';
 import { StaticImageData } from 'next/image';
+import { AuthContext } from '../useContexts/useAuth';
 
 interface SidebarProps {
   updateHeader(category: string, icon: StaticImageData): void;
@@ -16,6 +17,21 @@ interface SidebarProps {
 function Sidebar({ updateHeader }: SidebarProps) {
   function handleButtonClick(category: string, iconPath: StaticImageData) {
     updateHeader(category, iconPath);
+  }
+
+  const { user, setUser } = useContext(AuthContext);
+
+  async function handleLogout() {
+    const response = await fetch('http://localhost:6969/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include',
+    });
+
+    if (response.ok) {
+      setUser(null);
+    } else {
+      console.error('Logout failed');
+    }
   }
 
   return (
@@ -28,7 +44,9 @@ function Sidebar({ updateHeader }: SidebarProps) {
             className="w-full h-full object-contain p-2"
           />
         </button>
-        <button className="px-1 rounded-lg hover:bg-dirty">markrenzotan</button>
+        <button className="px-1 rounded-lg hover:bg-dirty">
+          {user && user.user_name ? user.user_name : 'Not logged in'}
+        </button>
       </div>
 
       <div className="flex flex-col pl-5 text-tertiary text-lg font-bold">
@@ -91,7 +109,10 @@ function Sidebar({ updateHeader }: SidebarProps) {
           </div>
         </button>
       </div>
-      <button className="flex items-center px-10 py-2 my-2 mx-4 fixed bottom-1  rounded-lg hover:bg-secondary">
+      <button
+        className="flex items-center px-10 py-2 my-2 mx-4 fixed bottom-1  rounded-lg hover:bg-secondary"
+        onClick={handleLogout}
+      >
         <div>
           <Image
             src={logoutIcon}

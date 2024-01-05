@@ -10,12 +10,16 @@ function useNavigation () {
     navigateTo('/screens/Home/Home')
   }
 
+  function ToMain () {
+    navigateTo('/screens/Main/Main')
+  }
+
   function ToAboutUs () {
-    navigateTo('/screens/AboutUs/AboutUs')
+    navigateTo('/screens/AboutUs/aboutUs')
   }
 
   function ToDemo () {
-    navigateTo('/screens/Demo/Demo')
+    navigateTo('/screens/Demo/demo')
   }
 
   function ToLogin () {
@@ -31,6 +35,7 @@ function useNavigation () {
 
   return {
     ToHome,
+    ToMain,
     ToAboutUs,
     ToDemo,
     ToLogin,
