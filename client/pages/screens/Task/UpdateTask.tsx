@@ -24,6 +24,7 @@ function UpdateTask({ onClose, value }: UpdateTaskProps) {
     value.task_duration_minutes
   );
   const [UpdatedTaskStatus, setUpdatedTaskStatus] = useState(value.task_status);
+  const [isUpdatedTaskNameValid, setIsUpdatedTaskNameValid] = useState(true);
 
   const today = new Date().toISOString().split('T')[0];
 
@@ -37,6 +38,10 @@ function UpdateTask({ onClose, value }: UpdateTaskProps) {
 
   async function handleUpdateTask() {
     try {
+      if (!UpdatedTaskName) {
+        setIsUpdatedTaskNameValid(false);
+        return;
+      }
       console.log('Before fetch');
       const body = {
         task_id: value.task_id,
@@ -119,9 +124,14 @@ function UpdateTask({ onClose, value }: UpdateTaskProps) {
               <input
                 type="number"
                 value={UpdatedTaskDurationDays}
-                onChange={(e) =>
-                  setUpdatedTaskDurationDays(Number(e.target.value))
-                }
+                onChange={(e) => {
+                  const days = Number(e.target.value);
+                  if (days < 0) {
+                    setUpdatedTaskDurationDays(0);
+                  } else {
+                    setUpdatedTaskDurationDays(days);
+                  }
+                }}
                 className="border rounded w-full p-2"
               />
             </label>
@@ -132,9 +142,14 @@ function UpdateTask({ onClose, value }: UpdateTaskProps) {
               <input
                 type="number"
                 value={UpdatedTaskDurationHours}
-                onChange={(e) =>
-                  setUpdatedTaskDurationHours(Number(e.target.value))
-                }
+                onChange={(e) => {
+                  const hours = Number(e.target.value);
+                  if (hours < 0 || hours > 23) {
+                    setUpdatedTaskDurationHours(0);
+                  } else {
+                    setUpdatedTaskDurationHours(hours);
+                  }
+                }}
                 className="border rounded w-full p-2"
               />
             </label>
@@ -145,9 +160,14 @@ function UpdateTask({ onClose, value }: UpdateTaskProps) {
               <input
                 type="number"
                 value={UpdatedTaskDurationMinutes}
-                onChange={(e) =>
-                  setUpdatedTaskDurationMinutes(Number(e.target.value))
-                }
+                onChange={(e) => {
+                  const minutes = Number(e.target.value);
+                  if (minutes < 0 || minutes > 59) {
+                    setUpdatedTaskDurationMinutes(0);
+                  } else {
+                    setUpdatedTaskDurationMinutes(minutes);
+                  }
+                }}
                 className="border rounded w-full p-2"
               />
             </label>
@@ -166,6 +186,10 @@ function UpdateTask({ onClose, value }: UpdateTaskProps) {
             <option value="Completed">Completed</option>
           </select>
         </label>
+
+        {!isUpdatedTaskNameValid && (
+          <p className="text-red-500">Please input task name</p>
+        )}
 
         <div className="flex justify-end">
           <button
