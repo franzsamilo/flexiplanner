@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 
 interface AddTaskProps {
   onClose: () => void;
+  selectedCategory: string;
 }
 
-function AddTask({ onClose }: AddTaskProps) {
+function AddTask({ onClose, selectedCategory }: AddTaskProps) {
   const [TaskName, setTaskName] = useState('');
   const [TaskPriority, setTaskPriority] = useState('Low');
   const [TaskDueDate, setTaskDueDate] = useState('');
@@ -38,7 +39,7 @@ function AddTask({ onClose }: AddTaskProps) {
       task_duration_minutes: TaskDurationMinutes,
       task_status: TaskStatus,
       user_id: 1,
-      category_name: '',
+      category_name: selectedCategory,
     };
 
     fetch('http://localhost:6969/api/tasks/create', {

@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import AddTask from '../Task/AddTask';
 import UpdateTask from '../Task/UpdateTask';
 import DeleteTask from '../Task/DeleteTask';
 import { Task } from '../Constants/types';
+
+interface TaskProps {
+  selectedCategory: string;
+}
 
 function formatDueDate(dueDate: string) {
   const formattedDate = new Date(dueDate).toISOString().split('T')[0];
@@ -26,14 +30,15 @@ function formatDuration(days: number, hours: number, minutes: number) {
   return formattedDuration;
 }
 
-function Task() {
+function Task({ selectedCategory }: TaskProps) {
   const tableHeaders = ['Name', 'Priority', 'DueDate', 'Duration', 'Status'];
-
   const [showTask, setShowTask] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([]);
-
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const tasksPerPage = 5;
+  const [showDeleteTask, setShowDeleteTask] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
 
   const totalPages = Math.ceil(tasks.length / tasksPerPage);
 
@@ -42,17 +47,40 @@ function Task() {
     currentPage * tasksPerPage
   );
 
-  const handlePageChange = (pageNumber: number) => {
+  function handlePageChange(pageNumber: number) {
     setCurrentPage(pageNumber);
-  };
+  }
 
-  useEffect(() => {
-    fetchTasks();
-  }, []);
+  function handleClickTask() {
+    setShowTask(true);
+  }
 
-  const fetchTasks = async () => {
+  function handleCloseTask() {
+    setShowTask(false);
+    fetchTasks(selectedCategory);
+  }
+
+  function handleEditTask(task: Task) {
+    setSelectedTask(task);
+    setShowTask(true);
+  }
+
+  function handleDeleteTask(task: Task) {
+    setTaskToDelete(task);
+    setShowDeleteTask(true);
+  }
+
+  function handleCloseDeleteTask() {
+    setTaskToDelete(null);
+    setShowDeleteTask(false);
+    fetchTasks(selectedCategory);
+  }
+
+  const fetchTasks = useCallback(async (selectedCategory: string) => {
     try {
-      const response = await fetch('http://localhost:6969/api/taskRead/read');
+      const response = await fetch(
+        `http://localhost:6969/api/taskRead/read?category_name=${selectedCategory}`
+      );
       if (!response.ok) {
         throw new Error('Failed to fetch tasks');
       }
@@ -62,37 +90,12 @@ function Task() {
     } catch (error) {
       console.error('Error fetching tasks:', error);
     }
-  };
+  }, []); // Empty dependency array means this function will never recompute
 
-  function handleClickTask() {
-    setShowTask(true);
-  }
-
-  function handleCloseTask() {
-    setShowTask(false);
-    fetchTasks();
-  }
-
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-
-  const handleEditTask = (task: Task) => {
-    setSelectedTask(task);
-    setShowTask(true);
-  };
-
-  const [showDeleteTask, setShowDeleteTask] = useState(false);
-  const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
-
-  const handleDeleteTask = (task: Task) => {
-    setTaskToDelete(task);
-    setShowDeleteTask(true);
-  };
-
-  function handleCloseDeleteTask() {
-    setTaskToDelete(null);
-    setShowDeleteTask(false);
-    fetchTasks();
-  }
+  useEffect(() => {
+    fetchTasks(selectedCategory);
+    console.log(selectedCategory);
+  }, [fetchTasks, selectedCategory]); // fetchTasks and selectedCategory are listed as dependencies
 
   return (
     <div className="bg-pink-50">
@@ -107,7 +110,12 @@ function Task() {
           >
             + Add Task
           </button>
-          {showTask && <AddTask onClose={handleCloseTask} />}
+          {showTask && (
+            <AddTask
+              onClose={handleCloseTask}
+              selectedCategory={selectedCategory}
+            />
+          )}
         </div>
         <div className="border border-gray-400 shadow rounded-[30px] p-4 h-auto w-[1200px] mb-10 bg-white">
           <div className="flex flex-col md:flex-row border-b w-full pb-2">
@@ -185,7 +193,7 @@ function Task() {
               onClose={() => {
                 setShowTask(false);
                 setSelectedTask(null);
-                fetchTasks();
+                fetchTasks(selectedCategory);
               }}
               value={selectedTask}
             />
