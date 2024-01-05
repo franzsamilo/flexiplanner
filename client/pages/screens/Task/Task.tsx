@@ -123,8 +123,8 @@ function Task() {
               key={task.task_id}
               className="flex flex-col md:flex-row border-b w-full pb-2"
             >
-              <div className="flex-1 text-center">
-                <p className="px-4 md:px-8 py-2">{task.task_name}</p>
+              <div className="flex-1 text-center max-w-[190px]">
+                <p className="px-4 md:px-8 py-2 truncate">{task.task_name}</p>
               </div>
               <div className="flex-1 text-center">
                 <p className="px-4 md:px-10 py-2">{task.task_priority}</p>
