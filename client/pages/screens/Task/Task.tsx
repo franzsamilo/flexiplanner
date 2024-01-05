@@ -32,6 +32,20 @@ function Task() {
   const [showTask, setShowTask] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const tasksPerPage = 5;
+
+  const totalPages = Math.ceil(tasks.length / tasksPerPage);
+
+  const currentTasks = tasks.slice(
+    (currentPage - 1) * tasksPerPage,
+    currentPage * tasksPerPage
+  );
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
   useEffect(() => {
     fetchTasks();
   }, []);
@@ -104,7 +118,7 @@ function Task() {
             ))}
             <div className="flex-1 text-center"></div>
           </div>
-          {tasks.map((task) => (
+          {currentTasks.map((task) => (
             <div
               key={task.task_id}
               className="flex flex-col md:flex-row border-b w-full pb-2"
@@ -149,6 +163,23 @@ function Task() {
               </div>
             </div>
           ))}
+
+          <div className="flex space-x-2">
+            {[...Array(totalPages).keys()].map((number) => (
+              <button
+                key={number}
+                className={`px-3 py-2 border rounded ${
+                  currentPage === number + 1
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-white text-blue-500'
+                }`}
+                onClick={() => handlePageChange(number + 1)}
+              >
+                {number + 1}
+              </button>
+            ))}
+          </div>
+
           {showTask && selectedTask && (
             <UpdateTask
               onClose={() => {
