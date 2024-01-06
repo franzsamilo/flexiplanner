@@ -16,7 +16,7 @@ import userLogoutRoutes from "./routes/userAuth/userLogout"
 const app = express();
 const PORT = 6969;
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'https://flexiplanner.vercel.app',
   credentials: true,
  }));
 app.use(express.json());
