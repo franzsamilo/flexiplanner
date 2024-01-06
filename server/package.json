@@ -9,7 +9,6 @@
     "dev": "nodemon server.ts",
     "prepare": "husky install",
     "build": "tsc"
-
   },
   "author": "Liberal Party (not the political one)",
   "license": "ISC",
@@ -29,6 +28,7 @@
     "@types/express": "^4.17.21",
     "@types/express-session": "^1.17.10",
     "@types/jsonwebtoken": "^9.0.5",
+    "@types/node": "^20.10.6",
     "dbmate": "^2.10.0",
     "eslint": "^8.56.0",
     "express-session": "^1.17.3",
