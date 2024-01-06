@@ -35,7 +35,7 @@ function MainPage() {
         <div className="flex flex-row ">
           {' '}
           <Sidebar updateHeader={updateHeader} />
-          <main className="flex flex-col w-full h-auto ">
+          <main className="flex flex-col w-full h-auto">
             <Header buttonText={headerText} icon={headerIcon} />
             <Scheduler />
             <Task selectedCategory={selectedCategory} />
