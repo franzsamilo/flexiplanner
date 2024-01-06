@@ -7,7 +7,7 @@ on:
     branches:
       - main
       paths:
-      - 'client/**'
+      - client/**
 jobs:
   Deploy-Production:
     runs-on: ubuntu-latest
