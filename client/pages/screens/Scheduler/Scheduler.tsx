@@ -134,14 +134,6 @@ function Scheduler() {
               const nextStart = new Date(
                 `1970-01-01T${schedulesOfDay[i + 1].starts}`
               );
-
-              if (currentEnd >= nextStart) {
-                console.log(
-                  `Conflict detected on ${day} between ${
-                    schedulesOfDay[i].subject
-                  } and ${schedulesOfDay[i + 1].subject}`
-                );
-              }
             }
           });
 
@@ -150,8 +142,6 @@ function Scheduler() {
         .catch((error) => {
           console.error('Error fetching events:', error);
           if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
             console.error('Response data:', error.response.data);
             console.error('Response status:', error.response.status);
             console.error('Response headers:', error.response.headers);

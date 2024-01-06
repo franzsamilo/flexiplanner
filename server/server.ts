@@ -21,13 +21,6 @@ app.use(cors({
  }));
 app.use(express.json());
 
-app.use(session({ 
-  secret: 'your_secret_key',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false } 
-}));
-
 app.use('/api/tasks', taskRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/eventRead', eventReadRoutes);

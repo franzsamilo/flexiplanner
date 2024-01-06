@@ -100,7 +100,6 @@ function AddSchedule({
       schedule.subject &&
       schedule.starts &&
       schedule.ends &&
-      !hasConflict(schedule) &&
       user.user_id
     ) {
       const newEvent: Event = {
