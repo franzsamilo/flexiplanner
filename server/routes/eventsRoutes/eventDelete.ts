@@ -1,22 +1,25 @@
-import express, { Request, Response } from "express";
-import flexiplannerDB from "../../poolDB/flexiplanner";
+import express, { Request, Response } from 'express';
+import flexiplannerDB from '../../poolDB/flexiplanner';
 
 const router = express.Router();
 
-router.delete("/delete", async (req: Request, res: Response) => {
+router.delete('/delete/:event_id', async (req: Request, res: Response) => {
+  console.log('Reached delete route');
+
+  const { event_id } = req.params;
+
   try {
-    const subject = req.body.subject;
+    await flexiplannerDB.query('DELETE FROM events WHERE event_id=$1', [
+      event_id,
+    ]);
 
-    const deleteEvent = await flexiplannerDB.query(
-      "DELETE FROM events WHERE subject= $1",
-      [subject]
-    );
-
-    res.json("event was deleted!");
+    res.json('event was deleted!');
   } catch (error) {
-    console.error("Error deleting event:", error);
-    res.status(500).json({ error: "Failed to deleting event" });
+    console.error('Error deleting event:', error);
+    res.status(500).json({ error: 'Failed to delete event' });
   }
+
+  console.log('End of event delete route');
 });
 
 export default router;

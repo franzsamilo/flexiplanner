@@ -62,14 +62,21 @@ function AddSchedule({
 
   function generateTimeOptions() {
     const options = [];
-    for (let i = 0; i < 24; i++) {
-      const time = `${i < 10 ? '0' : ''}${i}:00`;
-      options.push(
-        <option key={time} value={time}>
-          {time}
-        </option>
-      );
+    for (let hours = 0; hours < 24; hours++) {
+      for (let minutes = 0; minutes < 60; minutes += 5) {
+        const formattedHours = hours < 10 ? `0${hours}` : `${hours}`;
+        const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+
+        const time = `${formattedHours}:${formattedMinutes}`;
+
+        options.push(
+          <option key={time} value={time}>
+            {time}
+          </option>
+        );
+      }
     }
+
     return options;
   }
 
