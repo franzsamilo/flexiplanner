@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Task } from '../Constants/types';
+import { Task } from '../../../Constants/types';
 
 interface UpdateTaskProps {
   onClose: () => void;

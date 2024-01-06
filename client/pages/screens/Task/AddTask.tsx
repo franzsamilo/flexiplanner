@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface AddTaskProps {
   onClose: () => void;
@@ -16,6 +16,13 @@ function AddTask({ onClose, selectedCategory }: AddTaskProps) {
   const [isTaskNameValid, setIsTaskNameValid] = useState(true);
 
   const today = new Date().toISOString().split('T')[0];
+
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    setUserId(user.user_id);
+  }, []);
 
   function handleDueDateChange(date: string) {
     if (date >= today) {
@@ -38,7 +45,7 @@ function AddTask({ onClose, selectedCategory }: AddTaskProps) {
       task_duration_hours: TaskDurationHours,
       task_duration_minutes: TaskDurationMinutes,
       task_status: TaskStatus,
-      user_id: 1,
+      user_id: userId,
       category_name: selectedCategory,
     };
 

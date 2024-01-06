@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import AddTask from '../Task/AddTask';
 import UpdateTask from '../Task/UpdateTask';
 import DeleteTask from '../Task/DeleteTask';
-import { Task } from '../Constants/types';
+import { Task } from '../../../Constants/types';
 
 interface TaskProps {
   selectedCategory: string;
@@ -42,6 +42,13 @@ function Task({ selectedCategory }: TaskProps) {
   const [showDeleteTask, setShowDeleteTask] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
 
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    setUserId(user.user_id);
+  }, []);
+
   const totalPages = Math.ceil(tasks.length / tasksPerPage);
 
   const currentTasks = tasks.slice(
@@ -78,26 +85,30 @@ function Task({ selectedCategory }: TaskProps) {
     fetchTasks(selectedCategory);
   }
 
-  const fetchTasks = useCallback(async (selectedCategory: string) => {
-    try {
-      const response = await fetch(
-        `http://localhost:6969/api/taskRead/read?category_name=${selectedCategory}`
-      );
-      if (!response.ok) {
-        throw new Error('Failed to fetch tasks');
+  const fetchTasks = useCallback(
+    async (selectedCategory: string) => {
+      if (userId !== null) {
+        try {
+          const response = await fetch(
+            `http://localhost:6969/api/taskRead/read/${userId}?category_name=${selectedCategory}`
+          );
+          if (!response.ok) {
+            throw new Error('Failed to fetch tasks');
+          }
+          const data = await response.json();
+          setTasks(data);
+        } catch (error) {
+          console.error('Error fetching tasks:', error);
+        }
       }
-
-      const data = await response.json();
-      setTasks(data);
-    } catch (error) {
-      console.error('Error fetching tasks:', error);
-    }
-  }, []); // Empty dependency array means this function will never recompute
+    },
+    [userId]
+  );
 
   useEffect(() => {
     fetchTasks(selectedCategory);
     console.log(selectedCategory);
-  }, [fetchTasks, selectedCategory]); // fetchTasks and selectedCategory are listed as dependencies
+  }, [fetchTasks, selectedCategory]);
 
   return (
     <div className="">
@@ -144,7 +155,7 @@ function Task({ selectedCategory }: TaskProps) {
                   {task.task_due_date ? formatDueDate(task.task_due_date) : ''}
                 </p>
               </div>
-              <div className="flex-1 text-center text-sm">
+              <div className="flex-1 text-center">
                 <p className="px-4 md:px-18 py-2">
                   {formatDuration(
                     task.task_duration_days,

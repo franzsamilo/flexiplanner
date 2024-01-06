@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Event } from '../Constants/types';
+import { Event } from '../../../Constants/types';
 
 interface AddScheduleProps {
   onClose: () => void;
@@ -12,15 +12,28 @@ function AddSchedule({
   addSchedule,
   existingSchedules,
 }: AddScheduleProps) {
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    setUserId(user.user_id || 0);
+  }, []);
+
   const [schedule, setSchedule] = useState<Event>({
     event_id: 0,
     day: '',
     subject: '',
     starts: '',
     ends: '',
-    user_id: 0,
-    category_name: '',
+    user_id: userId || 0,
   });
+
+  useEffect(() => {
+    setSchedule((prevSchedule: Event) => ({
+      ...prevSchedule,
+      user_id: userId || 0,
+    }));
+  }, [userId]);
 
   const [sortedSchedules, setSortedSchedules] = useState<Event[]>([]);
 
@@ -81,16 +94,18 @@ function AddSchedule({
   }
 
   function handleAddSchedule() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (
       schedule.day &&
       schedule.subject &&
       schedule.starts &&
       schedule.ends &&
-      !hasConflict(schedule)
+      !hasConflict(schedule) &&
+      user.user_id
     ) {
       const newEvent: Event = {
         ...schedule,
-        user_id: 1,
+        user_id: user.user_id,
         category_name: '',
       };
 
@@ -102,13 +117,10 @@ function AddSchedule({
         return;
       }
 
-      const token = localStorage.getItem('token');
-
       fetch('http://localhost:6969/api/events/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(newEvent),
       })

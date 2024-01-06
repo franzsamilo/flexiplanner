@@ -1,5 +1,5 @@
 import React from 'react';
-import { Event } from '../Constants/types';
+import { Event } from '../../../Constants/types';
 
 interface DeleteScheduleProps {
   onClose: () => void;

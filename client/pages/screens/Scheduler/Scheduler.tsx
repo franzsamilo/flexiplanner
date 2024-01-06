@@ -3,9 +3,9 @@ import Image from 'next/image';
 import AddSchedule from './AddSchedule';
 import UpdateSchedule from './UpdateSchedule';
 import DeleteSchedule from './DeleteSchedule';
-import { Event } from '../Constants/types';
-import editIcon from 'public/assets/icons/edit-icon.svg';
-import deleteIcon from 'public/assets/icons/delete-icon.svg';
+import { Event } from '../../../Constants/types';
+import editIcon from '/public/assets/icons/edit-icon.svg';
+import deleteIcon from '/public/assets/icons/delete-icon.svg';
 
 function Scheduler() {
   const [showAddSchedule, setShowAddSchedule] = useState(false);
@@ -14,6 +14,13 @@ function Scheduler() {
   const [selectedSchedule, setSelectedSchedule] = useState<Event | null>(null);
   const [schedules, setSchedules] = useState<{ [key: string]: Event[] }>({});
   const [isEditMode, setIsEditMode] = useState(false);
+
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    setUserId(user.user_id);
+  }, []);
 
   function handleAddEvent() {
     setShowAddSchedule(true);
@@ -90,57 +97,68 @@ function Scheduler() {
   ];
 
   useEffect(() => {
-    fetch('http://localhost:6969/api/eventRead/read')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch events');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const weeklySchedules: { [key: string]: Event[] } = {};
-
-        data.forEach((event: any) => {
-          const { day } = event;
-          if (!weeklySchedules[day]) {
-            weeklySchedules[day] = [];
+    if (userId !== null) {
+      fetch(`http://localhost:6969/api/eventRead/read/?user_id=${userId}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Failed to fetch events');
           }
-          weeklySchedules[day].push(event);
-        });
+          return response.json();
+        })
+        .then((data) => {
+          const weeklySchedules: { [key: string]: Event[] } = {};
 
-        Object.keys(weeklySchedules).forEach((day) => {
-          weeklySchedules[day].sort((a: any, b: any) => {
-            const startTimeA = new Date(`1970-01-01T${a.starts}`);
-            const startTimeB = new Date(`1970-01-01T${b.starts}`);
-            return startTimeA.getTime() - startTimeB.getTime();
-          });
-        });
-
-        Object.keys(weeklySchedules).forEach((day) => {
-          const schedulesOfDay = weeklySchedules[day];
-
-          for (let i = 0; i < schedulesOfDay.length - 1; i++) {
-            const currentEnd = new Date(`1970-01-01T${schedulesOfDay[i].ends}`);
-            const nextStart = new Date(
-              `1970-01-01T${schedulesOfDay[i + 1].starts}`
-            );
-
-            if (currentEnd >= nextStart) {
-              console.log(
-                `Conflict detected on ${day} between ${
-                  schedulesOfDay[i].subject
-                } and ${schedulesOfDay[i + 1].subject}`
-              );
+          data.forEach((event: any) => {
+            const { day } = event;
+            if (!weeklySchedules[day]) {
+              weeklySchedules[day] = [];
             }
+            weeklySchedules[day].push(event);
+          });
+
+          Object.keys(weeklySchedules).forEach((day) => {
+            weeklySchedules[day].sort((a: any, b: any) => {
+              const startTimeA = new Date(`1970-01-01T${a.starts}`);
+              const startTimeB = new Date(`1970-01-01T${b.starts}`);
+              return startTimeA.getTime() - startTimeB.getTime();
+            });
+          });
+
+          Object.keys(weeklySchedules).forEach((day) => {
+            const schedulesOfDay = weeklySchedules[day];
+
+            for (let i = 0; i < schedulesOfDay.length - 1; i++) {
+              const currentEnd = new Date(
+                `1970-01-01T${schedulesOfDay[i].ends}`
+              );
+              const nextStart = new Date(
+                `1970-01-01T${schedulesOfDay[i + 1].starts}`
+              );
+
+              if (currentEnd >= nextStart) {
+                console.log(
+                  `Conflict detected on ${day} between ${
+                    schedulesOfDay[i].subject
+                  } and ${schedulesOfDay[i + 1].subject}`
+                );
+              }
+            }
+          });
+
+          setSchedules(weeklySchedules);
+        })
+        .catch((error) => {
+          console.error('Error fetching events:', error);
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.error('Response data:', error.response.data);
+            console.error('Response status:', error.response.status);
+            console.error('Response headers:', error.response.headers);
           }
         });
-
-        setSchedules(weeklySchedules);
-      })
-      .catch((error) => {
-        console.error('Error fetching events:', error);
-      });
-  }, []);
+    }
+  }, [userId]);
 
   return (
     <div className="px-2">

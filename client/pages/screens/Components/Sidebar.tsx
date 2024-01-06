@@ -2,11 +2,10 @@ import React, { useContext } from 'react';
 import Image from 'next/image';
 import userIconBlack from '/public/assets/icons/user-icon-black.png';
 import userIconWhite from '/public/assets/icons/user-icon-white.png';
-import remindersIcon from 'public/assets/icons/reminders-icon.png';
-import academicsIcon from 'public/assets/icons/academics-icon.png';
-import workIcon from 'public/assets/icons/work-icon.png';
-import createIcon from 'public/assets/icons/create-icon.png';
-import logoutIcon from 'public/assets/icons/right-from-bracket-solid.svg';
+import remindersIcon from '/public/assets/icons/reminders-icon.png';
+import academicsIcon from '/public/assets/icons/academics-icon.png';
+import workIcon from '/public/assets/icons/work-icon.png';
+import logoutIcon from '/public/assets/icons/right-from-bracket-solid.svg';
 import { StaticImageData } from 'next/image';
 import { AuthContext } from '../useContexts/useAuth';
 
