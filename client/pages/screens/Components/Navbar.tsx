@@ -8,20 +8,8 @@ function Navbar() {
   const [activeButton, setActiveButton] = useState<string | null>(null);
 
   const handleButtonClick = (buttonName: string, navigateFunction: any) => {
-    setActiveButton(buttonName); 
-    switch (buttonName) {
-      case 'home':
-        navigateFunction(ToHome);
-        break;
-      case 'aboutUs':
-        navigateFunction(ToAboutUs);
-        break;
-      case 'demo':
-        navigateFunction(ToDemo);
-        break;
-      default:
-        navigateFunction(ToLogin);
-    }
+    setActiveButton(buttonName);
+    navigateFunction();
   };
 
   return (
@@ -39,31 +27,21 @@ function Navbar() {
         </div>
         <div className="flex justify-center text-xl mr-20 xs:max-sm:text-sm xs:max-sm:mr-1 sm:max-lg:mr-8 sm:max-lg:ml-5">
           <button
-            className={`px-10 py-2 rounded-full font-semibold ${
-              activeButton === 'home'
-                ? 'bg-main text-white'
-                : 'bg-none hover:text-secondary'
-            } xs:max-sm:px-3 xs:max-lg:py-1 sm:max-lg:px-7 `}
+            className={`px-10 py-2 rounded-full font-semibold hover:text-main`}
             onClick={() => handleButtonClick('home', ToHome)}
           >
             Home
           </button>
+
           <button
-            className={`px-10 py-2 font-semibold rounded-full ${
-              activeButton === 'aboutUs'
-                ? 'bg-main text-white'
-                : 'bg-none hover:text-secondary'
-            } xs:max-sm:px-3 xs:max-lg:py-1 sm:max-lg:px-7`}
+            className={`px-10 py-2 font-semibold rounded-full hover:text-main xs:max-sm:px-3 xs:max-lg:py-1 sm:max-lg:px-7`}
             onClick={() => handleButtonClick('aboutUs', ToAboutUs)}
           >
             About Us
           </button>
+
           <button
-            className={`px-10 py-2 font-semibold rounded-full ${
-              activeButton === 'demo'
-                ? 'bg-main text-white'
-                : 'bg-none hover:text-secondary'
-            } xs:max-sm:px-3 xs:max-lg:py-1 sm:max-lg:px-7`}
+            className={`px-10 py-2 font-semibold rounded-full hover:text-main xs:max-sm:px-3 xs:max-lg:py-1 sm:max-lg:px-7`}
             onClick={() => handleButtonClick('demo', ToDemo)}
           >
             Demo
