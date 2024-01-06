@@ -4,9 +4,9 @@ import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import Sidebar from '../Components/Sidebar';
 import Task from '../Task/Task';
-import academicsIcon from 'public/assets/icons/academics-icon.png';
-import workIcon from 'public/assets/icons/work-icon.png';
-import personalIcon from 'public/assets/icons/user-icon-white.png';
+import academicsIcon from '/public/assets/icons/academics-icon.png';
+import workIcon from '/public/assets/icons/work-icon.png';
+import personalIcon from '/public/assets/icons/user-icon-white.png';
 import { StaticImageData } from 'next/image';
 import AuthWrapper from '../Components/AuthWrapper';
 

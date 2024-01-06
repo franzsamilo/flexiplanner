@@ -3,9 +3,9 @@ import Image from 'next/image';
 import AddSchedule from './AddSchedule';
 import UpdateSchedule from './UpdateSchedule';
 import DeleteSchedule from './DeleteSchedule';
-import { Event } from '../Constants/types';
-import editIcon from 'public/assets/icons/edit-icon.svg';
-import deleteIcon from 'public/assets/icons/delete-icon.svg';
+import { Event } from '../../../Constants/types';
+import editIcon from '/public/assets/icons/edit-icon.svg';
+import deleteIcon from '/public/assets/icons/delete-icon.svg';
 
 function Scheduler() {
   const [showAddSchedule, setShowAddSchedule] = useState(false);

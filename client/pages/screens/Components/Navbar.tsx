@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import logo from '/public/assets/logo.png';
-import useNavigation from '../Components/Navigation';
+import useNavigation from './Navigation';
 
 function Navbar() {
   const { ToHome, ToAboutUs, ToDemo, ToLogin } = useNavigation();
