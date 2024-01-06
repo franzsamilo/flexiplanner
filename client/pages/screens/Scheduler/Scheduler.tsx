@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
-import AddSchedule from "./AddSchedule";
-import UpdateSchedule from "./UpdateSchedule";
-import DeleteSchedule from "./DeleteSchedule";
-import { Event } from "../Constants/types";
-import JSXStyle from "styled-jsx/style";
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import AddSchedule from './AddSchedule';
+import UpdateSchedule from './UpdateSchedule';
+import DeleteSchedule from './DeleteSchedule';
+import { Event } from '../Constants/types';
+import editIcon from 'public/assets/icons/edit-icon.svg';
+import deleteIcon from 'public/assets/icons/delete-icon.svg';
 
 function Scheduler() {
   const [showAddSchedule, setShowAddSchedule] = useState(false);
@@ -11,6 +13,7 @@ function Scheduler() {
   const [showDeleteSchedule, setShowDeleteSchedule] = useState(false);
   const [selectedSchedule, setSelectedSchedule] = useState<Event | null>(null);
   const [schedules, setSchedules] = useState<{ [key: string]: Event[] }>({});
+  const [isEditMode, setIsEditMode] = useState(false);
 
   function handleAddEvent() {
     setShowAddSchedule(true);
@@ -41,21 +44,43 @@ function Scheduler() {
     window.location.reload();
   }
 
+  function updateSchedule(updatedSchedule: Event) {
+    setSchedules((prevSchedules) => {
+      const daySchedules = prevSchedules[updatedSchedule.day];
+      const updatedDaySchedules = daySchedules.map((schedule) =>
+        schedule.event_id === updatedSchedule.event_id
+          ? updatedSchedule
+          : schedule
+      );
+      return { ...prevSchedules, [updatedSchedule.day]: updatedDaySchedules };
+    });
+    window.location.reload();
+  }
+
+  function toggleEditMode() {
+    setIsEditMode(!isEditMode);
+  }
+
+  function formatTime(timeStr: string) {
+    const [hours, minutes, _] = timeStr.split(':');
+    return `${hours}:${minutes}`;
+  }
+
   const daysOfWeek = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
   ];
 
   useEffect(() => {
-    fetch("http://localhost:6969/api/eventRead/read")
+    fetch('http://localhost:6969/api/eventRead/read')
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to fetch events");
+          throw new Error('Failed to fetch events');
         }
         return response.json();
       })
@@ -100,36 +125,31 @@ function Scheduler() {
         setSchedules(weeklySchedules);
       })
       .catch((error) => {
-        console.error("Error fetching events:", error);
+        console.error('Error fetching events:', error);
       });
   }, []);
 
   return (
-    <div className="bg-pink-50">
-      <div className="flex flex-col items-center mx-auto">
-        <div className="ml-auto flex flex-row">
-          <div className="text-lg text-black font-bold py-2 px-4 rounded mb-2 mr-[450px] text-[20px]">
+    <div className="px-2">
+      <div className="flex flex-col mx-auto">
+        <div className="flex flex-row">
+          <div className="text-lg text-black font-bold pt-1 px-4 rounded my-2 mr-auto text-[20px]">
             Class Schedule
           </div>
-          <button
-            className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-1 px-3 mt-2 mb-2 rounded"
-            onClick={handleAddEvent}
-          >
-            + ADD EVENT
-          </button>
-          <button
-            className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-1 px-3 rounded mb-2 ml-3 mt-2 "
-            onClick={handleUpdateEvent}
-          >
-            UPDATE EVENT
-          </button>
-
-          <button
-            className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-1 px-3 rounded mb-2 ml-3 mt-2 mr-[300px]"
-            onClick={handleDeleteEvent}
-          >
-            DELETE EVENT
-          </button>
+          <div className="ml-auto">
+            <button
+              className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-1 px-3 my-2 mr-3  rounded"
+              onClick={handleAddEvent}
+            >
+              + Add Event
+            </button>
+            <button
+              className="bg-[#7da27e] hover:bg-[#225224] text-white font-bold py-1 px-3 my-2 mr-3 rounded"
+              onClick={toggleEditMode}
+            >
+              {isEditMode ? 'Done' : 'Edit Event'}
+            </button>
+          </div>
 
           {showAddSchedule && (
             <AddSchedule
@@ -138,22 +158,28 @@ function Scheduler() {
               existingSchedules={[]}
             />
           )}
-          {showUpdateSchedule && <UpdateSchedule onClose={handleClose} />}
+          {showUpdateSchedule && (
+            <UpdateSchedule
+              onClose={handleClose}
+              selectedSchedule={selectedSchedule!}
+              updateSchedule={updateSchedule}
+            />
+          )}
           {showDeleteSchedule && (
             <DeleteSchedule
               onClose={handleClose}
               onDelete={handleClose}
-              subject={selectedSchedule?.subject || ""}
+              subject={selectedSchedule?.subject || ''}
             />
           )}
         </div>
 
-        <div className="border border-gray-400 shadow rounded-[30px] p-4 h-[800px] bg-transparent ">
+        <div className="border border-gray-400 shadow rounded-[30px] p-4 min-h-[700px] bg-white ">
           <div className="grid grid-cols-7 gap-4 ">
             {daysOfWeek.map((day, index) => (
               <div key={index} className="flex-1 text-center">
                 <h4 className="font-bold px-4 md:px-10 py-2">{day}</h4>
-                <div className="storage-area p-2">
+                <div className="storage-area p-2 ">
                   {schedules[day]?.map((schedule, index) => (
                     <div
                       key={index}
@@ -164,8 +190,25 @@ function Scheduler() {
                           {schedule.subject}
                         </p>
                         <p className="text-gray-600 text-sm ">
-                          {schedule.starts} - {schedule.ends}
+                          {formatTime(schedule.starts)} -{' '}
+                          {formatTime(schedule.ends)}
                         </p>
+                        {isEditMode && (
+                          <div className="flex flex-row w-10 mt-2">
+                            <button
+                              className="mr-auto"
+                              onClick={() => {
+                                setSelectedSchedule(schedule);
+                                handleUpdateEvent();
+                              }}
+                            >
+                              <Image src={editIcon} alt="edit icon" />
+                            </button>
+                            <button className="ml-auto">
+                              <Image src={deleteIcon} alt="delete icon" />
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </div>
                   ))}

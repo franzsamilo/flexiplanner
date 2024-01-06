@@ -66,9 +66,8 @@ function UpdateTask({ onClose, value }: UpdateTaskProps) {
       );
 
       console.log('This is the response: ', response);
-      // Check if the response was successful (status code 200)
+
       if (response.ok) {
-        // Close the UpdateTask component
         onClose();
       }
 
@@ -111,7 +110,7 @@ function UpdateTask({ onClose, value }: UpdateTaskProps) {
           <input
             type="date"
             value={UpdatedTaskDueDate}
-            min={today} // Set the minimum date to today
+            min={today}
             onChange={(e) => handleDueDateChange(e.target.value)}
             className="border rounded w-full p-2"
           />

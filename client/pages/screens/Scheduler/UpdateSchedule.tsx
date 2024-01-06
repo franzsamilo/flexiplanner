@@ -1,25 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Event } from '../Constants/types';
 
 interface UpdateScheduleProps {
   onClose: () => void;
+  selectedSchedule: Event;
+  updateSchedule: (schedule: Event) => void;
 }
 
-function UpdateSchedule({ onClose }: UpdateScheduleProps) {
-  const [updateData, setUpdateData] = useState({
-    subject: '',
-    attribute: '',
-    newValue: '',
-  });
+function UpdateSchedule({
+  onClose,
+  selectedSchedule,
+  updateSchedule,
+}: UpdateScheduleProps) {
+  const [schedule, setSchedule] = useState<Event>(selectedSchedule);
 
-  const handleChange = (
+  useEffect(() => {
+    setSchedule(selectedSchedule);
+  }, [selectedSchedule]);
+
+  function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  ) {
     const { name, value } = e.target;
-    setUpdateData((prevData) => ({
-      ...prevData,
+    setSchedule((prevSchedule: Event) => ({
+      ...prevSchedule,
       [name]: value,
     }));
-  };
+  }
 
   function generateTimeOptions() {
     const options = [];
@@ -34,13 +41,54 @@ function UpdateSchedule({ onClose }: UpdateScheduleProps) {
     return options;
   }
 
-  function renderInputBasedOnAttribute() {
-    const { attribute } = updateData;
-    switch (attribute) {
-      case 'Day':
-        return (
+  function handleUpdateSchedule() {
+    if (schedule.day && schedule.subject && schedule.starts && schedule.ends) {
+      const updatedEvent: Event = {
+        ...schedule,
+        user_id: 1,
+        category_name: '',
+      };
+
+      const token = localStorage.getItem('token');
+
+      fetch(
+        `http://localhost:6969/api/eventUpdate/update/${schedule.event_id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedEvent),
+        }
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Failed to update event');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log('Event updated successfully:', data);
+          updateSchedule(updatedEvent);
+          onClose();
+        })
+        .catch((error) => {
+          console.error('Error updating event:', error);
+        });
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      <div className="bg-white p-6 rounded-md">
+        <h2 className="text-2xl font-bold mb-4">Update Event</h2>
+
+        <label className="block mb-2" id={`id${schedule.event_id}`}>
+          Day:
           <select
-            name="newValue"
+            name="day"
+            value={schedule.day}
             onChange={handleChange}
             className="border rounded w-full p-2"
           >
@@ -53,90 +101,48 @@ function UpdateSchedule({ onClose }: UpdateScheduleProps) {
             <option value="Saturday">Saturday</option>
             <option value="Sunday">Sunday</option>
           </select>
-        );
-      case 'Starts':
-      case 'Ends':
-        return (
-          <select
-            name="newValue"
-            onChange={handleChange}
-            className="border rounded w-full p-2"
-          >
-            <option value="">Select Time</option>
-            {generateTimeOptions()}
-          </select>
-        );
-      default:
-        return (
-          <input
-            type="text"
-            name="newValue"
-            onChange={handleChange}
-            className="border rounded w-full p-2"
-          />
-        );
-    }
-  }
+        </label>
 
-  async function handleUpdate() {
-    try {
-      const response = await fetch(
-        `http://localhost:6969/api/eventUpdate/update`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(updateData),
-        }
-      );
-
-      if (response.ok) {
-        console.log('Event updated successfully');
-        onClose();
-        window.location.reload();
-      } else {
-        console.error('Failed to update event');
-      }
-    } catch (error) {
-      console.error('Error updating event:', error);
-    }
-  }
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-md">
-        <h2 className="text-2xl font-bold mb-4">Update Event</h2>
-        <label className="block mb-2">
-          <p className="my-1">Subject:</p>
+        <label className="block mb-2" id={`id${schedule.event_id}`}>
+          Subject:
           <input
             type="text"
             name="subject"
+            value={schedule.subject}
             onChange={handleChange}
             className="border rounded w-full p-2"
           />
         </label>
-        <label className="block mb-2">
-          <p className="my-1">Attribute to Update:</p>
+
+        <label className="block mb-2" id={`id${schedule.event_id}`}>
+          Start Time:
           <select
-            name="attribute"
+            name="starts"
+            value={schedule.starts}
             onChange={handleChange}
             className="border rounded w-full p-2"
           >
-            <option value="">Select Attribute</option>
-            <option value="Subject">Subject</option>
-            <option value="Day">Day</option>
-            <option value="Starts">Starts</option>
-            <option value="Ends">Ends</option>
+            <option value="">Select Start Time</option>
+            {generateTimeOptions()}
           </select>
         </label>
-        <label className="block mb-2">
-          <p className="my-1">New Value:</p>
-          {renderInputBasedOnAttribute()}
+
+        <label className="block mb-2" id={`id${schedule.event_id}`}>
+          End Time:
+          <select
+            name="ends"
+            value={schedule.ends}
+            onChange={handleChange}
+            className="border rounded w-full p-2"
+          >
+            <option value="">Select End Time</option>
+            {generateTimeOptions()}
+          </select>
         </label>
+
         <div className="flex justify-end">
           <button
-            onClick={handleUpdate}
+            onClick={handleUpdateSchedule}
             className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
           >
             Update Event

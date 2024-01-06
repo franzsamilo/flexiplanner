@@ -9,7 +9,9 @@ interface TaskProps {
 }
 
 function formatDueDate(dueDate: string) {
-  const formattedDate = new Date(dueDate).toISOString().split('T')[0];
+  let date = new Date(dueDate);
+  date.setHours(12, 0, 0, 0);
+  const formattedDate = date.toISOString().split('T')[0];
   return formattedDate;
 }
 
@@ -98,14 +100,14 @@ function Task({ selectedCategory }: TaskProps) {
   }, [fetchTasks, selectedCategory]); // fetchTasks and selectedCategory are listed as dependencies
 
   return (
-    <div className="bg-pink-50">
+    <div className="">
       <div className="flex flex-col items-center mx-auto my-5 w-[1200px]">
         <div className="flex flex-row w-[1200px]">
           <div className="text-lg text-black font-bold py-2 px-4 rounded w-70 mb-2 mr-auto ml-5 text-[20px]">
             To do&apos;s
           </div>
           <button
-            className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded w-70 mb-2 ml-auto mr-5"
+            className="bg-blue-300 hover:bg-blue-900 text-white font-bold py-1 px-3 rounded w-70 mb-2 ml-auto mr-5"
             onClick={handleClickTask}
           >
             + Add Task

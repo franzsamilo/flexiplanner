@@ -1,10 +1,10 @@
-import express, { Request, Response } from "express";
-import flexiplannerDB from "../../poolDB/flexiplanner";
+import express, { Request, Response } from 'express';
+import flexiplannerDB from '../../poolDB/flexiplanner';
 
 const router = express.Router();
 
-router.put("/update/:task_id", async (req: Request, res: Response) => {
-  console.log("Reached update route");
+router.put('/update/:task_id', async (req: Request, res: Response) => {
+  console.log('Reached task update route');
   const {
     task_name,
     task_priority,
@@ -42,12 +42,12 @@ router.put("/update/:task_id", async (req: Request, res: Response) => {
       ]
     );
 
-    res.status(200).json({ message: "Task updated successfully" });
+    res.status(200).json({ message: 'Task updated successfully' });
   } catch (error) {
-    console.error("Error updating task:", error);
-    res.status(500).json({ error: "Failed to update task" });
+    console.error('Error updating task:', error);
+    res.status(500).json({ error: 'Failed to update task' });
   }
-  console.log("End of update route");
+  console.log('End of task update route');
 });
 
 export default router;
