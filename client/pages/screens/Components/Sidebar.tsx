@@ -58,7 +58,7 @@ function Sidebar({ updateHeader }: SidebarProps) {
         </button>
       </div>
 
-      <div className="flex flex-col bg-dirty mx-3 my-5 rounded-2xl shadow-lg">
+      <div className="flex flex-col bg-dirty mx-3 my-10 py-2 rounded-2xl shadow-lg">
         <div className="text-tertiary pl-2 text-lg font-medium">Categories</div>
         <button
           className="flex items-center px-4 py-3 my-2 mx-4 bg-secondary rounded-2xl hover:bg-main"
@@ -97,15 +97,6 @@ function Sidebar({ updateHeader }: SidebarProps) {
           </div>
           <div className="text-[#fff2f2] font-bold pl-3 text-xl justify-center">
             Work
-          </div>
-        </button>
-
-        <button className="flex items-center px-4 py-3 my-2 mx-4 bg-secondary rounded-2xl hover:bg-main">
-          <div>
-            <Image src={createIcon} alt="create-icon" className="w-[30px]" />
-          </div>
-          <div className="text-[#fff2f2] font-bold pl-3 text-xl justify-center">
-            Create
           </div>
         </button>
       </div>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Event } from "../Constants/types";
+import React, { useState, useEffect } from 'react';
+import { Event } from '../Constants/types';
 
 interface AddScheduleProps {
   onClose: () => void;
@@ -14,12 +14,12 @@ function AddSchedule({
 }: AddScheduleProps) {
   const [schedule, setSchedule] = useState<Event>({
     event_id: 0,
-    day: "",
-    subject: "",
-    starts: "",
-    ends: "",
+    day: '',
+    subject: '',
+    starts: '',
+    ends: '',
     user_id: 0,
-    category_name: "",
+    category_name: '',
   });
 
   const [sortedSchedules, setSortedSchedules] = useState<Event[]>([]);
@@ -63,7 +63,7 @@ function AddSchedule({
   function generateTimeOptions() {
     const options = [];
     for (let i = 0; i < 24; i++) {
-      const time = `${i < 10 ? "0" : ""}${i}:00`;
+      const time = `${i < 10 ? '0' : ''}${i}:00`;
       options.push(
         <option key={time} value={time}>
           {time}
@@ -72,6 +72,7 @@ function AddSchedule({
     }
     return options;
   }
+
   function handleAddSchedule() {
     if (
       schedule.day &&
@@ -83,32 +84,40 @@ function AddSchedule({
       const newEvent: Event = {
         ...schedule,
         user_id: 1,
-        category_name: "",
+        category_name: '',
       };
+
+      const startTime = new Date(`1970-01-01T${schedule.starts}`);
+      const endTime = new Date(`1970-01-01T${schedule.ends}`);
+
+      if (endTime <= startTime) {
+        alert('End time must be later than start time');
+        return;
+      }
 
       const token = localStorage.getItem('token');
 
-      fetch("http://localhost:6969/api/events/create", {
-        method: "POST",
+      fetch('http://localhost:6969/api/events/create', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(newEvent),
       })
         .then((response) => {
           if (!response.ok) {
-            throw new Error("Failed to add event");
+            throw new Error('Failed to add event');
           }
           return response.json();
         })
         .then((data) => {
-          console.log("Event created successfully:", data);
+          console.log('Event created successfully:', data);
           addSchedule(newEvent);
           onClose();
         })
         .catch((error) => {
-          console.error("Error adding event:", error);
+          console.error('Error adding event:', error);
         });
     }
   }
