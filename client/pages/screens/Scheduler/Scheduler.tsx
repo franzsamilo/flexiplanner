@@ -57,6 +57,19 @@ function Scheduler() {
     window.location.reload();
   }
 
+  function removeSchedule(eventId: number) {
+    setSchedules((prevSchedules) => {
+      const newSchedules = { ...prevSchedules };
+
+      for (let day in newSchedules) {
+        newSchedules[day] = newSchedules[day].filter(
+          (schedule) => schedule.event_id !== eventId
+        );
+      }
+      return newSchedules;
+    });
+  }
+
   function toggleEditMode() {
     setIsEditMode(!isEditMode);
   }
@@ -165,11 +178,11 @@ function Scheduler() {
               updateSchedule={updateSchedule}
             />
           )}
-          {showDeleteSchedule && (
+          {showDeleteSchedule && selectedSchedule && (
             <DeleteSchedule
               onClose={handleClose}
-              onDelete={handleClose}
-              subject={selectedSchedule?.subject || ''}
+              onDelete={removeSchedule}
+              value={selectedSchedule}
             />
           )}
         </div>
@@ -204,7 +217,13 @@ function Scheduler() {
                             >
                               <Image src={editIcon} alt="edit icon" />
                             </button>
-                            <button className="ml-auto">
+                            <button
+                              className="ml-auto"
+                              onClick={() => {
+                                setSelectedSchedule(schedule);
+                                handleDeleteEvent();
+                              }}
+                            >
                               <Image src={deleteIcon} alt="delete icon" />
                             </button>
                           </div>

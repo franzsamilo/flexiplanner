@@ -18,9 +18,7 @@ function DeleteTask({ onClose, onDelete, value }: DeleteTaskProps) {
       );
 
       if (response.ok) {
-        // Trigger the onDelete callback to update the task list
         onDelete(value.task_id);
-        // Close the DeleteTask component
         onClose();
       } else {
         console.error('Failed to delete task');
