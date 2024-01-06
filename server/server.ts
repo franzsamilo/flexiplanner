@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import session from "express-session";
 import taskRoutes from "./routes/taskRoutes/taskCreate";
 import taskReadRoutes from "./routes/taskRoutes/taskRead";
 import taskDeleteRoutes from "./routes/taskRoutes/taskDelete";
@@ -14,7 +13,7 @@ import userLoginRoutes from "./routes/userAuth/userLogin";
 import userLogoutRoutes from "./routes/userAuth/userLogout"
 
 const app = express();
-const PORT = 6969;
+const PORT = 5001;
 app.use(cors({
   origin: 'https://flexiplanner.vercel.app',
   credentials: true,

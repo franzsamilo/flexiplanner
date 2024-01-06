@@ -98,7 +98,7 @@ function Scheduler() {
 
   useEffect(() => {
     if (userId !== null) {
-      fetch(`http://localhost:6969/api/eventRead/read/?user_id=${userId}`)
+      fetch(`http://localhost:5001/api/eventRead/read/?user_id=${userId}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error('Failed to fetch events');

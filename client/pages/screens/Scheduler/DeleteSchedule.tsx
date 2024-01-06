@@ -11,7 +11,7 @@ function DeleteSchedule({ onClose, onDelete, value }: DeleteScheduleProps) {
   const handleDeleteEvent = async () => {
     try {
       const response = await fetch(
-        `http://localhost:6969/api/eventDelete/delete/${value.event_id}`,
+        `http://localhost:5001/api/eventDelete/delete/${value.event_id}`,
         {
           method: 'DELETE',
         }

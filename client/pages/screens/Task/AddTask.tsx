@@ -49,7 +49,7 @@ function AddTask({ onClose, selectedCategory }: AddTaskProps) {
       category_name: selectedCategory,
     };
 
-    fetch('http://localhost:6969/api/tasks/create', {
+    fetch('http://localhost:5001/api/tasks/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -67,7 +67,7 @@ function UpdateSchedule({
       const token = localStorage.getItem('token');
 
       fetch(
-        `http://localhost:6969/api/eventUpdate/update/${schedule.event_id}`,
+        `http://localhost:5001/api/eventUpdate/update/${schedule.event_id}`,
         {
           method: 'PUT',
           headers: {

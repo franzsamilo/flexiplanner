@@ -16,7 +16,7 @@ function LoginPage() {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:6969/api/auth/login', {
+      const response = await fetch('http://localhost:5001/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

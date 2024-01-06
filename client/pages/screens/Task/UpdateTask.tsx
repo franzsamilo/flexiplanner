@@ -55,7 +55,7 @@ function UpdateTask({ onClose, value }: UpdateTaskProps) {
       };
 
       const response = await fetch(
-        `http://localhost:6969/api/taskUpdate/update/${value.task_id}`,
+        `http://localhost:5001/api/taskUpdate/update/${value.task_id}`,
         {
           method: 'PUT',
           headers: {

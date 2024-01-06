@@ -116,7 +116,7 @@ function AddSchedule({
         return;
       }
 
-      fetch('http://localhost:6969/api/events/create', {
+      fetch('http://localhost:5001/api/events/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

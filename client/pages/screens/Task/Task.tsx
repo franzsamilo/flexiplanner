@@ -90,7 +90,7 @@ function Task({ selectedCategory }: TaskProps) {
       if (userId !== null) {
         try {
           const response = await fetch(
-            `http://localhost:6969/api/taskRead/read/${userId}?category_name=${selectedCategory}`
+            `http://localhost:5001/api/taskRead/read/${userId}?category_name=${selectedCategory}`
           );
           if (!response.ok) {
             throw new Error('Failed to fetch tasks');

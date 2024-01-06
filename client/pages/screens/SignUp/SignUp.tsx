@@ -43,7 +43,7 @@ function SignUpPage() {
     try {
       const { confirmPassword, ...dataToSend } = formData;
 
-      const response = await fetch("http://localhost:6969/api/auth/register", {
+      const response = await fetch("http://localhost:5001/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

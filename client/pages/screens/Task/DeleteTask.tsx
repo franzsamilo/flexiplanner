@@ -11,7 +11,7 @@ function DeleteTask({ onClose, onDelete, value }: DeleteTaskProps) {
   const handleDeleteTask = async () => {
     try {
       const response = await fetch(
-        `http://localhost:6969/api/taskDelete/delete/${value.task_id}`,
+        `http://localhost:5001/api/taskDelete/delete/${value.task_id}`,
         {
           method: 'DELETE',
         }

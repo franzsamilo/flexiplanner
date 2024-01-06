@@ -33,7 +33,7 @@ function Footer( { className }: { className?: string } ) {
               Contact Us:
             </div>
             <p>Email: liberalparty@gmail.com</p>
-            <p>Contact Number: 09696969699</p>
+            <p>Contact Number: 09500150019</p>
           </div>
         </div>
       </div>

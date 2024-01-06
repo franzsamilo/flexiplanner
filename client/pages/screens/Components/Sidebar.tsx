@@ -21,7 +21,7 @@ function Sidebar({ updateHeader }: SidebarProps) {
   const { user, setUser } = useContext(AuthContext);
 
   async function handleLogout() {
-    const response = await fetch('http://localhost:6969/api/auth/logout', {
+    const response = await fetch('http://localhost:5001/api/auth/logout', {
       method: 'POST',
       credentials: 'include',
     });
