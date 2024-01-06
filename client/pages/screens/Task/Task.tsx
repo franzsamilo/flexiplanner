@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import AddTask from '../Task/AddTask';
 import UpdateTask from '../Task/UpdateTask';
 import DeleteTask from '../Task/DeleteTask';
-import { Task } from '../Constants/types';
+import { Task } from '../../../Constants/types';
 
 interface TaskProps {
   selectedCategory: string;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Event } from '../Constants/types';
+import { Event } from '../../../Constants/types';
 
 interface UpdateScheduleProps {
   onClose: () => void;
