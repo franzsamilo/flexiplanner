@@ -28,6 +28,7 @@ function Sidebar({ updateHeader }: SidebarProps) {
 
     if (response.ok) {
       setUser(null);
+      window.location.reload();
     } else {
       console.error('Logout failed');
     }
