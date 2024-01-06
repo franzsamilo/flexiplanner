@@ -5,11 +5,11 @@ const router = express.Router();
 
 router.post('/create', async (req: Request, res: Response) => {
   try {
-    const { day, subject, starts, ends, user_id, category_name } = req.body;
+    const { day, subject, starts, ends, user_id } = req.body;
 
     await flexiplannerDB.query(
-      'INSERT INTO events (day, subject, starts, ends, user_id, category_name) VALUES ($1, $2, $3, $4, $5, $6)',
-      [day, subject, starts, ends, user_id, category_name]
+      'INSERT INTO events (day, subject, starts, ends, user_id) VALUES ($1, $2, $3, $4, $5)',
+      [day, subject, starts, ends, user_id]
     );
 
     res.status(201).json({ message: 'Event created successfully' });
